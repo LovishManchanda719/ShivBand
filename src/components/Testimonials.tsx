@@ -89,7 +89,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ isDarkMode }) => {
 
               {/* Testimonial Text */}
               <p className="text-lg italic mb-4 relative z-10 pl-6">
-                "{testimonial.text}"
+                &quot;{testimonial.text}&quot;
               </p>
 
               <div className="flex justify-between items-center mt-4">
@@ -119,7 +119,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ isDarkMode }) => {
 
         {/* Decorative Divider */}
         <div 
-          className={`
+          className={` 
             absolute bottom-0 left-0 right-0 h-2
             ${isDarkMode 
               ? "bg-gradient-to-r from-teal-700 via-purple-700 to-pink-700" 

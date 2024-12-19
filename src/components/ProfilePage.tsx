@@ -3,29 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  User, 
   Camera, 
   Edit, 
   Save, 
-  X, 
-  Check, 
+  X,
   Calendar, 
   Star as StarIcon,
-  Image as ImageIcon 
 } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { auth, db } from '@/lib/firebaseConfig';
 import { 
-  updateProfile, 
-  updateEmail, 
-  updatePassword 
+  updateProfile,
 } from 'firebase/auth';
 import { 
-  doc, 
-  updateDoc, 
-  getDoc, 
+  doc,  
   collection, 
   query, 
   where, 
@@ -65,7 +58,7 @@ interface UserReview {
 
 const ProfilePage: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
-  const [user, setUser] = useState(auth.currentUser);
+  const [user] = useState(auth.currentUser);
   const [displayName, setDisplayName] = useState(user?.displayName || '');
   const [email, setEmail] = useState(user?.email || '');
   const [profilePicture, setProfilePicture] = useState(user?.photoURL || '');

@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Calendar, Info } from "lucide-react";
+import { Play, Calendar } from "lucide-react";
 import { getVideos, Video } from "@/lib/firebase";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import { Card, CardContent } from "@/components/ui/card";
+import { Timestamp } from "firebase/firestore";
 interface VideoCardProps {
   video: Video;
   index: number;
@@ -13,12 +13,12 @@ interface VideoCardProps {
 }
 
 // Helper function to safely format dates
-const formatDate = (uploadDate: any) => {
+const formatDate = (uploadDate: Date | number | Timestamp | null): string => {
   try {
     if (!uploadDate) return "Date not available";
     
     // If it's a Firestore Timestamp
-    if (uploadDate?.toDate instanceof Function) {
+    if (uploadDate instanceof Timestamp) {
       return uploadDate.toDate().toLocaleDateString();
     }
     

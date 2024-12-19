@@ -9,9 +9,7 @@ import {
   query,
   getDocs,
   where,
-  serverTimestamp,
   Timestamp,
-  addDoc
 } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
@@ -137,7 +135,7 @@ export interface Booking {
   preferredTime: string;
   additionalDetails: string;
   status: 'pending' | 'confirmed' | 'cancelled';
-  createdAt: any;
+  createdAt: Date;
 }
 
 // Get user's bookings

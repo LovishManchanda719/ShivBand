@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
-
+import { FirebaseError } from 'firebase/app';
 export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,13 +24,17 @@ export default function SignupPage() {
     e.preventDefault();
     setError('');
     setLoading(true);
-
+  
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName: name });
       router.push('/');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        setError(err.message); // Access the message property of the FirebaseError
+      } else {
+        setError('An unexpected error occurred'); // In case it's not a FirebaseError
+      }
     } finally {
       setLoading(false);
     }

@@ -17,8 +17,8 @@ import Footer from "@/components/Footer";
 import { collection, addDoc, serverTimestamp, doc, updateDoc } from "firebase/firestore";
 import { db, auth} from "@/lib/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+import type { User as FirebaseUser } from "firebase/auth";
 import { useRouter } from "next/navigation";
-
 
 interface BookingData {
   userId: string;
@@ -28,7 +28,7 @@ interface BookingData {
   preferredTime: string;
   additionalDetails: string;
   status: 'pending' | 'confirmed' | 'cancelled';
-  createdAt: any;
+  createdAt: ReturnType<typeof serverTimestamp>;
   bookingId?: string;
 }
 
@@ -36,23 +36,19 @@ const ContactPage: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const router = useRouter();
 
-
-
   // Form state
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
   const [preferredTime, setPreferredTime] = useState("");
   const [additionalDetails, setAdditionalDetails] = useState("");
-  const [user, setUser] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setIsLoading(false);
     });
 
     return () => unsubscribe();
@@ -389,16 +385,16 @@ const ContactPage: React.FC = () => {
 
             {/* Submission Status Messages */}
             <AnimatePresence>
-              {submitStatus === "success" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="mt-4 p-3 bg-green-500 text-white rounded-md text-center"
-                >
-                  Thank you! We'll contact you soon to confirm your event.
-                </motion.div>
-              )}
+            {submitStatus === "success" && (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        className="mt-4 p-3 bg-green-500 text-white rounded-md text-center"
+      >
+        We&apos;ll contact you soon to confirm your event.
+      </motion.div>
+    )}
               {submitStatus === "error" && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}

@@ -9,8 +9,7 @@ import {
   X
 } from "lucide-react";
 import { auth } from "../lib/firebaseConfig";
-import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import Link from "next/link";
+import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
@@ -26,15 +25,30 @@ interface NavbarProps {
   toggleDarkMode: () => void;
 }
 
+// Define a type for the user
+interface UserType {
+  displayName: string | null;
+  email: string | null;
+  photoURL: string | null;
+}
+
 const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserType | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
+      if (currentUser) {
+        setUser({
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL
+        });
+      } else {
+        setUser(null);
+      }
     });
 
     return () => unsubscribe();
@@ -46,7 +60,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
     
     router.push(path);
     
-    // Reset navigation state after a short delay
     setTimeout(() => {
       setIsNavigating(false);
     }, 500);
