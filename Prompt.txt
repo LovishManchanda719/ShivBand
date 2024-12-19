@@ -1,0 +1,874 @@
+Modifiy /src/app/gallery/photos/page.tsx such that it fetched photos from Firestore and displays it like the current UI. Discard the like/dislike functionality. You can fetch the photos from Firestore from the photos collection. Each photo has a url, a title, a description, and a date of upload.
+This is the directory structure:
+
+> .next > node_modules > public Sit • .gitignore {} components.json eslint.config.mjs TS next-env.d.ts TS next.config.ts package-lockjson M packagejson JS postcss.config.mjs README.md TS tailwind.config.ts M tsconfig.json 
+
+Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        19-12-2024     05:25                app
+d-----        19-12-2024     05:25                components
+d-----        19-12-2024     05:25                context
+d-----        19-12-2024     05:25                lib
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        19-12-2024     05:25                contact
+d-----        19-12-2024     05:25                feedback
+d-----        19-12-2024     05:25                gallery
+d-----        19-12-2024     05:25                login
+d-----        19-12-2024     05:25                profile
+d-----        19-12-2024     05:25                reviews
+d-----        19-12-2024     05:25                signup
+-a----        17-12-2024     18:51          25931 favicon.ico
+-a----        17-12-2024     21:32           1411 globals.css
+-a----        19-12-2024     04:54            555 layout.tsx
+-a----        17-12-2024     22:15            253 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app\contact
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        19-12-2024     04:08          13720 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app\feedback
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        19-12-2024     03:30           8079 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app\gallery
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        19-12-2024     05:25                photos
+d-----        19-12-2024     05:25                videos
+-a----        18-12-2024     21:02            117 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app\gallery\photos
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        19-12-2024     00:56           8841 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app\gallery\videos
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        19-12-2024     05:22            809 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app\login
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        19-12-2024     02:01           3441 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app\profile
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        18-12-2024     21:22            117 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app\reviews
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        17-12-2024     22:14            116 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\app\signup
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        19-12-2024     02:01           3992 page.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\components
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        19-12-2024     05:25                ui
+-a----        17-12-2024     20:20           1975 BubbleAnimation.tsx
+-a----        18-12-2024     21:07           6887 Footer.tsx
+-a----        18-12-2024     21:02           3395 GalleryPage.tsx
+-a----        19-12-2024     02:53           1700 Hero.tsx
+-a----        17-12-2024     22:36            934 Home.tsx
+-a----        19-12-2024     05:43           7678 Navbar.tsx
+-a----        18-12-2024     21:11            900 PhotoHighlights.tsx
+-a----        19-12-2024     04:14          13359 ProfilePage.tsx
+-a----        19-12-2024     03:21           6903 Reviews.tsx
+-a----        18-12-2024     21:10           4037 Testimonials.tsx
+-a----        19-12-2024     05:47           1770 VideoGallery.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\components\ui
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        17-12-2024     19:52           1902 button.tsx
+-a----        17-12-2024     19:52           1828 card.tsx
+-a----        17-12-2024     21:25           3849 dialog.tsx
+-a----        17-12-2024     21:24           7416 dropdown-menu.tsx
+-a----        18-12-2024     21:55            768 input.tsx
+-a----        17-12-2024     21:36            649 textarea.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\context
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        19-12-2024     03:04           1115 AuthContext.tsx
+-a----        17-12-2024     22:25           1647 ThemeContext.tsx
+
+
+    Directory: C:\Lovish\Coding\WebDev\Projects\shivband - Copy - Copy\src\lib
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        19-12-2024     05:35           5084 firebase.ts
+-a----        19-12-2024     04:42           1008 firebaseConfig.ts
+-a----        17-12-2024     19:52            166 utils.ts
+
+
+
+This is /src/app/gallery/photos/page.tsx:
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { 
+  ThumbsUp, 
+  ThumbsDown, 
+  Heart, 
+  Download, 
+  MoreVertical 
+} from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { 
+  collection, 
+  addDoc, 
+  getDocs, 
+  updateDoc, 
+  doc, 
+  query, 
+  orderBy 
+} from "firebase/firestore";
+import { db } from "@/lib/firebaseConfig";
+
+// Type for Photo
+interface Photo {
+  id?: string;
+  url: string;
+  title: string;
+  likes: number;
+  dislikes: number;
+  datePosted: Date;
+  description?: string;
+}
+
+const PhotoGalleryPage: React.FC = () => {
+  const { isDarkMode, toggleDarkMode } = useTheme();
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+
+  // Initial photo data (you can replace this with Firestore data)
+  const initialPhotos: Photo[] = [
+    {
+      url: "/1.jpg",
+      title: "Romantic Moment",
+      likes: 42,
+      dislikes: 3,
+      datePosted: new Date("2024-01-15"),
+      description: "A magical moment during the wedding ceremony"
+    },
+    {
+      url: "/2.jpg",
+      title: "Dance Floor Magic",
+      likes: 67,
+      dislikes: 2,
+      datePosted: new Date("2024-02-20"),
+      description: "Incredible energy on the dance floor"
+    },
+    // Add more initial photos
+  ];
+
+  useEffect(() => {
+    // For now, use initial photos
+    setPhotos(initialPhotos);
+  }, []);
+
+  // Handle like/dislike
+  const handleReaction = async (photo: Photo, reaction: 'like' | 'dislike') => {
+    try {
+      // Create a copy of the photo to modify
+      const updatedPhoto = {...photo};
+      
+      if (reaction === 'like') {
+        updatedPhoto.likes += 1;
+      } else {
+        updatedPhoto.dislikes += 1;
+      }
+
+      // Update local state
+      setPhotos(prevPhotos => 
+        prevPhotos.map(p => p.url === photo.url ? updatedPhoto : p)
+      );
+    } catch (error) {
+      console.error("Error updating reaction:", error);
+    }
+  };
+
+  // Download image
+  const downloadImage = (url: string, title: string) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${title.replace(/\s+/g, '_')}.jpg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Photo Card Component
+  const PhotoCard: React.FC<{ photo: Photo, index: number }> = ({ photo, index }) => {
+    return (
+      <motion.div
+        key={index}
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: (index) => ({
+            opacity: 1, 
+            y: 0,
+            transition: {
+              delay: index * 0.1,
+              duration: 0.3
+            }
+          })
+        }}
+        initial="hidden"
+        animate="visible"
+        whileHover={{ 
+          scale: 1.03,
+          boxShadow: "0 10px 20px rgba(0,0,0,0.1)"
+        }}
+        whileTap={{ scale: 0.97 }}
+        custom={index}
+        className={`
+          relative overflow-hidden rounded-lg shadow-md 
+          transform transition-all duration-300
+          ${isDarkMode 
+            ? "bg-gray-800 text-white border-gray-700" 
+            : "bg-white text-black border-gray-200"
+          }
+        `}
+        onClick={() => setSelectedPhoto(photo)}
+      >
+        {/* Photo Image */}
+        <div className="relative w-full pt-[75%]">
+          <Image 
+            src={photo.url} 
+            alt={photo.title}
+            fill
+            className="absolute top-0 left-0 w-full h-full object-cover"
+          />
+        </div>
+
+        {/* Photo Details */}
+        <div className="p-4">
+          <h3 className="font-bold text-lg mb-2">{photo.title}</h3>
+          
+          {/* Interaction Buttons */}
+          <div className="flex justify-between items-center">
+            {/* Likes */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleReaction(photo, 'like');
+              }}
+              className="flex items-center space-x-1"
+            >
+              <ThumbsUp className="w-5 h-5" />
+              <span>{photo.likes}</span>
+            </motion.button>
+
+            {/* Dislikes */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleReaction(photo, 'dislike');
+              }}
+              className="flex items-center space-x-1"
+            >
+              <ThumbsDown className="w-5 h-5" />
+              <span>{photo.dislikes}</span>
+            </motion.button>
+
+            {/* Download */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={(e) => {
+                e.stopPropagation();
+                downloadImage(photo.url, photo.title);
+              }}
+            >
+              <Download className="w-5 h-5" />
+            </motion.button>
+          </div>
+
+          {/* Date Posted */}
+          <p className="text-sm text-gray-500 mt-2">
+            {photo.datePosted.toLocaleDateString()}
+          </p>
+        </div>
+      </motion.div>
+    );
+  };
+
+  // Photo Detail Modal
+  const PhotoDetailModal = () => {
+    if (!selectedPhoto) return null;
+
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+        onClick={() => setSelectedPhoto(null)}
+      >
+        <motion.div
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          exit={{ scale: 0.9 }}
+          className="max-w-4xl w-full max-h-[90vh] flex"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="w-2/3 relative">
+            <Image 
+              src={selectedPhoto.url} 
+              alt={selectedPhoto.title}
+              fill
+              className="object-contain"
+            />
+          </div>
+          <div 
+            className={`w-1/3 p-6 ${
+              isDarkMode 
+                ? "bg-gray-800 text-white" 
+                : "bg-white text-black"
+            }`}
+          >
+            <h2 className="text-2xl font-bold mb-4">{selectedPhoto.title}</h2>
+            <p className="mb-4">{selectedPhoto.description}</p>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <ThumbsUp className="w-5 h-5" />
+                <span>{selectedPhoto.likes}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <ThumbsDown className="w-5 h-5" />
+                <span>{selectedPhoto.dislikes}</span>
+              </div>
+            </div>
+            <p className="mt-4 text-gray-500">
+              Posted on: {selectedPhoto.datePosted.toLocaleDateString()}
+            </p>
+          </div>
+        </motion.div>
+      </motion.div>
+    );
+  };
+
+  return (
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"
+      }`}
+    >
+      <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      
+      <div className="container mx-auto px-4 py-16">
+        <h1 className="text-4xl font-bold text-center mb-12">
+          Our Wedding Gallery
+        </h1>
+
+        {/* Photo Grid */}
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                delayChildren: 0.2,
+                staggerChildren: 0.1
+              }
+            }
+          }}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        >
+          {photos.map((photo, index) => (
+            <PhotoCard key={index} photo={photo} index={index} />
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Photo Detail Modal */}
+      <AnimatePresence>
+        {selectedPhoto && <PhotoDetailModal />}
+      </AnimatePresence>
+      
+      <Footer isDarkMode={isDarkMode} />
+    </div>
+  );
+};
+
+export default PhotoGalleryPage;
+
+This is firebase.ts:
+// src/lib/firebase.ts
+import { 
+  collection, 
+  doc, 
+  updateDoc, 
+  getDoc, 
+  setDoc,
+  onSnapshot,
+  query,
+  getDocs,
+  where,
+  serverTimestamp,
+  Timestamp,
+  addDoc
+} from "firebase/firestore";
+import { db } from "./firebaseConfig";
+
+export interface Review {
+  id: string;
+  name: string;
+  rating: number;
+  comment: string;
+  location: string;
+  date: Timestamp;
+  likes: number;
+  dislikes: number;
+}
+
+interface UserReaction {
+  liked: boolean;
+  disliked: boolean;
+}
+
+// Function to subscribe to reviews
+export const subscribeToReviews = (callback: (reviews: Review[]) => void) => {
+  const reviewsQuery = query(collection(db, "reviews"));
+  
+  return onSnapshot(reviewsQuery, (snapshot) => {
+    const reviews = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Review[];
+    callback(reviews);
+  });
+};
+
+// Function to calculate average rating
+export const calculateAverageRating = (reviews: Review[]): number => {
+  if (reviews.length === 0) return 0;
+  const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+  return sum / reviews.length;
+};
+
+// Function to get user's reaction to a review
+export const getUserReaction = async (userId: string, reviewId: string): Promise<UserReaction> => {
+  const reactionRef = doc(db, "userReactions", `${userId}_${reviewId}`);
+  const reactionDoc = await getDoc(reactionRef);
+  
+  if (reactionDoc.exists()) {
+    return reactionDoc.data() as UserReaction;
+  }
+  
+  return { liked: false, disliked: false };
+};
+
+// Function to update review reaction
+export const updateReviewReaction = async (
+  reviewId: string, 
+  type: 'like' | 'dislike',
+  userId: string
+) => {
+  const reviewRef = doc(db, "reviews", reviewId);
+  const reactionRef = doc(db, "userReactions", `${userId}_${reviewId}`);
+  
+  // Get current user's reaction
+  const currentReaction = await getUserReaction(userId, reviewId);
+  const reviewDoc = await getDoc(reviewRef);
+  
+  if (!reviewDoc.exists()) {
+    throw new Error("Review not found");
+  }
+  
+  const reviewData = reviewDoc.data() as Review;
+  
+  // Handle like/dislike logic
+  if (type === 'like') {
+    if (currentReaction.liked) {
+      // Unlike
+      await updateDoc(reviewRef, {
+        likes: reviewData.likes - 1
+      });
+      await setDoc(reactionRef, {
+        liked: false,
+        disliked: false
+      });
+    } else if (!currentReaction.disliked) {
+      // Like
+      await updateDoc(reviewRef, {
+        likes: reviewData.likes + 1
+      });
+      await setDoc(reactionRef, {
+        liked: true,
+        disliked: false
+      });
+    }
+  } else {
+    if (currentReaction.disliked) {
+      // Remove dislike
+      await updateDoc(reviewRef, {
+        dislikes: reviewData.dislikes - 1
+      });
+      await setDoc(reactionRef, {
+        liked: false,
+        disliked: false
+      });
+    } else if (!currentReaction.liked) {
+      // Dislike
+      await updateDoc(reviewRef, {
+        dislikes: reviewData.dislikes + 1
+      });
+      await setDoc(reactionRef, {
+        liked: false,
+        disliked: true
+      });
+    }
+  }
+};
+// Add this to your existing firebase.ts file
+
+export interface Booking {
+  userId: string;
+  bookingId: string;
+  name: string;
+  phone: string;
+  preferredDate: string;
+  preferredTime: string;
+  additionalDetails: string;
+  status: 'pending' | 'confirmed' | 'cancelled';
+  createdAt: any;
+}
+
+// Get user's bookings
+export const getUserBookings = async (userId: string): Promise<Booking[]> => {
+  const bookingsQuery = query(
+    collection(db, "bookings"), 
+    where("userId", "==", userId)
+  );
+  
+  const snapshot = await getDocs(bookingsQuery);
+  return snapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      userId: data.userId,
+      bookingId: doc.id,
+      name: data.name,
+      phone: data.phone,
+      preferredDate: data.preferredDate,
+      preferredTime: data.preferredTime,
+      additionalDetails: data.additionalDetails,
+      status: data.status,
+      createdAt: data.createdAt
+    } as Booking;
+  });
+};
+
+// Update booking status
+export const updateBookingStatus = async (
+  bookingId: string, 
+  status: 'pending' | 'confirmed' | 'cancelled'
+) => {
+  const bookingRef = doc(db, "bookings", bookingId);
+  await updateDoc(bookingRef, { status });
+};
+// Add these to your existing firebase.ts file
+
+// Function to fetch videos
+export interface Video {
+  id: string;
+  title: string;
+  description: string;
+  youtubeLink: string;
+  uploadDate: Timestamp;
+}
+
+export const getVideos = async (): Promise<Video[]> => {
+  const videosQuery = query(collection(db, "videos"));
+  const snapshot = await getDocs(videosQuery);
+  
+  return snapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      title: data.title,
+      description: data.description,
+      youtubeLink: data.youtubeLink,
+      uploadDate: data.uploadDate,
+    } as Video;
+  });
+};
+
+
+This is firebaseConfig.ts:
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAzE84J_ac3FU8RmsRM0sl0tGCeCvLgW-8",
+  authDomain: "shivband-5fc30.firebaseapp.com",
+  projectId: "shivband-5fc30",
+  storageBucket: "shivband-5fc30.firebasestorage.app",
+  messagingSenderId: "475590308098",
+  appId: "1:475590308098:web:ca1c72af30de48a7e4d21b",
+  measurementId: "G-FD1Q452WVC"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+// Export instances
+export const auth = getAuth(app);
+export const db = getFirestore(app); // Firestore instance
+
+This is my ThemeContext.tsx:
+"use client";
+
+import React, { 
+  createContext, 
+  useState, 
+  useContext, 
+  useEffect, 
+  ReactNode 
+} from 'react';
+
+// Define the type for the context
+interface ThemeContextType {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+// Create the context with a default value
+const ThemeContext = createContext<ThemeContextType>({
+  isDarkMode: false,
+  toggleDarkMode: () => {}
+});
+
+// Provider component
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Effect to persist theme preference in localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark');
+    }
+  }, []);
+
+  // Effect to update localStorage and apply theme
+  useEffect(() => {
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    
+    // Optional: Add class to root element for CSS-based theme styling
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+// Custom hook to use theme context
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};
+
+These are my current Rules for Firestore:
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Helper function to check if the reaction belongs to the current user
+    function isUserReaction(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // Helper function to validate review data
+    function isValidReview() {
+      let data = request.resource.data;
+      return data.name is string &&
+             data.name.size() > 0 &&
+             data.rating is number &&
+             data.rating >= 1 &&
+             data.rating <= 5 &&
+             data.comment is string &&
+             data.comment.size() > 0 &&
+             data.date is timestamp &&
+             data.likes is number &&
+             data.likes == 0 &&
+             data.dislikes is number &&
+             data.dislikes == 0 &&
+             data.userId == request.auth.uid &&
+             data.location is string;
+    }
+
+    // Helper function to validate video data (without thumbnail)
+    function isValidVideo() {
+      let data = request.resource.data;
+      return data.title is string &&
+             data.title.size() > 0 &&
+             data.description is string &&
+             data.youtubeUrl is string &&
+             data.youtubeUrl.size() > 0 &&
+             data.uploadDate is timestamp;
+    }
+
+    // Default rule - Allow read/write access only to authenticated users
+    match /{document=**} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Videos collection
+    match /videos/{videoId} {
+      // Anyone can read videos
+      allow read: if true;
+      // Only admin users can create, update, or delete videos
+      allow create: if isAdmin() && isValidVideo();
+      allow update: if isAdmin() && isValidVideo();
+      allow delete: if isAdmin();
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Articles collection
+    match /articles/{articleId} {
+      allow read: if true;
+      allow write: if isAuthenticated() && request.auth.token.role == 'editor';
+    }
+    
+    // Messages collection
+    match /messages/{messageId} {
+      allow read, write: if isAuthenticated() && 
+        (request.auth.uid == resource.data.senderId || request.auth.uid == resource.data.receiverId);
+    }
+    
+    // Reviews collection
+    match /reviews/{reviewId} {
+      // Anyone can read reviews
+      allow read: if true;
+      
+      // Allow authenticated users to create reviews with valid data
+      allow create: if isAuthenticated() && isValidReview();
+      
+      // Only authenticated users can update likes and dislikes
+      allow update: if isAuthenticated() 
+        && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['likes', 'dislikes']);
+    }
+    
+    // UserReactions collection
+    match /userReactions/{reactionId} {
+      // Allow read if the reaction belongs to the current user
+      allow read: if isAuthenticated() 
+        && reactionId.matches(request.auth.uid + "_.*");
+      
+      // Allow create/update if the reaction belongs to the current user
+      allow create, update: if isAuthenticated() 
+        && reactionId.matches(request.auth.uid + "_.*")
+        && request.resource.data.keys().hasOnly(['liked', 'disliked']);
+    }
+
+    // Feedback collection
+    match /feedback/{feedbackId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated() && request.auth.uid == resource.data.userId;
+    }
+  }
+}
