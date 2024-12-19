@@ -91,11 +91,11 @@ export default function LoginPage() {
             </form>
 
             <p className={`mt-4 text-center text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-500'}`}>
-              Don't have an account?{' '}
-              <Link href="/signup" className="text-blue-500 hover:text-blue-600">
-                Sign up
-              </Link>
-            </p>
+  Don&apos;t have an account?{' '}
+  <Link href="/signup" className="text-blue-500 hover:text-blue-600">
+    Sign up
+  </Link>
+</p>
           </CardContent>
         </Card>
       </motion.div>
