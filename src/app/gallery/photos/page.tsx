@@ -17,12 +17,6 @@ interface Photo {
   description?: string;
 }
 
-const getDirectImageUrl = (driveUrl: string) => {
-  const fileId = driveUrl.match(/\/d\/(.*?)\/view/)?.[1];
-  if (!fileId) return driveUrl;
-  return `https://drive.google.com/uc?export=view&id=${fileId}`;
-};
-
 const PhotoGalleryPage: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -43,7 +37,8 @@ const PhotoGalleryPage: React.FC = () => {
           return {
             id: doc.id,
             ...data,
-            url: getDirectImageUrl(data.url)
+            // Convert the url to local path (e.g., "110.jpg" -> "/images/110.jpg")
+            url: `/images/${data.url}`
           };
         }) as Photo[];
         
@@ -83,7 +78,7 @@ const PhotoGalleryPage: React.FC = () => {
         custom={index}
         className={`
           flex flex-col h-full rounded-lg shadow-md overflow-hidden
-          transform transition-all duration-300
+          transform transition-all duration-300 cursor-pointer
           ${isDarkMode 
             ? "bg-gray-800 text-white border-gray-700" 
             : "bg-white text-black border-gray-200"
@@ -103,7 +98,6 @@ const PhotoGalleryPage: React.FC = () => {
               style={{ 
                 objectFit: 'cover',
               }}
-              unoptimized
             />
           </div>
           
@@ -118,7 +112,6 @@ const PhotoGalleryPage: React.FC = () => {
                 style={{ 
                   objectFit: 'contain',
                 }}
-                unoptimized
               />
             </div>
           </div>
@@ -161,7 +154,6 @@ const PhotoGalleryPage: React.FC = () => {
                 fill
                 className="scale-110 blur-xl opacity-30"
                 style={{ objectFit: 'cover' }}
-                unoptimized
               />
             </div>
             
@@ -175,7 +167,6 @@ const PhotoGalleryPage: React.FC = () => {
                 style={{ 
                   objectFit: 'contain',
                 }}
-                unoptimized
               />
             </div>
           </div>

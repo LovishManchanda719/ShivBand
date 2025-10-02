@@ -6,9 +6,9 @@ interface PhotoHighlightsProps {
 
 const PhotoHighlights: React.FC<PhotoHighlightsProps> = ({ isDarkMode }) => {
   const photoHighlights = [
-    "https://i.pinimg.com/736x/f7/d3/38/f7d3382fc26705396d6173c5564b8b53.jpg",
-    "https://i.pinimg.com/736x/68/90/f8/6890f881b0b1d205b4f82eb661801e37.jpg",
-    "https://i.pinimg.com/736x/82/68/ec/8268ec904d9e26dd02d5d4d47b5c7c39.jpg"
+    "images/1.jpg",
+    "images/2.jpg",
+    "images/3.jpg",
   ];
 
   return (

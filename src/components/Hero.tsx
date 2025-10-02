@@ -14,7 +14,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
         <div className="flex items-center justify-center">
           <div className="w-full max-w-lg bg-gray-200 dark:bg-gray-700 rounded-xl overflow-hidden shadow-2xl">
             <img
-              src="https://i.pinimg.com/736x/5a/8d/7d/5a8d7d9ce755800be49f7fe5f8bdb56e.jpg"
+              src="images/50.jpg"
               alt="Wedding band"
               className="w-full h-full object-cover"
             />
