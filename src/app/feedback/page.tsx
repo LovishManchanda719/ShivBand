@@ -7,8 +7,34 @@ import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "@/lib/firebaseConfig";
+import { signInAnonymously } from "firebase/auth";
+import { db, auth } from "@/lib/firebaseConfig";
 import { CheckCircle, MessageSquare, User as UserIcon } from "lucide-react";
+
+// Vibrant SVG Flower Emblem Avatars for reviewers
+const flowerSvgs = [
+  // Golden Marigold Flower Emblem
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23f59e0b'/><path d='M50 20c4 8 16 8 20 0c0 9 8 16 0 20c9 4 9 16 0 20c8 4 0 16 0 20c-4-8-16-8-20 0c0-9-8-16 0-20c-9-4-9-16 0-20c-8-4 0-16 0-20z' fill='%23ffffff' opacity='0.95'/><circle cx='50' cy='50' r='14' fill='%23d97706'/></svg>",
+  // Royal Rose Flower Emblem
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23e11d48'/><circle cx='50' cy='50' r='32' fill='%23ffffff' opacity='0.9'/><path d='M50 26a24 24 0 1 0 0 48a24 24 0 1 0 0-48z' fill='none' stroke='%23be123c' stroke-width='6'/><circle cx='50' cy='50' r='12' fill='%23be123c'/></svg>",
+  // Teal Lotus Flower Emblem
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%230d9488'/><path d='M50 20C36 38 30 50 50 80C70 50 64 38 50 20Z' fill='%23ffffff'/><path d='M22 50C38 40 48 50 78 50C62 60 52 50 22 50Z' fill='%23ccfbf1'/></svg>",
+  // Sunflower Amber Emblem
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23d97706'/><circle cx='50' cy='50' r='26' fill='%2378350f'/><circle cx='50' cy='50' r='38' stroke='%23fef08a' stroke-width='6' stroke-dasharray='10 6' fill='none'/></svg>",
+  // Emerald Royal Floral Emblem
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23059669'/><path d='M50 22L58 42L78 50L58 58L50 78L42 58L22 50L42 42Z' fill='%23ffffff'/><circle cx='50' cy='50' r='10' fill='%23f59e0b'/></svg>"
+];
+
+const getFlowerAvatarUrl = (name: string, photoURL?: string): string => {
+  if (photoURL && photoURL.startsWith("data:image")) {
+    return photoURL;
+  }
+  let hash = 0;
+  for (let i = 0; i < (name || "Guest").length; i++) {
+    hash += (name || "Guest").charCodeAt(i);
+  }
+  return flowerSvgs[hash % flowerSvgs.length];
+};
 
 // Rating component
 const StarRating = ({ 
@@ -23,9 +49,9 @@ const StarRating = ({
       {[1, 2, 3, 4, 5].map((star) => (
         <motion.span
           key={star}
-          onClick={() => setRating(star)}
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
+          onClick={() => setRating(star)}
           className={`cursor-pointer text-3xl select-none transition-colors ${
             star <= rating ? "text-amber-400" : "text-gray-300 dark:text-gray-600"
           }`}
@@ -48,7 +74,6 @@ const FeedbackPage: React.FC = () => {
   
   // Form state
   const [name, setName] = useState(user?.displayName || "");
-  const [location, setLocation] = useState("Delhi NCR");
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   
@@ -83,7 +108,22 @@ const FeedbackPage: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      // Add review to Firestore with sanitized inputs
+      let activeUserId = user?.uid || "guest";
+      const assignedFlowerAvatar = getFlowerAvatarUrl(name.trim(), user?.photoURL || undefined);
+
+      // If user is not logged in, authenticate anonymously in background to fulfill Firestore security rules
+      if (!auth.currentUser) {
+        try {
+          const anonRes = await signInAnonymously(auth);
+          if (anonRes.user) {
+            activeUserId = anonRes.user.uid;
+          }
+        } catch (authError) {
+          console.warn("Background anonymous auth notice:", authError);
+        }
+      }
+
+      // Add review to Firestore with sanitized inputs and flower avatar
       await addDoc(collection(db, "reviews"), {
         name: sanitizeInput(name),
         rating,
@@ -91,9 +131,9 @@ const FeedbackPage: React.FC = () => {
         date: new Date(),
         likes: 0,
         dislikes: 0,
-        userId: user?.uid || "guest",
-        photoURL: user?.photoURL || "/avatar1.jpg",
-        location: sanitizeInput(location) || "Verified Guest"
+        userId: activeUserId,
+        photoURL: assignedFlowerAvatar,
+        location: ""
       });
 
       // Reset form and show success message
@@ -105,8 +145,12 @@ const FeedbackPage: React.FC = () => {
       setTimeout(() => {
         setSubmitStatus("idle");
       }, 4000);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error submitting review:", error);
+      const err = error as { code?: string; message?: string };
+      if (err?.code === "permission-denied" || err?.message?.includes("permissions")) {
+        alert("Firestore Permission Notice: To allow guest reviews without login, please set 'allow read, create: if true;' for the reviews collection in your Firebase Console Firestore Rules.");
+      }
       setSubmitStatus("error");
       
       setTimeout(() => {
@@ -118,15 +162,13 @@ const FeedbackPage: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-300 pb-16 ${
+    <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
       isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
     }`}>
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       
       <main className="flex-grow container mx-auto px-4 pt-24 sm:pt-28 pb-16">
-        
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 font-bold text-xs uppercase tracking-wider mb-3">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Public Feedback & Reviews</span>
@@ -175,25 +217,6 @@ const FeedbackPage: React.FC = () => {
               </div>
             </div>
 
-            {/* City / Location Input */}
-            <div>
-              <label htmlFor="location" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
-                City / Location (Optional)
-              </label>
-              <input
-                type="text"
-                id="location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className={`w-full p-3 rounded-xl border text-sm transition-colors ${
-                  isDarkMode 
-                    ? "bg-gray-800 border-gray-700 text-white focus:border-teal-500" 
-                    : "bg-gray-50 border-gray-300 focus:border-teal-500"
-                }`}
-                placeholder="e.g. Delhi, Noida, Gurgaon"
-              />
-            </div>
-
             {/* Rating Stars */}
             <div>
               <label htmlFor="rating" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
@@ -205,67 +228,68 @@ const FeedbackPage: React.FC = () => {
             {/* Review Comment */}
             <div>
               <label htmlFor="comment" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
-                Your Review Comment <span className="text-red-500">*</span>
+                Your Review <span className="text-red-500">*</span>
               </label>
               <textarea
                 id="comment"
+                rows={4}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 required
-                rows={4}
                 className={`w-full p-3 rounded-xl border text-sm transition-colors ${
                   isDarkMode 
                     ? "bg-gray-800 border-gray-700 text-white focus:border-teal-500" 
                     : "bg-gray-50 border-gray-300 focus:border-teal-500"
                 }`}
-                placeholder="Share your experience about our music band, lighting, or barat procession..."
+                placeholder="Tell us about the barat music, dhol energy, and lighting setup..."
               />
             </div>
 
             {/* Submit Button */}
             <motion.button
-              type="submit"
-              disabled={isSubmitting}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className={`w-full py-3.5 px-6 rounded-xl font-bold text-sm text-white shadow-lg transition-all ${
+              type="submit"
+              disabled={isSubmitting}
+              className={`w-full py-3.5 rounded-xl font-bold text-sm text-white shadow-lg transition-all ${
                 isSubmitting
                   ? "bg-gray-500 cursor-not-allowed"
                   : "bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 hover:from-amber-600 hover:to-emerald-600 shadow-teal-500/20"
               }`}
             >
-              {isSubmitting ? "Submitting Review..." : "Publish Review Now"}
+              {isSubmitting ? "Publishing Review..." : "Publish Review"}
             </motion.button>
+
+            {/* Success / Error Messages */}
+            <AnimatePresence>
+              {submitStatus === "success" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-3 text-sm font-semibold"
+                >
+                  <CheckCircle className="w-5 h-5 shrink-0" />
+                  <span>Thank you! Your review has been published successfully.</span>
+                </motion.div>
+              )}
+
+              {submitStatus === "error" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-sm font-semibold"
+                >
+                  Failed to publish review. Please try again or check Firestore rules in Firebase Console.
+                </motion.div>
+              )}
+            </AnimatePresence>
+
           </form>
-
-          {/* Submission Status Messages */}
-          <AnimatePresence>
-            {submitStatus === "success" && (
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                className="mt-5 p-4 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 rounded-xl text-center font-bold text-sm flex items-center justify-center gap-2"
-              >
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <span>Thank you! Your review has been submitted successfully.</span>
-              </motion.div>
-            )}
-            {submitStatus === "error" && (
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                className="mt-5 p-4 bg-rose-500/15 border border-rose-500/30 text-rose-400 rounded-xl text-center font-bold text-sm"
-              >
-                Oops! There was an issue submitting your review. Please try again.
-              </motion.div>
-            )}
-          </AnimatePresence>
         </motion.div>
-
       </main>
-      
+
       <Footer isDarkMode={isDarkMode} />
     </div>
   );

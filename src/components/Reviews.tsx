@@ -50,6 +50,25 @@ const fallbackReviews: Review[] = [
   }
 ];
 
+const flowerSvgs = [
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23f59e0b'/><path d='M50 20c4 8 16 8 20 0c0 9 8 16 0 20c9 4 9 16 0 20c8 4 0 16 0 20c-4-8-16-8-20 0c0-9-8-16 0-20c-9-4-9-16 0-20c-8-4 0-16 0-20z' fill='%23ffffff' opacity='0.95'/><circle cx='50' cy='50' r='14' fill='%23d97706'/></svg>",
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23e11d48'/><circle cx='50' cy='50' r='32' fill='%23ffffff' opacity='0.9'/><path d='M50 26a24 24 0 1 0 0 48a24 24 0 1 0 0-48z' fill='none' stroke='%23be123c' stroke-width='6'/><circle cx='50' cy='50' r='12' fill='%23be123c'/></svg>",
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%230d9488'/><path d='M50 20C36 38 30 50 50 80C70 50 64 38 50 20Z' fill='%23ffffff'/><path d='M22 50C38 40 48 50 78 50C62 60 52 50 22 50Z' fill='%23ccfbf1'/></svg>",
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23d97706'/><circle cx='50' cy='50' r='26' fill='%2378350f'/><circle cx='50' cy='50' r='38' stroke='%23fef08a' stroke-width='6' stroke-dasharray='10 6' fill='none'/></svg>",
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23059669'/><path d='M50 22L58 42L78 50L58 58L50 78L42 58L22 50L42 42Z' fill='%23ffffff'/><circle cx='50' cy='50' r='10' fill='%23f59e0b'/></svg>"
+];
+
+const getAvatarUrl = (name: string, photoURL?: string): string => {
+  if (photoURL && photoURL.startsWith("data:image")) {
+    return photoURL;
+  }
+  let hash = 0;
+  for (let i = 0; i < (name || "Guest").length; i++) {
+    hash += (name || "Guest").charCodeAt(i);
+  }
+  return flowerSvgs[hash % flowerSvgs.length];
+};
+
 const ReviewsPage: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -144,7 +163,7 @@ const ReviewsPage: React.FC = () => {
                   <CardHeader className="flex flex-row justify-between items-center pb-2">
                     <div className="flex items-center space-x-3 min-w-0">
                       <img
-                        src={review.photoURL || "/avatar1.jpg"} 
+                        src={getAvatarUrl(review.name, review.photoURL)} 
                         alt={`${review.name}'s profile picture`}
                         className="h-10 w-10 rounded-full object-cover border border-amber-500/40 shrink-0"
                       />
@@ -158,12 +177,6 @@ const ReviewsPage: React.FC = () => {
                   </CardHeader>
                   
                   <CardContent className="flex-grow flex flex-col pt-0">
-                    <p className={`text-xs font-bold mb-2.5 ${
-                      isDarkMode ? "text-teal-400" : "text-teal-600"
-                    }`}>
-                      {review.location || "Verified Guest"}
-                    </p>
-
                     <p className={`text-sm flex-grow leading-relaxed ${
                       isDarkMode ? "text-gray-200" : "text-gray-800 font-medium"
                     }`}>
