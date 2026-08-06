@@ -1,9 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Camera, PlayCircle } from "lucide-react";
+import { Camera, Calendar } from "lucide-react";
 import BubbleAnimation from "./BubbleAnimation";
-import Logo from "./Logo";
 
 interface HeroProps {
   isDarkMode: boolean;
@@ -11,7 +10,10 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
   return (
-    <header className="relative pt-24 pb-12 md:py-32 min-h-[90vh] md:min-h-screen flex items-center overflow-hidden">
+    <header className={`relative pt-24 sm:pt-32 pb-16 overflow-hidden transition-colors duration-300 ${
+      isDarkMode ? "bg-gray-950 text-white" : "bg-white text-gray-900"
+    }`}>
+      {/* Interactive Floating Music Bubbles Background */}
       <BubbleAnimation />
 
       {/* Decorative ambient background glows */}
@@ -28,14 +30,13 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className={`text-3xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight ${
-              isDarkMode ? "text-white" : "text-gray-900"
-            }`}
+            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight"
           >
-            Making Your Celebrations <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-teal-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
-              Truly Unforgettable
-            </span>
+            Grand Wedding{" "}
+            <span className="bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-400 bg-clip-text text-transparent">
+              Barat & Lighting
+            </span>{" "}
+            Services
           </motion.h1>
 
           {/* Subtitle */}
@@ -43,14 +44,14 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className={`text-base sm:text-lg lg:text-xl max-w-xl mx-auto md:mx-0 ${
+            className={`text-base sm:text-lg lg:text-xl font-normal leading-relaxed max-w-xl mx-auto md:mx-0 ${
               isDarkMode ? "text-gray-300" : "text-gray-600"
             }`}
           >
             Live brass band, majestic barat processions, vibrant dhol, and spectacular fancy lighting setup for weddings and special occasions.
           </motion.p>
 
-          {/* Buttons: Direct Focus on Gallery! */}
+          {/* Buttons */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -62,19 +63,19 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
               className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 hover:from-amber-600 hover:to-emerald-600 text-white rounded-xl text-base font-bold shadow-lg shadow-teal-500/25 flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 transition-all"
             >
               <Camera className="w-5 h-5" />
-              <span>Explore Photo Gallery</span>
+              <span>Explore Performance Gallery</span>
             </Link>
 
             <Link
-              href="/gallery/videos"
+              href="/contact"
               className={`w-full sm:w-auto px-6 py-3.5 border-2 rounded-xl text-base font-bold flex items-center justify-center gap-2 transition-all transform hover:scale-105 active:scale-95 ${
                 isDarkMode 
                   ? "border-gray-700 bg-gray-800/80 text-white hover:bg-gray-700 hover:border-teal-500" 
                   : "border-gray-300 bg-white/80 text-gray-800 hover:bg-gray-50 hover:border-teal-500 shadow-sm"
               }`}
             >
-              <PlayCircle className="w-5 h-5 text-teal-500" />
-              <span>Watch Performances</span>
+              <Calendar className="w-5 h-5 text-teal-500" />
+              <span>Book Your Event</span>
             </Link>
           </motion.div>
 
@@ -121,19 +122,6 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
                 alt="Shiv Band Wedding Performance"
                 className="w-full h-[320px] sm:h-[420px] object-cover transition-transform duration-500 hover:scale-105"
               />
-              
-              {/* Overlay Overlay Info Box */}
-              <div className="absolute bottom-4 left-4 right-4 p-3 sm:p-4 rounded-2xl backdrop-blur-md bg-black/60 border border-white/20 text-white flex items-center justify-between shadow-lg">
-                <Logo size="sm" variant="inline" />
-
-                <Link 
-                  href="/gallery/photos"
-                  className="px-3 py-1.5 rounded-lg bg-teal-500 hover:bg-teal-600 text-white text-xs font-bold transition-all shrink-0"
-                >
-                  View All
-                </Link>
-              </div>
-
             </div>
           </div>
         </motion.div>

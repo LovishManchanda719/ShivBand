@@ -74,8 +74,8 @@ export const Logo: React.FC<LogoProps> = ({
         </span>
       </div>
 
-      {/* Brand Text */}
-      <div className="flex flex-col min-w-0 leading-tight">
+      {/* Brand Text (Hidden on mobile screens to prevent "Sh.." truncation, visible on sm and above) */}
+      <div className="hidden sm:flex flex-col min-w-0 leading-tight">
         <div className="flex items-center gap-1">
           <span className={`font-black tracking-tight uppercase ${dimensions.textTitle} bg-gradient-to-r from-red-600 via-amber-500 to-amber-600 bg-clip-text text-transparent truncate`}>
             SHIV BAND

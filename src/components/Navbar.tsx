@@ -288,22 +288,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               }`}
             >
               <div className="px-4 pt-3 pb-6 space-y-2">
-                {/* Featured Gallery Banner in Mobile Drawer */}
-                <div 
-                  onClick={() => handleNavigation('/gallery/photos')}
-                  className="mb-3 p-3 rounded-xl bg-gradient-to-r from-amber-500/15 via-teal-500/15 to-emerald-500/15 border border-amber-500/30 flex items-center justify-between cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-amber-500 text-white shadow">
-                      <Camera className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-amber-500 uppercase tracking-wider">Showcase</div>
-                      <div className="text-sm font-black">Explore Wedding Gallery</div>
-                    </div>
-                  </div>
-                  <Sparkles className="w-4 h-4 text-amber-500 animate-spin" />
-                </div>
 
                 {navItems.map((item) => {
                   const isActive = pathname === item.href;

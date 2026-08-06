@@ -156,11 +156,11 @@ const PhotoGalleryPage: React.FC = () => {
             Wedding Photo Showcase
           </h1>
           <p className={`text-sm sm:text-base ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-            Browse our grand barat processions, vintage lights, and wedding band performances.
+            Explore our grand barat processions, vintage lights, and live wedding band moments in a Pinterest-style masonry layout.
           </p>
         </div>
 
-        {/* Gallery Grid */}
+        {/* Pinterest-Style Masonry Gallery Grid */}
         {loading ? (
           <div className="flex justify-center items-center py-20">
             <div className="flex items-center gap-3 text-teal-500 font-bold text-lg">
@@ -182,55 +182,62 @@ const PhotoGalleryPage: React.FC = () => {
                 opacity: 1,
                 transition: {
                   delayChildren: 0.1,
-                  staggerChildren: 0.05
+                  staggerChildren: 0.04
                 }
               }
             }}
-            className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+            className="columns-1 xs:columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-4 sm:gap-5 space-y-4 sm:space-y-5 max-w-7xl mx-auto"
           >
             {photos.map((photo) => (
               <motion.div
                 key={photo.id}
                 variants={{
-                  hidden: { opacity: 0, y: 15 },
+                  hidden: { opacity: 0, y: 20 },
                   visible: { opacity: 1, y: 0 }
                 }}
-                whileHover={{ y: -4, scale: 1.02 }}
+                whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedIndex(photos.findIndex(p => p.id === photo.id))}
-                className={`group rounded-2xl overflow-hidden shadow-md cursor-pointer border transition-all duration-300 ${
+                className={`break-inside-avoid group rounded-2xl overflow-hidden shadow-md cursor-pointer border transition-all duration-300 relative ${
                   isDarkMode 
-                    ? "bg-gray-900 border-gray-800 hover:border-teal-500/50" 
-                    : "bg-white border-gray-200 hover:border-teal-500/50"
+                    ? "bg-gray-900 border-gray-800 hover:border-amber-500/50 shadow-black/40" 
+                    : "bg-white border-gray-200 hover:border-amber-500/50 shadow-gray-200"
                 }`}
               >
-                {/* Photo Image aspect ratio container */}
-                <div className="relative w-full aspect-[4/3] bg-gray-950 overflow-hidden">
-                  <Image 
+                {/* Natural Aspect Ratio Image Container */}
+                <div className="relative w-full overflow-hidden bg-gray-950">
+                  <img
                     src={photo.url} 
                     alt={photo.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-auto object-cover block transition-transform duration-500 group-hover:scale-105"
                   />
 
-                  {/* Expand icon on hover */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="p-2.5 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
-                      <Maximize2 className="w-5 h-5" />
+                  {/* Pinterest-style dark gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+                    
+                    {/* Top right Expand Icon */}
+                    <div className="self-end p-2 rounded-full bg-black/50 backdrop-blur-md text-white border border-white/20">
+                      <Maximize2 className="w-4 h-4" />
+                    </div>
+
+                    {/* Bottom Title & Info Overlay */}
+                    <div>
+                      <h3 className="text-sm font-bold text-white drop-shadow mb-1 line-clamp-2">
+                        {photo.title}
+                      </h3>
+                      <div className="flex items-center gap-1.5 text-[11px] font-medium text-amber-400">
+                        <Calendar className="w-3 h-3" />
+                        <span>{formatDate(photo.datePosted)}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Card Title & Info */}
-                <div className="p-3.5">
-                  <h3 className="font-bold text-xs sm:text-sm line-clamp-1 group-hover:text-teal-500 transition-colors">
+                {/* Subtitle / Caption Bar below card */}
+                <div className="p-3.5 flex items-center justify-between">
+                  <h3 className="font-bold text-xs sm:text-sm line-clamp-1 group-hover:text-amber-500 transition-colors">
                     {photo.title}
                   </h3>
-                  <div className="flex items-center gap-1 mt-1 text-[11px] text-gray-500">
-                    <Calendar className="w-3 h-3 text-teal-500" />
-                    <span>{formatDate(photo.datePosted)}</span>
-                  </div>
                 </div>
               </motion.div>
             ))}
@@ -260,32 +267,30 @@ const PhotoGalleryPage: React.FC = () => {
               {/* Close Button */}
               <button
                 onClick={() => setSelectedIndex(null)}
-                className="absolute top-3 right-3 z-30 p-2 rounded-full bg-black/60 hover:bg-black text-white transition-colors border border-white/20"
-                title="Close (Esc)"
+                className="absolute top-4 right-4 z-30 p-2.5 rounded-full bg-black/60 hover:bg-black text-white transition-colors border border-white/20 shadow-lg"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Prev Button */}
-              <button
-                onClick={handlePrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/60 hover:bg-black text-white transition-colors border border-white/20"
-                title="Previous Photo (Left Arrow)"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-
-              {/* Next Button */}
-              <button
-                onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-black/60 hover:bg-black text-white transition-colors border border-white/20 md:right-auto md:left-[calc(66.666%-3.5rem)]"
-                title="Next Photo (Right Arrow)"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-
-              {/* Left Column: Image Viewer */}
+              {/* Left Column: Image Display with Navigation Arrows */}
               <div className="relative w-full md:w-2/3 h-[50vh] md:h-[80vh] bg-black flex items-center justify-center overflow-hidden">
+                
+                {/* Prev Button */}
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-3 z-30 p-3 rounded-full bg-black/60 hover:bg-black text-white transition-colors border border-white/20 shadow-lg"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+
+                {/* Next Button */}
+                <button
+                  onClick={handleNext}
+                  className="absolute right-3 z-30 p-3 rounded-full bg-black/60 hover:bg-black text-white transition-colors border border-white/20 shadow-lg"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+
                 {/* Ambient Blurred Background */}
                 <Image
                   src={selectedPhoto.url}
@@ -349,10 +354,9 @@ const PhotoGalleryPage: React.FC = () => {
                     rel="noreferrer"
                     className="py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    Inquire
+                    <span>Inquire</span>
                   </a>
                 </div>
-
               </div>
 
             </motion.div>

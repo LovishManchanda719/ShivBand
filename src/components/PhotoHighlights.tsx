@@ -101,27 +101,15 @@ const PhotoHighlights: React.FC<PhotoHighlightsProps> = ({ isDarkMode }) => {
           </AnimatePresence>
         </motion.div>
 
-        {/* View Full Gallery CTAs */}
-        <div className="mt-12 text-center flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* View Full Gallery CTA */}
+        <div className="mt-10 text-center">
           <Link
             href="/gallery/photos"
-            className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 text-white rounded-xl text-base font-bold shadow-lg shadow-teal-500/20 hover:shadow-teal-500/40 flex items-center justify-center gap-2 transform hover:scale-105 transition-all"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 text-white rounded-xl text-base font-bold shadow-lg shadow-teal-500/20 hover:shadow-teal-500/40 transform hover:scale-105 transition-all"
           >
             <Camera className="w-5 h-5" />
-            <span>Browse Full Photo Gallery</span>
+            <span>Browse Full Gallery</span>
             <ArrowRight className="w-4 h-4 ml-1" />
-          </Link>
-
-          <Link
-            href="/gallery/videos"
-            className={`w-full sm:w-auto px-8 py-3.5 rounded-xl border-2 text-base font-bold flex items-center justify-center gap-2 transition-all transform hover:scale-105 ${
-              isDarkMode 
-                ? "border-gray-700 bg-gray-800 text-white hover:border-teal-500" 
-                : "border-gray-300 bg-white text-gray-800 hover:border-teal-500 shadow-sm"
-            }`}
-          >
-            <Video className="w-5 h-5 text-teal-500" />
-            <span>Watch Video Performances</span>
           </Link>
         </div>
 
