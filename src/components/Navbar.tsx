@@ -12,8 +12,7 @@ import {
   Home,
   Star,
   MessageSquare,
-  PhoneCall,
-  Sparkles
+  PhoneCall
 } from "lucide-react";
 import { auth } from "../lib/firebaseConfig";
 import { signOut } from "firebase/auth";
@@ -151,15 +150,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
 
           {/* Header Actions Right */}
           <div className="flex items-center space-x-1.5 sm:space-x-3">
-            {/* Gallery Quick Badge Button for Mobile */}
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleNavigation('/gallery/photos')}
-              className="md:hidden flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-amber-500 to-teal-500 text-white shadow-sm"
-            >
-              <Sparkles className="w-3 h-3" />
-              <span>Gallery</span>
-            </motion.button>
 
             {/* Dark Mode Toggle */}
             <motion.button
