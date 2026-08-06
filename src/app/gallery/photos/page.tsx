@@ -53,6 +53,7 @@ const PhotoGalleryPage: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -293,14 +294,19 @@ const PhotoGalleryPage: React.FC = () => {
                   className="scale-125 blur-2xl opacity-40 object-cover"
                 />
 
-                {/* Main Centered Image */}
-                <div className="relative w-full h-full p-2 sm:p-6 z-10 flex items-center justify-center">
+                {/* Main Centered Image with Tap-to-Zoom */}
+                <div 
+                  onClick={() => setIsZoomed(!isZoomed)}
+                  className="relative w-full h-full p-2 sm:p-6 z-10 flex items-center justify-center cursor-zoom-in"
+                >
                   <Image
                     src={selectedPhoto.url}
                     alt={selectedPhoto.title}
                     fill
                     priority
-                    className="object-contain"
+                    className={`object-contain transition-transform duration-300 ${
+                      isZoomed ? "scale-150 sm:scale-175 cursor-zoom-out" : "scale-100"
+                    }`}
                   />
                 </div>
 
