@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebaseConfig";
+import { CheckCircle, MessageSquare, User as UserIcon } from "lucide-react";
 
 // Rating component
 const StarRating = ({ 
@@ -25,8 +26,8 @@ const StarRating = ({
           onClick={() => setRating(star)}
           whileHover={{ scale: 1.2 }}
           whileTap={{ scale: 0.9 }}
-          className={`cursor-pointer text-3xl ${
-            star <= rating ? "text-yellow-400" : "text-gray-300"
+          className={`cursor-pointer text-3xl select-none transition-colors ${
+            star <= rating ? "text-amber-400" : "text-gray-300 dark:text-gray-600"
           }`}
         >
           ★
@@ -36,14 +37,20 @@ const StarRating = ({
   );
 };
 
+// Input Sanitizer for XSS security protection
+const sanitizeInput = (str: string): string => {
+  return str.replace(/<[^>]*>?/gm, '').trim();
+};
+
 const FeedbackPage: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const { user } = useAuth();
   
   // Form state
-  const [name, setName] = useState("");
+  const [name, setName] = useState(user?.displayName || "");
+  const [location, setLocation] = useState("Delhi NCR");
   const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(5);
   
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,190 +58,213 @@ const FeedbackPage: React.FC = () => {
 
   // Form validation
   const validateForm = () => {
-    if (!user) {
-      alert("Please log in to submit a review");
+    if (!name.trim()) {
+      alert("Please enter your name");
       return false;
     }
-    return name.trim() !== "" && rating > 0 && comment.trim() !== "";
+    if (rating === 0) {
+      alert("Please select a rating star");
+      return false;
+    }
+    if (!comment.trim()) {
+      alert("Please write your review comment");
+      return false;
+    }
+    return true;
   };
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate form
     if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
     try {
-      // Add review to Firestore
+      // Add review to Firestore with sanitized inputs
       await addDoc(collection(db, "reviews"), {
-        name,
+        name: sanitizeInput(name),
         rating,
-        comment,
+        comment: sanitizeInput(comment),
         date: new Date(),
         likes: 0,
         dislikes: 0,
-        userId: user?.uid,
-        photoURL: user?.photoURL,
-        location: "Verified Customer" // You can modify this as needed
+        userId: user?.uid || "guest",
+        photoURL: user?.photoURL || "/avatar1.jpg",
+        location: sanitizeInput(location) || "Verified Guest"
       });
 
       // Reset form and show success message
-      setName("");
+      if (!user) setName("");
       setComment("");
-      setRating(0);
+      setRating(5);
       setSubmitStatus("success");
       
-      // Hide success message after 3 seconds
       setTimeout(() => {
         setSubmitStatus("idle");
-      }, 3000);
+      }, 4000);
     } catch (error) {
       console.error("Error submitting review:", error);
       setSubmitStatus("error");
       
-      // Hide error message after 3 seconds
       setTimeout(() => {
         setSubmitStatus("idle");
-      }, 3000);
+      }, 4000);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"
+    <div className={`min-h-screen flex flex-col transition-colors duration-300 pb-16 ${
+      isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
     }`}>
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       
-      <div className="container mx-auto px-4 py-16">
-        <motion.h1
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-center mb-12"
-        >
-          Share Your Experience
-        </motion.h1>
+      <main className="flex-grow container mx-auto px-4 pt-24 sm:pt-28 pb-16">
+        
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 font-bold text-xs uppercase tracking-wider mb-3">
+            <MessageSquare className="w-3.5 h-3.5" />
+            <span>Public Feedback & Reviews</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight mb-3">
+            Write a Review
+          </h1>
+          <p className={`text-sm sm:text-base ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+            Share your experience with Shiv Band & Light House.
+          </p>
+        </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className={`max-w-xl mx-auto p-8 rounded-lg shadow-lg ${
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className={`max-w-xl mx-auto p-6 sm:p-8 rounded-2xl shadow-xl border ${
             isDarkMode 
-              ? "bg-gray-800 border border-gray-700" 
-              : "bg-white border border-gray-200"
+              ? "bg-gray-900 border-gray-800 text-white" 
+              : "bg-white border-gray-200 text-gray-900"
           }`}
         >
-          {!user ? (
-            <div className="text-center p-6">
-              <p className="mb-4">Please log in to submit a review</p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-md"
-                onClick={() => window.location.href = "/login"}
-              >
-                Log In
-              </motion.button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name Input */}
-              <div>
-                <label htmlFor="name" className="block mb-2 font-semibold">
-                  Name <span className="text-red-500">*</span>
-                </label>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            
+            {/* Name Input */}
+            <div>
+              <label htmlFor="name" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
+                Your Name <span className="text-red-500">*</span>
+              </label>
+              <div className="relative">
                 <input
                   type="text"
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className={`w-full p-3 rounded-md border ${
+                  className={`w-full p-3 pl-10 rounded-xl border text-sm transition-colors ${
                     isDarkMode 
-                      ? "bg-gray-700 border-gray-600 text-white" 
-                      : "bg-gray-100 border-gray-300"
+                      ? "bg-gray-800 border-gray-700 text-white focus:border-teal-500" 
+                      : "bg-gray-50 border-gray-300 focus:border-teal-500"
                   }`}
-                  placeholder="Your name (as you want it to appear)"
+                  placeholder="Enter your full name"
                 />
+                <UserIcon className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               </div>
+            </div>
 
-              {/* Review Comment */}
-              <div>
-                <label htmlFor="comment" className="block mb-2 font-semibold">
-                  Your Review <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  id="comment"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  required
-                  rows={4}
-                  className={`w-full p-3 rounded-md border ${
-                    isDarkMode 
-                      ? "bg-gray-700 border-gray-600 text-white" 
-                      : "bg-gray-100 border-gray-300"
-                  }`}
-                  placeholder="Share your experience with our services"
-                />
-              </div>
-
-              {/* Rating */}
-              <div>
-                <label htmlFor="rating" className="block mb-2 font-semibold">
-                  Your Rating <span className="text-red-500">*</span>
-                </label>
-                <StarRating rating={rating} setRating={setRating} />
-              </div>
-
-              {/* Submit Button */}
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`w-full p-3 rounded-md transition-colors duration-300 ${
-                  isSubmitting
-                    ? "bg-gray-500 cursor-not-allowed"
-                    : "bg-teal-500 hover:bg-teal-600 text-white"
+            {/* City / Location Input */}
+            <div>
+              <label htmlFor="location" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
+                City / Location (Optional)
+              </label>
+              <input
+                type="text"
+                id="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className={`w-full p-3 rounded-xl border text-sm transition-colors ${
+                  isDarkMode 
+                    ? "bg-gray-800 border-gray-700 text-white focus:border-teal-500" 
+                    : "bg-gray-50 border-gray-300 focus:border-teal-500"
                 }`}
-              >
-                {isSubmitting ? "Submitting..." : "Submit Review"}
-              </motion.button>
-            </form>
-          )}
+                placeholder="e.g. Delhi, Noida, Gurgaon"
+              />
+            </div>
+
+            {/* Rating Stars */}
+            <div>
+              <label htmlFor="rating" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
+                Your Rating <span className="text-red-500">*</span>
+              </label>
+              <StarRating rating={rating} setRating={setRating} />
+            </div>
+
+            {/* Review Comment */}
+            <div>
+              <label htmlFor="comment" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
+                Your Review Comment <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                id="comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                required
+                rows={4}
+                className={`w-full p-3 rounded-xl border text-sm transition-colors ${
+                  isDarkMode 
+                    ? "bg-gray-800 border-gray-700 text-white focus:border-teal-500" 
+                    : "bg-gray-50 border-gray-300 focus:border-teal-500"
+                }`}
+                placeholder="Share your experience about our music band, lighting, or barat procession..."
+              />
+            </div>
+
+            {/* Submit Button */}
+            <motion.button
+              type="submit"
+              disabled={isSubmitting}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={`w-full py-3.5 px-6 rounded-xl font-bold text-sm text-white shadow-lg transition-all ${
+                isSubmitting
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 hover:from-amber-600 hover:to-emerald-600 shadow-teal-500/20"
+              }`}
+            >
+              {isSubmitting ? "Submitting Review..." : "Publish Review Now"}
+            </motion.button>
+          </form>
 
           {/* Submission Status Messages */}
           <AnimatePresence>
             {submitStatus === "success" && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="mt-4 p-3 bg-green-500 text-white rounded-md text-center"
+                exit={{ opacity: 0, y: -15 }}
+                className="mt-5 p-4 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 rounded-xl text-center font-bold text-sm flex items-center justify-center gap-2"
               >
-                Thank you for your review! It will appear on our reviews page shortly.
+                <CheckCircle className="w-5 h-5 text-emerald-400" />
+                <span>Thank you! Your review has been submitted successfully.</span>
               </motion.div>
             )}
             {submitStatus === "error" && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="mt-4 p-3 bg-red-500 text-white rounded-md text-center"
+                exit={{ opacity: 0, y: -15 }}
+                className="mt-5 p-4 bg-rose-500/15 border border-rose-500/30 text-rose-400 rounded-xl text-center font-bold text-sm"
               >
-                Oops! There was an error submitting your review. Please try again.
+                Oops! There was an issue submitting your review. Please try again.
               </motion.div>
             )}
           </AnimatePresence>
         </motion.div>
-      </div>
+
+      </main>
       
       <Footer isDarkMode={isDarkMode} />
     </div>

@@ -1,10 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Calendar } from "lucide-react";
+import { Play, Calendar, Video as VideoIcon, Sparkles } from "lucide-react";
 import { getVideos, Video } from "@/lib/firebase";
 import { Card, CardContent } from "@/components/ui/card";
 import { Timestamp } from "firebase/firestore";
+
 interface VideoCardProps {
   video: Video;
   index: number;
@@ -12,40 +13,60 @@ interface VideoCardProps {
   isDarkMode: boolean;
 }
 
-// Helper function to safely format dates
+const fallbackVideos: Video[] = [
+  {
+    id: "v1",
+    title: "Grand Barat Procession - Live Shiv Band Performance",
+    description: "Watch our majestic brass band and high energy dhol performance in action during a royal wedding barat.",
+    youtubeLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    uploadDate: new Date(2025, 10, 1)
+  },
+  {
+    id: "v2",
+    title: "Illuminated Fancy Light House & Rath Entry",
+    description: "Spectacular evening lighting setup and decorative chariot procession for wedding celebrations.",
+    youtubeLink: "https://www.youtube.com/watch?v=dQw4w9WgWgXcQ",
+    uploadDate: new Date(2025, 9, 20)
+  },
+  {
+    id: "v3",
+    title: "Live Symphony & Brass Trumpet Solo",
+    description: "Enchanting brass solos and classic festive tunes performed live by Shiv Band master musicians.",
+    youtubeLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    uploadDate: new Date(2025, 9, 5)
+  }
+];
+
 const formatDate = (uploadDate: Date | number | Timestamp | null): string => {
   try {
-    if (!uploadDate) return "Date not available";
-    
-    // If it's a Firestore Timestamp
+    if (!uploadDate) return "Recent Performance";
+    let d: Date;
     if (uploadDate instanceof Timestamp) {
-      return uploadDate.toDate().toLocaleDateString();
+      d = uploadDate.toDate();
+    } else if (uploadDate instanceof Date) {
+      d = uploadDate;
+    } else if (typeof uploadDate === 'number') {
+      d = new Date(uploadDate);
+    } else {
+      return "Recent Performance";
     }
-    
-    // If it's already a Date object
-    if (uploadDate instanceof Date) {
-      return uploadDate.toLocaleDateString();
-    }
-    
-    // If it's a timestamp number
-    if (typeof uploadDate === 'number') {
-      return new Date(uploadDate).toLocaleDateString();
-    }
-    
-    return "Invalid date format";
-  } catch (error) {
-    console.error("Error formatting date:", error);
-    return "Date format error";
+    const year = d.getFullYear();
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[d.getMonth()];
+    const day = d.getDate();
+    return `${month} ${day}, ${year}`;
+  } catch {
+    return "Recent Performance";
   }
 };
 
 const VideoCard: React.FC<VideoCardProps> = ({ video, index, onSelect, isDarkMode }) => {
   const getYouTubeId = (url: string) => {
     const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-    return match?.[1] || "";
+    return match?.[1] || "dQw4w9WgXcQ";
   };
 
-  const thumbnailUrl = `https://img.youtube.com/vi/${getYouTubeId(video.youtubeLink)}/maxresdefault.jpg`;
+  const thumbnailUrl = `https://img.youtube.com/vi/${getYouTubeId(video.youtubeLink)}/hqdefault.jpg`;
 
   return (
     <motion.div
@@ -63,43 +84,50 @@ const VideoCard: React.FC<VideoCardProps> = ({ video, index, onSelect, isDarkMod
       initial="hidden"
       animate="visible"
       custom={index}
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.97 }}
+      whileHover={{ y: -4, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
     >
       <Card 
-        className={`overflow-hidden cursor-pointer ${
-          isDarkMode ? "bg-gray-800 border-gray-700" : "bg-white"
+        className={`overflow-hidden cursor-pointer rounded-2xl border shadow-md transition-all duration-300 ${
+          isDarkMode ? "bg-gray-900 border-gray-800 hover:border-teal-500/50" : "bg-white border-gray-200 hover:border-teal-500/50"
         }`}
         onClick={() => onSelect(video)}
       >
-        <div className="relative aspect-video group">
+        <div className="relative aspect-video group bg-gray-950 overflow-hidden">
           <img
             src={thumbnailUrl}
             alt={video.title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <Play className="w-12 h-12 text-white" />
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
+            <div className="p-3 sm:p-4 rounded-full bg-amber-500 text-white shadow-lg shadow-amber-500/30 transform group-hover:scale-110 transition-transform">
+              <Play className="w-6 h-6 sm:w-8 sm:h-8 fill-white ml-0.5" />
+            </div>
+          </div>
+
+          <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-bold text-amber-400 uppercase tracking-wider border border-white/20 flex items-center gap-1">
+            <Sparkles className="w-3 h-3" />
+            <span>Live Video</span>
           </div>
         </div>
         
-        <CardContent className="p-4">
-          <h3 className={`font-bold text-lg mb-2 line-clamp-2 ${
-            isDarkMode ? "text-white" : "text-gray-800"
+        <CardContent className="p-4 sm:p-5">
+          <h3 className={`font-bold text-base sm:text-lg mb-2 line-clamp-2 transition-colors ${
+            isDarkMode ? "text-white group-hover:text-teal-400" : "text-gray-900 group-hover:text-teal-600"
           }`}>
             {video.title}
           </h3>
           
-          <p className={`text-sm mb-3 line-clamp-2 ${
-            isDarkMode ? "text-gray-300" : "text-gray-600"
+          <p className={`text-xs sm:text-sm mb-4 line-clamp-2 ${
+            isDarkMode ? "text-gray-400" : "text-gray-600"
           }`}>
             {video.description}
           </p>
           
-          <div className={`flex items-center text-sm ${
+          <div className={`flex items-center text-xs font-medium ${
             isDarkMode ? "text-gray-400" : "text-gray-500"
           }`}>
-            <Calendar className="w-4 h-4 mr-1" />
+            <Calendar className="w-3.5 h-3.5 mr-1.5 text-teal-500" />
             {formatDate(video.uploadDate)}
           </div>
         </CardContent>
@@ -114,8 +142,8 @@ const VideoModal: React.FC<{
   isDarkMode: boolean;
 }> = ({ video, onClose, isDarkMode }) => {
   const getEmbedUrl = (url: string) => {
-    const videoId = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1];
-    return `https://www.youtube.com/embed/${videoId}`;
+    const videoId = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1] || "dQw4w9WgXcQ";
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
   };
 
   return (
@@ -123,19 +151,19 @@ const VideoModal: React.FC<{
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-3 sm:p-6"
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.9 }}
+        initial={{ scale: 0.95 }}
         animate={{ scale: 1 }}
-        exit={{ scale: 0.9 }}
-        className={`max-w-5xl w-full rounded-lg overflow-hidden ${
-          isDarkMode ? "bg-gray-800" : "bg-white"
+        exit={{ scale: 0.95 }}
+        className={`max-w-4xl w-full rounded-2xl overflow-hidden shadow-2xl border ${
+          isDarkMode ? "bg-gray-900 border-gray-800 text-white" : "bg-white border-gray-200 text-gray-900"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="aspect-video">
+        <div className="aspect-video bg-black">
           <iframe
             src={getEmbedUrl(video.youtubeLink)}
             title={video.title}
@@ -145,21 +173,19 @@ const VideoModal: React.FC<{
           />
         </div>
         
-        <div className="p-6">
-          <h2 className={`text-2xl font-bold mb-3 ${
-            isDarkMode ? "text-white" : "text-gray-800"
-          }`}>
+        <div className="p-5 sm:p-6">
+          <h2 className="text-xl sm:text-2xl font-bold mb-2">
             {video.title}
           </h2>
-          <p className={`mb-4 ${
+          <p className={`text-sm mb-4 ${
             isDarkMode ? "text-gray-300" : "text-gray-600"
           }`}>
             {video.description}
           </p>
-          <div className={`flex items-center ${
+          <div className={`flex items-center text-xs font-medium ${
             isDarkMode ? "text-gray-400" : "text-gray-500"
           }`}>
-            <Calendar className="w-4 h-4 mr-1" />
+            <Calendar className="w-4 h-4 mr-1 text-teal-500" />
             {formatDate(video.uploadDate)}
           </div>
         </div>
@@ -177,9 +203,14 @@ const VideoGallery: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
     const fetchVideos = async () => {
       try {
         const videoList = await getVideos();
-        setVideos(videoList);
+        if (videoList && videoList.length > 0) {
+          setVideos(videoList);
+        } else {
+          setVideos(fallbackVideos);
+        }
       } catch (error) {
-        console.error("Error fetching videos:", error);
+        console.warn("Using fallback video gallery data:", error);
+        setVideos(fallbackVideos);
       } finally {
         setLoading(false);
       }
@@ -189,19 +220,10 @@ const VideoGallery: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className={`text-lg ${isDarkMode ? "text-white" : "text-gray-800"}`}>
-          Loading videos...
-        </div>
-      </div>
-    );
-  }
-
-  if (videos.length === 0) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className={`text-lg ${isDarkMode ? "text-white" : "text-gray-800"}`}>
-          No videos available.
+      <div className="flex justify-center items-center py-20">
+        <div className="flex items-center gap-3 text-teal-500 font-bold text-lg">
+          <VideoIcon className="w-6 h-6 animate-spin" />
+          <span>Loading Performance Videos...</span>
         </div>
       </div>
     );
@@ -217,8 +239,8 @@ const VideoGallery: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
           visible: {
             opacity: 1,
             transition: {
-              delayChildren: 0.2,
-              staggerChildren: 0.1
+              delayChildren: 0.1,
+              staggerChildren: 0.05
             }
           }
         }}

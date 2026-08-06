@@ -178,7 +178,7 @@ export interface Video {
   title: string;
   description: string;
   youtubeLink: string;
-  uploadDate: Timestamp;
+  uploadDate: Timestamp | Date | number | null;
 }
 
 export const getVideos = async (): Promise<Video[]> => {

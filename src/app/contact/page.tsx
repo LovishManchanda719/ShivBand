@@ -32,6 +32,11 @@ interface BookingData {
   bookingId?: string;
 }
 
+// Input Sanitizer for XSS security protection
+const sanitizeInput = (str: string): string => {
+  return str.replace(/<[^>]*>?/gm, '').trim();
+};
+
 const ContactPage: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
   const router = useRouter();
@@ -72,11 +77,11 @@ const ContactPage: React.FC = () => {
     try {
       const bookingData: BookingData = {
         userId: user.uid,
-        name,
-        phone,
-        preferredDate,
-        preferredTime,
-        additionalDetails,
+        name: sanitizeInput(name),
+        phone: sanitizeInput(phone),
+        preferredDate: sanitizeInput(preferredDate),
+        preferredTime: sanitizeInput(preferredTime),
+        additionalDetails: sanitizeInput(additionalDetails),
         status: 'pending',
         createdAt: serverTimestamp(),
       };

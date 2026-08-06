@@ -1,153 +1,281 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkle, Heart, Film } from 'lucide-react';
+import { 
+  Heart, 
+  Camera, 
+  Video, 
+  Phone, 
+  MapPin, 
+  ArrowUp, 
+  Instagram, 
+  Facebook, 
+  Youtube, 
+  Clock,
+  ShieldCheck,
+  ChevronRight
+} from 'lucide-react';
 import Link from 'next/link';
+import Logo from './Logo';
+
+// Official WhatsApp Logo Icon
+const WhatsAppIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-5" }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    className={className} 
+    fill="currentColor"
+  >
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.461c-1.807 0-3.578-.484-5.128-1.402l-.367-.219-3.808.999 1.017-3.712-.241-.384c-1.01-1.608-1.544-3.473-1.544-5.385 0-5.659 4.604-10.263 10.264-10.263 2.743 0 5.319 1.068 7.258 3.008 1.939 1.94 3.007 4.516 3.007 7.257 0 5.66-4.604 10.262-10.264 10.262m0-21.843C5.972 0 0 5.972 0 13.245c0 2.324.606 4.593 1.757 6.589L0 24l4.316-1.132a13.2 13.2 0 006.377 1.623h.006c7.272 0 13.245-5.973 13.245-13.246 0-3.539-1.378-6.865-3.882-9.369C17.558 1.377 14.233 0 10.511 0z"/>
+  </svg>
+);
 
 interface FooterProps {
   isDarkMode: boolean;
 }
 
 const Footer: React.FC<FooterProps> = ({ isDarkMode }) => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const socialLinks = [
     {
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#1877F2">
-          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-        </svg>
-      ),
-      href: "https://www.facebook.com/shivband.lighthouse",
-      label: "Facebook"
-    },
-    {
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <defs>
-            <linearGradient id="instagram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#F58529" />
-              <stop offset="50%" stopColor="#DD2A7B" />
-              <stop offset="100%" stopColor="#515BD4" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M12 2.162c3.204 0 3.584.012 4.849.07 1.17.054 1.805.249 2.227.413.562.216.96.477 1.38.896.419.42.68.818.896 1.381.164.422.36 1.057.413 2.227.058 1.265.07 1.645.07 4.849s-.012 3.584-.07 4.849c-.054 1.17-.249 1.805-.413 2.227-.216.562-.477.96-.896 1.38-.42.419-.818.68-1.381.896-.422.164-1.057.36-2.227.413-1.265.058-1.645.07-4.849.07s-3.584-.012-4.849-.07c-1.17-.054-1.805-.249-2.227-.413-.562-.216-.96-.477-1.38-.896-.419-.42-.68-.818-.896-1.381-.164-.422-.36-1.057-.413-2.227-.058-1.265-.07-1.645-.07-4.849s.012-3.584.07-4.849c.054-1.17.249-1.805.413-2.227.216-.562.477-.96.896-1.38.42-.419.818-.68 1.381-.896.422-.164 1.057-.36 2.227-.413 1.265-.058 1.645-.07 4.849-.07M12 0C8.741 0 8.332.014 7.053.072 5.78.131 4.901.333 4.14.63c-.79.306-1.459.717-2.126 1.384S.936 3.35.63 4.14C.333 4.901.131 5.78.072 7.053.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.947.059 1.273.261 2.152.558 2.913.306.79.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.761.297 1.64.499 2.913.558C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.947-.072 1.273-.059 2.152-.261 2.913-.558.79-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.297-.761.499-1.64.558-2.913.058-1.279.072-1.688.072-4.947s-.014-3.668-.072-4.947c-.059-1.273-.261-2.152-.558-2.913-.306-.79-.718-1.459-1.384-2.126C21.314 1.042 20.646.63 19.856.324c-.761-.297-1.64-.499-2.913-.558C15.668.014 15.259 0 12 0z"
-            fill="url(#instagram-gradient)"
-          />
-          <circle cx="12" cy="12" r="3.5" fill="none" stroke="#fff" strokeWidth="2" />
-          <circle cx="18.5" cy="5.5" r="1.5" fill="#fff" />
-        </svg>
-      )
-      ,
+      icon: <Instagram className="w-4 h-4 text-white" />,
       href: "https://www.instagram.com/shiv_band_and_light_house/",
-      label: "Instagram"
+      label: "Instagram",
+      gradient: "from-amber-500 via-rose-500 to-purple-600"
     },
     {
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#FF0000">
-          <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.527 0-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.527 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
-        </svg>
-      ),
+      icon: <Facebook className="w-4 h-4 text-white" />,
+      href: "https://www.facebook.com/shivband.lighthouse",
+      label: "Facebook",
+      gradient: "from-blue-600 to-blue-700"
+    },
+    {
+      icon: <Youtube className="w-4 h-4 text-white" />,
       href: "https://www.youtube.com/@manishmanchanda4089/videos",
-      label: "YouTube"
+      label: "YouTube",
+      gradient: "from-red-600 to-red-700"
+    },
+    {
+      icon: <WhatsAppIcon className="w-4 h-4 text-white" />,
+      href: "https://wa.me/919818626259?text=Hello%20Shiv%20Band,%20I%20want%20to%20inquire%20about%20your%20wedding%20services!",
+      label: "WhatsApp",
+      gradient: "from-emerald-500 to-green-600"
     }
   ];
 
-  const footerLinks = [
-    {
-      icon: <Film className="mr-2" size={20} />,
-      label: "Gallery",
-      href: "/gallery"
-    }
+  const quickLinks = [
+    { label: "Home", href: "/" },
+    { label: "Photo Gallery", href: "/gallery/photos" },
+    { label: "Video Gallery", href: "/gallery/videos" },
+    { label: "Contact Us", href: "/contact" },
+    { label: "Reviews", href: "/reviews" },
+    { label: "Feedback", href: "/feedback" },
+  ];
+
+  const services = [
+    { label: "Royal Barat Brass Band", href: "/gallery/photos" },
+    { label: "Vintage Fancy Light House", href: "/gallery/photos" },
+    { label: "Punjabi Dhol & Tasha Ensembles", href: "/gallery/photos" },
+    { label: "Decorated Chariot & Rath Entry", href: "/gallery/photos" },
+    { label: "Groom Light Pillars & Fireworks", href: "/gallery/photos" },
+    { label: "Live Wedding Symphony", href: "/gallery/videos" }
   ];
 
   return (
     <footer 
-      className={`
-        ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}
-        py-12 px-4 md:px-12 transition-colors duration-300
-      `}
+      className={`relative pt-8 md:pt-14 pb-24 md:pb-12 px-4 md:px-10 transition-colors duration-300 border-t ${
+        isDarkMode 
+          ? 'bg-gray-950 text-gray-200 border-gray-800' 
+          : 'bg-gray-900 text-white border-gray-800'
+      }`}
     >
-      <div className="container mx-auto flex flex-col items-center justify-center text-center">
-        {/* Decorative Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center space-x-2 mb-6"
-        >
-          <Sparkle className="text-teal-500" />
-          <h3 className="text-2xl font-bold">Shiv Band & Light House</h3>
-          <Sparkle className="text-teal-500" />
-        </motion.div>
+      <div className="max-w-7xl mx-auto">
+        
+        {/* MOBILE COMPACT FOOTER (Shown on screens below md) */}
+        <div className="md:hidden flex flex-col items-center text-center space-y-5 pb-6 border-b border-gray-800/80">
+          {/* Logo */}
+          <Link href="/" className="inline-block">
+            <Logo size="sm" variant="inline" />
+          </Link>
 
-        {/* Footer Navigation Links */}
-        <div className="flex space-x-4 mb-6">
-          {footerLinks.map((link) => (
-            <motion.div
-              key={link.label}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Link 
-                href={link.href}
-                className={`
-                  flex items-center 
-                  ${isDarkMode 
-                    ? 'hover:text-teal-400' 
-                    : 'hover:text-teal-600'
-                  }
-                  transition-colors duration-300
-                `}
+          <p className="text-xs text-gray-400 max-w-xs leading-relaxed">
+            Royal wedding barat band & light house illumination in Delhi NCR.
+          </p>
+
+          {/* Social Icons Row */}
+          <div className="flex items-center gap-2">
+            {socialLinks.map((social) => (
+              <motion.a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileTap={{ scale: 0.9 }}
+                className={`p-2 rounded-xl bg-gradient-to-tr ${social.gradient} shadow-md flex items-center justify-center`}
+                title={social.label}
               >
-                {link.icon}
-                {link.label}
+                {social.icon}
+              </motion.a>
+            ))}
+          </div>
+
+          {/* Quick Nav Pills */}
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs font-semibold text-gray-300">
+            <Link href="/" className="hover:text-teal-400">Home</Link>
+            <Link href="/gallery/photos" className="hover:text-teal-400">Photos</Link>
+            <Link href="/gallery/videos" className="hover:text-teal-400">Videos</Link>
+            <Link href="/reviews" className="hover:text-teal-400">Reviews</Link>
+            <Link href="/contact" className="hover:text-teal-400">Contact</Link>
+          </div>
+        </div>
+
+        {/* DESKTOP FULL GRID FOOTER (Shown on md and above) */}
+        <div className="hidden md:grid grid-cols-4 gap-8 pb-12 border-b border-gray-800/80">
+          
+          {/* Column 1: Brand & About */}
+          <div className="space-y-4">
+            <Link href="/">
+              <Logo size="md" variant="inline" />
+            </Link>
+
+            <p className="text-xs text-gray-400 leading-relaxed">
+              Delivering royal wedding barat processions, live brass band symphonies, and majestic illumination for over two decades.
+            </p>
+
+            <div className="pt-1 flex items-center gap-2 text-xs text-amber-400 font-medium">
+              <ShieldCheck className="w-4 h-4 text-amber-400" />
+              <span>Trusted by 1000+ Families</span>
+            </div>
+          </div>
+
+          {/* Column 2: Quick Links */}
+          <div>
+            <h4 className="text-sm font-bold uppercase tracking-wider text-teal-400 mb-4 flex items-center gap-1.5">
+              <Camera className="w-4 h-4" />
+              <span>Quick Navigation</span>
+            </h4>
+            <ul className="space-y-2.5 text-xs">
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <Link 
+                    href={link.href}
+                    className="text-gray-300 hover:text-teal-400 transition-colors flex items-center gap-1.5 group"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <span>{link.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Services Offered Links */}
+          <div>
+            <h4 className="text-sm font-bold uppercase tracking-wider text-teal-400 mb-4 flex items-center gap-1.5">
+              <Video className="w-4 h-4" />
+              <span>Our Services</span>
+            </h4>
+            <ul className="space-y-2 text-xs">
+              {services.map((service, i) => (
+                <li key={i}>
+                  <Link
+                    href={service.href}
+                    className="text-gray-300 hover:text-amber-400 transition-colors flex items-center gap-1.5 group"
+                  >
+                    <ChevronRight className="w-3 h-3 text-amber-500 group-hover:translate-x-0.5 transition-transform" />
+                    <span>{service.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Contact & Socials */}
+          <div className="space-y-4">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-teal-400 mb-2">
+              Connect With Us
+            </h4>
+
+            <div className="space-y-2.5 text-xs text-gray-300">
+              <a 
+                href="tel:+919818626259"
+                className="flex items-center gap-2 hover:text-teal-400 transition-colors"
+                title="Call owner"
+              >
+                <Phone className="w-4 h-4 text-teal-400 shrink-0" />
+                <span>+91 98186 26259</span>
+              </a>
+
+              <Link 
+                href="/contact"
+                className="flex items-start gap-2 text-gray-300 hover:text-teal-400 transition-colors"
+                title="View location map"
+              >
+                <MapPin className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                <span>Parawana Road, Delhi-51</span>
               </Link>
-            </motion.div>
-          ))}
+
+              <div className="flex items-center gap-2 text-gray-400">
+                <Clock className="w-4 h-4 text-teal-400 shrink-0" />
+                <span>Available 24/7 for Inquiries</span>
+              </div>
+            </div>
+
+            {/* Social Media Pills */}
+            <div className="pt-2">
+              <div className="text-[11px] font-semibold text-gray-400 mb-2">Follow Our Socials</div>
+              <div className="flex items-center gap-2.5">
+                {socialLinks.map((social) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.15, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`p-2.5 rounded-xl bg-gradient-to-tr ${social.gradient} shadow-md flex items-center justify-center`}
+                    title={social.label}
+                  >
+                    {social.icon}
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
-        {/* Social Media Icons */}
-        <div className="flex space-x-6 mb-6">
-          {socialLinks.map((social) => (
-            <motion.a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.2, rotate: 360 }}
-              whileTap={{ scale: 0.9 }}
-              className="transition-transform duration-300"
+        {/* Bottom Copyright Bar & Back To Top */}
+        <div className="pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+          
+          <div className="flex items-center gap-1.5">
+            <span>© {new Date().getFullYear()} Shiv Band & Light House</span>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.25, 1],
+                transition: { repeat: Infinity, duration: 1.2 }
+              }}
             >
-              {social.icon}
-            </motion.a>
-          ))}
+              <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+            </motion.div>
+          </div>
+
+          {/* Back to top button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={scrollToTop}
+            className="px-3.5 py-1.5 rounded-full bg-gray-800 hover:bg-gray-700 text-teal-400 text-xs font-semibold flex items-center gap-1.5 border border-gray-700 transition-colors"
+          >
+            <span>Back to Top</span>
+            <ArrowUp className="w-3.5 h-3.5" />
+          </motion.button>
+
         </div>
 
-        {/* Copyright with Heartbeat */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="flex items-center space-x-2 text-sm opacity-75"
-        >
-          <span>© {new Date().getFullYear()} Shiv Band & Light House</span>
-          <motion.div
-            animate={{ 
-              scale: [1, 1.2, 1],
-              transition: { 
-                repeat: Infinity, 
-                duration: 1,
-                ease: "easeInOut"
-              }
-            }}
-          >
-            <Heart className="text-red-500" size={16} />
-          </motion.div>
-        </motion.div>
-
-        {/* Subtle Tagline */}
-        <p className="mt-2 text-xs opacity-50">
-          Creating musical memories that last a lifetime
-        </p>
       </div>
     </footer>
   );
