@@ -71,7 +71,7 @@ const getAvatarUrl = (name: string, photoURL?: string): string => {
 
 const ReviewsPage: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<Review[]>(fallbackReviews);
   const [averageRating, setAverageRating] = useState(5.0);
 
   useEffect(() => {

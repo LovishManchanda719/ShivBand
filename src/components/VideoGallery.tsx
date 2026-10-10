@@ -195,8 +195,8 @@ const VideoModal: React.FC<{
 };
 
 const VideoGallery: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [videos, setVideos] = useState<Video[]>(fallbackVideos);
+  const [loading, setLoading] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
   useEffect(() => {

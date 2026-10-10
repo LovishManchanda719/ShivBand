@@ -101,7 +101,7 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode }) => {
           </Link>
 
           <p className="text-xs text-gray-400 max-w-xs leading-relaxed">
-            Royal wedding barat band & light house illumination in Delhi NCR.
+            Shiv Band &amp; Light House — Royal wedding barat band, Punjabi dhol, ghori, flower baggi &amp; fancy lighting in Krishna Nagar, Old Govindpura, New Delhi-110051 (Since 1996).
           </p>
 
           {/* Social Icons Row */}
@@ -141,12 +141,12 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode }) => {
             </Link>
 
             <p className="text-xs text-gray-400 leading-relaxed">
-              Delivering royal wedding barat processions, live brass band symphonies, and majestic illumination for over two decades.
+              Shiv Band &amp; Light House (Est. 1996 by Manish Kumar) — Delivering royal wedding barat processions, live brass band symphonies, Punjabi dhol, ghori, flower baggi &amp; majestic fancy lighting across Krishna Nagar, Old Govindpura &amp; Delhi NCR.
             </p>
 
             <div className="pt-1 flex items-center gap-2 text-xs text-amber-400 font-medium">
               <ShieldCheck className="w-4 h-4 text-amber-400" />
-              <span>Trusted by 1000+ Families</span>
+              <span>Trusted by 1000+ Families Since 1996</span>
             </div>
           </div>
 
@@ -202,10 +202,10 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode }) => {
               <a 
                 href="tel:+919818626259"
                 className="flex items-center gap-2 hover:text-teal-400 transition-colors"
-                title="Call owner"
+                title="Call Manish Kumar - Shiv Band & Light House"
               >
                 <Phone className="w-4 h-4 text-teal-400 shrink-0" />
-                <span>+91 98186 26259</span>
+                <span>+91 98186 26259 / 98186 22259</span>
               </a>
 
               <Link 
@@ -214,12 +214,12 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode }) => {
                 title="View location map"
               >
                 <MapPin className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
-                <span>Parawana Road, Delhi-51</span>
+                <span>D-96 / C-40, Parwana Rd, Old Govindpura, Krishna Nagar, New Delhi - 110051</span>
               </Link>
 
               <div className="flex items-center gap-2 text-gray-400">
                 <Clock className="w-4 h-4 text-teal-400 shrink-0" />
-                <span>Available 24/7 for Inquiries</span>
+                <span>Open Daily: 9:00 AM – 9:00 PM</span>
               </div>
             </div>
 

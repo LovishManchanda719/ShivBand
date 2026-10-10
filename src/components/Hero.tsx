@@ -32,9 +32,12 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight"
           >
+            <span className="block text-base sm:text-xl font-extrabold uppercase tracking-widest text-amber-500 mb-2">
+              Shiv Band &amp; Light House • Since 1996
+            </span>
             Grand Wedding{" "}
             <span className="bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-400 bg-clip-text text-transparent">
-              Barat & Lighting
+              Barat &amp; Lighting
             </span>{" "}
             Services
           </motion.h1>
@@ -48,7 +51,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
               isDarkMode ? "text-gray-300" : "text-gray-600"
             }`}
           >
-            Live brass band, majestic barat processions, vibrant dhol, and spectacular fancy lighting setup for weddings and special occasions.
+            Serving Krishna Nagar, Old Govindpura &amp; Delhi NCR with live brass band, majestic barat processions, vibrant Punjabi dhol, royal ghori, flower baggi, rath chariot, and spectacular fancy lighting setup.
           </motion.p>
 
           {/* Buttons */}
@@ -92,7 +95,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
             </div>
             <div className="text-center md:text-left">
               <div className="text-lg sm:text-2xl font-black text-teal-500">Royal</div>
-              <div className={`text-[10px] sm:text-xs font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Brass & Dhol</div>
+              <div className={`text-[10px] sm:text-xs font-medium ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>Brass &amp; Dhol</div>
             </div>
             <div className="text-center md:text-left">
               <div className="text-lg sm:text-2xl font-black text-emerald-500">Vintage</div>
@@ -119,7 +122,7 @@ const Hero: React.FC<HeroProps> = ({ isDarkMode }) => {
             }`}>
               <img
                 src="/images/50.jpg"
-                alt="Shiv Band Wedding Performance"
+                alt="Shiv Band & Light House - Royal Wedding Brass Band, Barat & Fancy Lighting in Krishna Nagar, New Delhi"
                 className="w-full h-[320px] sm:h-[420px] object-cover transition-transform duration-500 hover:scale-105"
               />
             </div>

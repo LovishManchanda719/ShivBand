@@ -17,6 +17,7 @@ import {
 import { auth } from "../lib/firebaseConfig";
 import { signOut } from "firebase/auth";
 import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -114,7 +115,9 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex justify-between items-center">
           
           {/* Brand Logo & Official Emblem */}
-          <Logo size="md" variant="inline" onClick={() => handleNavigation('/')} />
+          <Link href="/" aria-label="Shiv Band & Light House Home">
+            <Logo size="md" variant="inline" />
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
@@ -122,10 +125,9 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               const isActive = pathname === item.href;
               const Icon = item.icon;
               return (
-                <button 
+                <Link 
                   key={item.href}
-                  onClick={() => handleNavigation(item.href)}
-                  disabled={isNavigating}
+                  href={item.href}
                   className={`px-3 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all duration-200 flex items-center gap-1.5 relative ${
                     isActive 
                       ? "bg-teal-500 text-white shadow-md shadow-teal-500/20" 
@@ -143,7 +145,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
                   {item.highlight && !isActive && (
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                   )}
-                </button>
+                </Link>
               );
             })}
           </div>
@@ -330,18 +332,18 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
           ? "bg-gray-900/90 border-gray-800/80 text-gray-300" 
           : "bg-white/90 border-gray-200/80 text-gray-600"
       }`}>
-        <button
-          onClick={() => handleNavigation('/')}
+        <Link
+          href="/"
           className={`flex flex-col items-center justify-center px-3 py-1 rounded-lg transition-colors ${
             pathname === '/' ? 'text-teal-500 font-bold' : 'hover:text-teal-500'
           }`}
         >
           <Home className="w-4 h-4" />
           <span className="text-[10px] mt-0.5">Home</span>
-        </button>
+        </Link>
 
-        <button
-          onClick={() => handleNavigation('/gallery/photos')}
+        <Link
+          href="/gallery/photos"
           className={`flex flex-col items-center justify-center px-3 py-1 rounded-lg transition-colors relative ${
             pathname === '/gallery/photos' ? 'text-teal-500 font-bold' : 'hover:text-teal-500'
           }`}
@@ -349,17 +351,17 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
           <Camera className="w-4 h-4" />
           <span className="text-[10px] mt-0.5">Photos</span>
           <span className="absolute top-0 right-1 w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
-        </button>
+        </Link>
 
-        <button
-          onClick={() => handleNavigation('/gallery/videos')}
+        <Link
+          href="/gallery/videos"
           className={`flex flex-col items-center justify-center px-3 py-1 rounded-lg transition-colors ${
             pathname === '/gallery/videos' ? 'text-teal-500 font-bold' : 'hover:text-teal-500'
           }`}
         >
           <Video className="w-4 h-4" />
           <span className="text-[10px] mt-0.5">Videos</span>
-        </button>
+        </Link>
 
         {/* WhatsApp Dock Button with Official WhatsApp Icon */}
         <button

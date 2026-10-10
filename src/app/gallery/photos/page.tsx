@@ -49,9 +49,9 @@ const defaultFallbackPhotos: Photo[] = [
 
 const PhotoGalleryPage: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
-  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [photos, setPhotos] = useState<Photo[]>(defaultFallbackPhotos);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
 
