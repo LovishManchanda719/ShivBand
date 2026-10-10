@@ -251,16 +251,26 @@ const Footer: React.FC<FooterProps> = ({ isDarkMode }) => {
         {/* Bottom Copyright Bar & Back To Top */}
         <div className="pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           
-          <div className="flex items-center gap-1.5">
-            <span>© {new Date().getFullYear()} Shiv Band & Light House</span>
-            <motion.div
-              animate={{ 
-                scale: [1, 1.25, 1],
-                transition: { repeat: Infinity, duration: 1.2 }
-              }}
-            >
-              <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
-            </motion.div>
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1.5">
+            <span className="flex items-center gap-1.5">
+              <span>© {new Date().getFullYear()} Shiv Band &amp; Light House</span>
+              <motion.div
+                animate={{ 
+                  scale: [1, 1.25, 1],
+                  transition: { repeat: Infinity, duration: 1.2 }
+                }}
+              >
+                <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+              </motion.div>
+            </span>
+            <span className="text-gray-700">•</span>
+            <Link href="/privacy" className="hover:text-teal-400 transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-gray-700">•</span>
+            <Link href="/terms" className="hover:text-teal-400 transition-colors">
+              Terms &amp; Disclaimer
+            </Link>
           </div>
 
           {/* Back to top button */}

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Camera, Sparkles, ArrowRight, Eye, X, Video } from "lucide-react";
+import { Camera, Sparkles, ArrowRight, Eye, X } from "lucide-react";
+import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
+import { db } from "@/lib/firebaseConfig";
+import { trackEvent } from "@/lib/analytics";
 
 interface PhotoHighlightsProps {
   isDarkMode: boolean;
@@ -13,7 +16,7 @@ interface HighlightItem {
   title: string;
 }
 
-const photoHighlightsData: HighlightItem[] = [
+const defaultPhotoHighlightsData: HighlightItem[] = [
   { id: "1", url: "/images/1.jpg", title: "Royal Wedding Barat Procession" },
   { id: "2", url: "/images/2.jpg", title: "Vintage Chariot & Fancy Lighting" },
   { id: "3", url: "/images/3.jpg", title: "Live Brass Band Performance" },
@@ -24,6 +27,35 @@ const photoHighlightsData: HighlightItem[] = [
 
 const PhotoHighlights: React.FC<PhotoHighlightsProps> = ({ isDarkMode }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<HighlightItem | null>(null);
+  const [photoHighlightsData, setPhotoHighlightsData] = useState<HighlightItem[]>(defaultPhotoHighlightsData);
+
+  useEffect(() => {
+    const fetchLatestPhotos = async () => {
+      try {
+        const q = query(collection(db, "photos"), orderBy("createdAt", "desc"), limit(6));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          const uploaded: HighlightItem[] = snap.docs
+            .map((docSnap) => {
+              const data = docSnap.data();
+              return {
+                id: docSnap.id,
+                url: data.url || data.src || "",
+                title: data.title || data.alt || "Shiv Band & Light House Celebration",
+              };
+            })
+            .filter((item) => Boolean(item.url));
+          if (uploaded.length > 0) {
+            const combined = [...uploaded, ...defaultPhotoHighlightsData].slice(0, 6);
+            setPhotoHighlightsData(combined);
+          }
+        }
+      } catch {
+        // Keep default fallback highlights if Firestore read fails
+      }
+    };
+    fetchLatestPhotos();
+  }, []);
 
   return (
     <section className={`py-16 sm:py-24 relative overflow-hidden transition-colors ${
@@ -66,7 +98,10 @@ const PhotoHighlights: React.FC<PhotoHighlightsProps> = ({ isDarkMode }) => {
                 className={`group relative rounded-2xl overflow-hidden shadow-lg border cursor-pointer ${
                   isDarkMode ? "bg-gray-800 border-gray-700/80" : "bg-white border-gray-200"
                 }`}
-                onClick={() => setSelectedPhoto(photo)}
+                onClick={() => {
+                  setSelectedPhoto(photo);
+                  trackEvent("gallery_photo_view", { photo_id: photo.id, title: photo.title, source: "home_highlights" });
+                }}
               >
                 {/* Image Container */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-gray-950">

@@ -1,7 +1,7 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, isSupported, type Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,16 +13,31 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase App singleton safely
+export const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
-// Initialize Analytics only on client side
-let analytics = null;
-if (typeof window !== 'undefined') {
-  analytics = getAnalytics(app);
-}
+// Safely initialize Firebase / Google Analytics on client side when supported
+let analytics: Analytics | null = null;
+let analyticsPromise: Promise<Analytics | null> | null = null;
+
+export const initFirebaseAnalytics = async (): Promise<Analytics | null> => {
+  if (typeof window === "undefined") return null;
+  if (analytics) return analytics;
+  if (!analyticsPromise) {
+    analyticsPromise = isSupported()
+      .then((supported) => {
+        if (supported && firebaseConfig.measurementId) {
+          analytics = getAnalytics(app);
+          return analytics;
+        }
+        return null;
+      })
+      .catch(() => null);
+  }
+  return analyticsPromise;
+};
 
 // Export instances
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export { analytics };
+export { analytics };

@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Hero from "./Hero";
 import PhotoHighlights from "./PhotoHighlights";
+import ServicesSEO from "./ServicesSEO";
 import Testimonials from "./Testimonials";
 import BubbleAnimation from "./BubbleAnimation";
 
@@ -21,6 +22,7 @@ const HomePage: React.FC = () => {
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <Hero isDarkMode={isDarkMode} />
       <PhotoHighlights isDarkMode={isDarkMode} />
+      <ServicesSEO isDarkMode={isDarkMode} />
       <Testimonials isDarkMode={isDarkMode} />
       <Footer isDarkMode={isDarkMode} />
       <BubbleAnimation />

@@ -204,7 +204,7 @@ const VideoGallery: React.FC<{ isDarkMode: boolean }> = ({ isDarkMode }) => {
       try {
         const videoList = await getVideos();
         if (videoList && videoList.length > 0) {
-          setVideos(videoList);
+          setVideos([...videoList, ...fallbackVideos]);
         } else {
           setVideos(fallbackVideos);
         }

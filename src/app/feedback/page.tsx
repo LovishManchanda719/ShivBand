@@ -63,9 +63,13 @@ const StarRating = ({
   );
 };
 
-// Input Sanitizer for XSS security protection
-const sanitizeInput = (str: string): string => {
-  return str.replace(/<[^>]*>?/gm, '').trim();
+// Input Sanitizer for XSS & payload length security protection
+const sanitizeInput = (str: string, maxLen = 1000): string => {
+  return str
+    .replace(/<[^>]*>?/gm, '')
+    .replace(/[<>]/g, '')
+    .trim()
+    .slice(0, maxLen);
 };
 
 const FeedbackPage: React.FC = () => {
@@ -76,6 +80,8 @@ const FeedbackPage: React.FC = () => {
   const [name, setName] = useState(user?.displayName || "");
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
+  const [honeypot, setHoneypot] = useState("");
+  const [lastSubmittedAt, setLastSubmittedAt] = useState<number>(0);
   
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -87,8 +93,8 @@ const FeedbackPage: React.FC = () => {
       alert("Please enter your name");
       return false;
     }
-    if (rating === 0) {
-      alert("Please select a rating star");
+    if (rating < 1 || rating > 5) {
+      alert("Please select a rating star between 1 and 5");
       return false;
     }
     if (!comment.trim()) {
@@ -101,6 +107,18 @@ const FeedbackPage: React.FC = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Anti-bot honeypot check
+    if (honeypot) {
+      return;
+    }
+
+    // Rate-limit: 30 seconds cooldown between review submissions
+    const now = Date.now();
+    if (now - lastSubmittedAt < 30000) {
+      alert("Please wait 30 seconds before submitting another review.");
+      return;
+    }
     
     if (!validateForm()) {
       return;
@@ -125,18 +143,22 @@ const FeedbackPage: React.FC = () => {
 
       // Add review to Firestore with sanitized inputs and flower avatar
       await addDoc(collection(db, "reviews"), {
-        name: sanitizeInput(name),
-        rating,
-        comment: sanitizeInput(comment),
+        name: sanitizeInput(name, 80),
+        rating: Math.min(5, Math.max(1, Math.round(rating))),
+        comment: sanitizeInput(comment, 1200),
         date: new Date(),
         likes: 0,
         dislikes: 0,
         userId: activeUserId,
         photoURL: assignedFlowerAvatar,
-        location: ""
+        location: "Delhi NCR"
       });
 
+      const { trackAnalyticsEvent } = await import("@/lib/analytics");
+      trackAnalyticsEvent("review_submitted", { rating });
+
       // Reset form and show success message
+      setLastSubmittedAt(Date.now());
       if (!user) setName("");
       setComment("");
       setRating(5);
@@ -193,6 +215,17 @@ const FeedbackPage: React.FC = () => {
           }`}
         >
           <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Hidden Anti-Bot Honeypot Field */}
+            <input
+              type="text"
+              name="company_website"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="hidden"
+            />
             
             {/* Name Input */}
             <div>

@@ -12,12 +12,14 @@ import {
   Home,
   Star,
   MessageSquare,
-  PhoneCall
+  PhoneCall,
+  ShieldCheck
 } from "lucide-react";
 import { auth } from "../lib/firebaseConfig";
 import { signOut } from "firebase/auth";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import { ADMIN_EMAIL } from "@/lib/analytics";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -56,6 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
   const [isNavigating, setIsNavigating] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const isAdminUser = user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -102,7 +105,10 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
     { href: "/gallery/videos", label: "Video Gallery", icon: Video, highlight: true },
     { href: "/contact", label: "Contact", icon: PhoneCall },
     { href: "/reviews", label: "Reviews", icon: Star },
-    { href: "/feedback", label: "Feedback", icon: MessageSquare }
+    { href: "/feedback", label: "Feedback", icon: MessageSquare },
+    ...(isAdminUser
+      ? [{ href: "/admin", label: "Admin Panel", icon: ShieldCheck, highlight: true }]
+      : []),
   ];
 
   return (
@@ -213,6 +219,15 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator className={isDarkMode ? 'bg-gray-700' : 'bg-gray-200'} />
+                    {isAdminUser && (
+                      <DropdownMenuItem 
+                        onClick={() => handleNavigation('/admin')}
+                        className={`cursor-pointer font-bold text-amber-500 ${isDarkMode ? 'hover:bg-gray-700 focus:bg-gray-700' : 'hover:bg-gray-100 focus:bg-gray-100'}`}
+                        disabled={isNavigating}
+                      >
+                        ⚡ Admin Dashboard
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem 
                       onClick={() => handleNavigation('/profile')}
                       className={`cursor-pointer ${isDarkMode ? 'hover:bg-gray-700 focus:bg-gray-700' : 'hover:bg-gray-100 focus:bg-gray-100'}`}

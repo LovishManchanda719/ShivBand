@@ -67,13 +67,21 @@ const PhotoGalleryPage: React.FC = () => {
         if (!snapshot.empty) {
           const fetchedPhotos = snapshot.docs.map(doc => {
             const data = doc.data();
+            const rawUrl = String(data.url || "");
+            const resolvedUrl =
+              rawUrl.startsWith("http://") ||
+              rawUrl.startsWith("https://") ||
+              rawUrl.startsWith("data:image/") ||
+              rawUrl.startsWith("/")
+                ? rawUrl
+                : `/images/${rawUrl}`;
             return {
               id: doc.id,
               ...data,
-              url: `/images/${data.url}`
+              url: resolvedUrl
             };
           }) as Photo[];
-          setPhotos(fetchedPhotos);
+          setPhotos([...fetchedPhotos, ...defaultFallbackPhotos]);
         } else {
           setPhotos(defaultFallbackPhotos);
         }
@@ -197,7 +205,12 @@ const PhotoGalleryPage: React.FC = () => {
                 }}
                 whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => setSelectedIndex(photos.findIndex(p => p.id === photo.id))}
+                onClick={() => {
+                  setSelectedIndex(photos.findIndex(p => p.id === photo.id));
+                  import("@/lib/analytics").then(({ trackAnalyticsEvent }) => {
+                    trackAnalyticsEvent("gallery_photo_view", { photo_title: photo.title });
+                  });
+                }}
                 className={`break-inside-avoid group rounded-2xl overflow-hidden shadow-md cursor-pointer border transition-all duration-300 relative ${
                   isDarkMode 
                     ? "bg-gray-900 border-gray-800 hover:border-amber-500/50 shadow-black/40" 
@@ -296,6 +309,7 @@ const PhotoGalleryPage: React.FC = () => {
                   src={selectedPhoto.url}
                   alt=""
                   fill
+                  unoptimized
                   className="scale-125 blur-2xl opacity-40 object-cover"
                 />
 
@@ -309,6 +323,7 @@ const PhotoGalleryPage: React.FC = () => {
                     alt={selectedPhoto.title}
                     fill
                     priority
+                    unoptimized
                     className={`object-contain transition-transform duration-300 ${
                       isZoomed ? "scale-150 sm:scale-175 cursor-zoom-out" : "scale-100"
                     }`}

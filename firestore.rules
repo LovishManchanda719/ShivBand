@@ -7,126 +7,149 @@ service cloud.firestore {
       return request.auth != null;
     }
     
-    // Helper function to check if user is admin
+    // Helper function to check if user is the verified Admin (lovishmanchanda719@gmail.com)
     function isAdmin() {
-      return request.auth != null && request.auth.token.admin == true;
+      return request.auth != null && (
+        request.auth.token.email == "lovishmanchanda719@gmail.com" ||
+        request.auth.token.admin == true
+      );
     }
     
     // Helper function to check if the reaction belongs to the current user
     function isUserReaction(userId) {
-      return request.auth.uid == userId;
+      return isAuthenticated() && request.auth.uid == userId;
     }
 
-    // Helper function to validate review data (allows guest & logged in user reviews)
+    // Helper function to validate review data (allows guest & logged-in user reviews with anti-spam bounds)
     function isValidReview() {
       let data = request.resource.data;
       return data.name is string &&
              data.name.size() > 0 &&
+             data.name.size() <= 100 &&
              data.rating is number &&
              data.rating >= 1 &&
              data.rating <= 5 &&
              data.comment is string &&
              data.comment.size() > 0 &&
-             data.date is timestamp &&
+             data.comment.size() <= 1500 &&
              data.likes is number &&
              data.likes == 0 &&
              data.dislikes is number &&
              data.dislikes == 0 &&
              data.userId is string &&
              data.userId.size() > 0 &&
-             data.location is string;
+             data.userId.size() <= 128 &&
+             data.location is string &&
+             data.location.size() <= 100;
     }
 
-    // Helper function to validate video data (without thumbnail)
-    function isValidVideo() {
+    // Validate booking data with strict type & length limits
+    function isValidBooking() {
       let data = request.resource.data;
-      return data.title is string &&
-             data.title.size() > 0 &&
-             data.description is string &&
-             data.youtubeUrl is string &&
-             data.youtubeUrl.size() > 0 &&
-             data.uploadDate is timestamp;
+      return data.name is string &&
+             data.name.size() > 0 &&
+             data.name.size() <= 100 &&
+             data.phone is string &&
+             data.phone.size() >= 10 &&
+             data.phone.size() <= 15 &&
+             data.preferredDate is string &&
+             data.preferredDate.size() <= 30 &&
+             data.preferredTime is string &&
+             data.preferredTime.size() <= 30;
     }
 
-    // Default rule - Allow read/write access only to authenticated users
-    match /{document=**} {
-      allow read, write: if isAuthenticated();
+    // Validate analytics event payload (write-only privacy-safe telemetry)
+    function isValidAnalyticsEvent() {
+      let data = request.resource.data;
+      return data.eventName is string &&
+             data.eventName.size() > 0 &&
+             data.eventName.size() <= 60 &&
+             data.path is string &&
+             data.path.size() <= 200 &&
+             data.visitorId is string &&
+             data.visitorId.size() <= 100;
     }
-    
-    // Videos collection
+
+    // Videos collection (Public Read, Admin-Only Write)
     match /videos/{videoId} {
-      // Anyone can read videos
       allow read: if true;
-      // Only admin users can create, update, or delete videos
-      allow create: if isAdmin() && isValidVideo();
-      allow update: if isAdmin() && isValidVideo();
-      allow delete: if isAdmin();
+      allow write: if isAdmin();
     }
     
-    // Photos collection
+    // Photos collection (Public Read, Admin-Only Write)
     match /photos/{photoId} {
-      allow read: if true;  // Anyone can read photos
-      allow write: if isAdmin();  // Only admin can modify photos
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
-    // Users collection
+    // Users collection (Strict Owner-Only Access + Admin)
     match /users/{userId} {
-      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+      allow read, write: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
     }
     
-    // Articles collection
+    // Articles collection (Preserved from original rules)
     match /articles/{articleId} {
       allow read: if true;
-      allow write: if isAuthenticated() && request.auth.token.role == 'editor';
+      allow write: if isAdmin() || (isAuthenticated() && request.auth.token.role == 'editor');
     }
     
-    // Messages collection
+    // Messages collection (Preserved from original rules, strict sender/receiver check)
     match /messages/{messageId} {
-      allow read, write: if isAuthenticated() && 
-        (request.auth.uid == resource.data.senderId || request.auth.uid == resource.data.receiverId);
+      allow read: if isAuthenticated() && 
+        (request.auth.uid == resource.data.senderId || request.auth.uid == resource.data.receiverId || isAdmin());
+      allow create: if isAuthenticated() && request.auth.uid == request.resource.data.senderId;
+      allow update, delete: if isAdmin();
     }
     
-    // Reviews collection (Allows ANY visitor to read & publish reviews)
+    // Reviews collection (Allows ANY visitor to read & publish validated reviews)
     match /reviews/{reviewId} {
-      // Anyone can read reviews
       allow read: if true;
-      
-      // Allow ANY visitor (guest or logged-in user) to create reviews with valid data
       allow create: if isValidReview();
-      
-      // Only authenticated users can update likes and dislikes
-      allow update: if isAuthenticated() 
-        && request.resource.data.diff(resource.data).affectedKeys()
-            .hasOnly(['likes', 'dislikes']);
-
-      // Only admins can delete reviews
+      allow update: if isAdmin() || (
+        isAuthenticated() &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'dislikes'])
+      );
       allow delete: if isAdmin();
     }
     
-    // Bookings collection (Allows ANY visitor to submit booking inquiries)
+    // Bookings collection (Owner or Admin can read; Validated create; Owner can set bookingId; Admin full control)
     match /bookings/{bookingId} {
-      allow read: if isAuthenticated();
-      allow create: if true;
-      allow update, delete: if isAuthenticated();
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isValidBooking();
+      allow update: if isAuthenticated() && (
+        isAdmin() ||
+        (resource.data.userId == request.auth.uid &&
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['bookingId']))
+      );
+      allow delete: if isAdmin();
     }
 
-    // UserReactions collection
+    // UserReactions collection (Preserved from original rules - Strict Owner-Only Access)
     match /userReactions/{reactionId} {
-      // Allow read if the reaction belongs to the current user
       allow read: if isAuthenticated() 
         && reactionId.matches(request.auth.uid + "_.*");
-      
-      // Allow create/update if the reaction belongs to the current user
       allow create, update: if isAuthenticated() 
         && reactionId.matches(request.auth.uid + "_.*")
         && request.resource.data.keys().hasOnly(['liked', 'disliked']);
+      allow delete: if isAdmin();
     }
 
-    // Feedback collection
+    // Feedback collection (Preserved from original rules, secured so only owner/admin can read/modify)
     match /feedback/{feedbackId} {
-      allow read: if isAuthenticated();
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.userId == request.auth.uid);
       allow create: if true;
-      allow update, delete: if isAuthenticated() && request.auth.uid == resource.data.userId;
+      allow update, delete: if isAdmin() || (isAuthenticated() && request.auth.uid == resource.data.userId);
+    }
+
+    // SiteAnalytics collection (Write-Only Telemetry for Visitors, Admin-Only Read/Delete)
+    match /siteAnalytics/{eventId} {
+      allow create: if isValidAnalyticsEvent();
+      allow read, update, delete: if isAdmin();
+    }
+
+    // IMPORTANT: Default deny-all fallback (Replaces the dangerous `allow read, write: if isAuthenticated()` wildcard)
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

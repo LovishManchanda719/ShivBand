@@ -19,6 +19,7 @@ import { db, auth} from "@/lib/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import type { User as FirebaseUser } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 interface BookingData {
   userId: string;
@@ -32,9 +33,13 @@ interface BookingData {
   bookingId?: string;
 }
 
-// Input Sanitizer for XSS security protection
-const sanitizeInput = (str: string): string => {
-  return str.replace(/<[^>]*>?/gm, '').trim();
+// Input Sanitizer for XSS & payload length security protection
+const sanitizeInput = (str: string, maxLen = 500): string => {
+  return str
+    .replace(/<[^>]*>?/gm, '')
+    .replace(/[<>]/g, '')
+    .trim()
+    .slice(0, maxLen);
 };
 
 const ContactPage: React.FC = () => {
@@ -47,6 +52,8 @@ const ContactPage: React.FC = () => {
   const [preferredDate, setPreferredDate] = useState("");
   const [preferredTime, setPreferredTime] = useState("");
   const [additionalDetails, setAdditionalDetails] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [lastSubmittedAt, setLastSubmittedAt] = useState<number>(0);
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -62,6 +69,18 @@ const ContactPage: React.FC = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Anti-bot honeypot check
+    if (honeypot) {
+      return;
+    }
+
+    // Rate-limit: 30 seconds cooldown between submissions
+    const now = Date.now();
+    if (now - lastSubmittedAt < 30000) {
+      alert("Please wait 30 seconds before submitting another booking request.");
+      return;
+    }
     
     if (!user) {
       router.push('/login');
@@ -73,15 +92,20 @@ const ContactPage: React.FC = () => {
       return;
     }
 
+    if (!/^[0-9]{10}$/.test(phone.trim())) {
+      alert("Please enter a valid 10-digit phone number");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const bookingData: BookingData = {
         userId: user.uid,
-        name: sanitizeInput(name),
-        phone: sanitizeInput(phone),
-        preferredDate: sanitizeInput(preferredDate),
-        preferredTime: sanitizeInput(preferredTime),
-        additionalDetails: sanitizeInput(additionalDetails),
+        name: sanitizeInput(name, 80),
+        phone: sanitizeInput(phone, 15),
+        preferredDate: sanitizeInput(preferredDate, 20),
+        preferredTime: sanitizeInput(preferredTime, 20),
+        additionalDetails: sanitizeInput(additionalDetails, 1000),
         status: 'pending',
         createdAt: serverTimestamp(),
       };
@@ -92,6 +116,11 @@ const ContactPage: React.FC = () => {
         bookingId
       });
 
+      trackAnalyticsEvent("booking_submitted", {
+        preferred_date: bookingData.preferredDate,
+      });
+
+      setLastSubmittedAt(Date.now());
       setName("");
       setPhone("");
       setPreferredDate("");
@@ -258,6 +287,17 @@ const ContactPage: React.FC = () => {
               Book Your Event
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Hidden Anti-Bot Honeypot Field */}
+              <input
+                type="text"
+                name="website_url_confirm"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
               {/* Name Input */}
               <div>
                 <label 
