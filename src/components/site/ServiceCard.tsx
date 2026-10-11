@@ -18,6 +18,7 @@ export default function ServiceCard({ service, index }: { service: Service; inde
                 alt={img.alt}
                 fill
                 sizes="(min-width: 1024px) 30vw, 48vw"
+                style={img.focus ? { objectPosition: img.focus } : undefined}
                 className="photo-grade object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" aria-hidden="true" />

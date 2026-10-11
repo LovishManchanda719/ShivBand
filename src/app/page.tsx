@@ -5,6 +5,7 @@ import Hero from "@/components/site/Hero";
 import Footer from "@/components/Footer";
 import SectionHeading from "@/components/site/SectionHeading";
 import ServiceCard from "@/components/site/ServiceCard";
+import ServiceIcon from "@/components/site/ServiceIcon";
 import ReviewsList from "@/components/site/ReviewsList";
 import BookingForm from "@/components/site/BookingForm";
 import Faq from "@/components/site/Faq";
@@ -20,13 +21,18 @@ const STEPS = [
   { title: "We arrive on time", text: "One team, in uniform, ready before the baraat leaves." },
 ];
 
+// Shown at their natural shape (no cropping). Width/height are the real file sizes.
 const GALLERY = [
-  { src: "/images/107.jpg", alt: "Groom on a decorated ghodi with chhatri lights in a Delhi baraat", cls: "col-span-2 row-span-2" },
-  { src: "/images/2.jpg", alt: "Decorated white wedding ghodi by Shiv Band", cls: "" },
-  { src: "/images/3.jpg", alt: "Shiv Band trumpet player in ceremonial uniform", cls: "" },
-  { src: "/images/101.jpg", alt: "Dhol players before a night baraat", cls: "" },
-  { src: "/images/1.jpg", alt: "Flower-decorated wedding baggi", cls: "" },
+  { src: "/images/groom-ghodi-chhatri-lights.jpg", w: 1254, h: 1254, alt: "Groom on a decorated ghodi with chhatri lights in a Delhi baraat" },
+  { src: "/images/brass-band-chhatri-lights.jpg", w: 941, h: 1672, alt: "Shiv Band brass band player with chhatri lights at a night baraat" },
+  { src: "/images/shiv-band-brass-band-procession.jpg", w: 1672, h: 941, alt: "Shiv Band brass band procession with SHIV BAND drum signs" },
+  { src: "/images/vintage-car/red-vintage-car-groom.jpg", w: 1086, h: 1448, alt: "Groom in a decorated red vintage car during a Delhi baraat" },
+  { src: "/images/dhol-wale-baraat.jpg", w: 941, h: 1671, alt: "Dhol players before a night baraat" },
+  { src: "/images/2.jpg", w: 736, h: 981, alt: "Decorated white wedding ghodi by Shiv Band" },
 ];
+
+// Three highlighted services on the home page; the rest are listed as links.
+const FEATURED = ["wedding-band", "ghodi-for-wedding", "baraat-package"];
 
 export default async function HomePage() {
   return (
@@ -86,10 +92,28 @@ export default async function HomePage() {
                 All services <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
               </Link>
             </div>
-            <div className="mt-16 grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-8 sm:gap-y-16 lg:grid-cols-3">
-              {SERVICES.map((s, i) => (
-                <ServiceCard key={s.slug} service={s} index={i} />
+            <div className="-mx-5 mt-14 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-8 sm:overflow-visible sm:px-0 sm:pb-0">
+              {SERVICES.filter((s) => FEATURED.includes(s.slug)).map((s, i) => (
+                <div key={s.slug} className="w-[72vw] max-w-[300px] shrink-0 snap-start sm:w-auto sm:max-w-none">
+                  <ServiceCard service={s} index={i} />
+                </div>
               ))}
+            </div>
+            <div className="mt-14 border-t border-line pt-8">
+              <p className="eyebrow mb-4">Also available</p>
+              <ul className="flex flex-wrap gap-2">
+                {SERVICES.filter((s) => !FEATURED.includes(s.slug)).map((s) => (
+                  <li key={s.slug}>
+                    <Link
+                      href={`/services/${s.slug}`}
+                      className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-[14px] text-ink transition-colors hover:border-gold hover:bg-ivory"
+                    >
+                      <ServiceIcon name={s.icon} className="h-4 w-4 text-gold" />
+                      {s.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
@@ -136,13 +160,17 @@ export default async function HomePage() {
               View all photos <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
             </Link>
           </div>
-          <div className="mt-12 grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[220px] md:grid-cols-4 md:gap-4">
+          <div className="mt-12 columns-2 gap-3 md:columns-3 md:gap-4">
             {GALLERY.map((g, i) => (
-              <div
-                key={g.src}
-                className={`relative overflow-hidden rounded-2xl bg-sand ${g.cls} ${i === 4 ? "hidden md:block" : ""}`}
-              >
-                <Image src={g.src} alt={g.alt} fill sizes="(min-width: 768px) 25vw, 50vw" className="photo-grade object-cover" />
+              <div key={g.src} className={`mb-3 break-inside-avoid overflow-hidden rounded-2xl bg-sand md:mb-4 ${i >= 4 ? "hidden md:block" : ""}`}>
+                <Image
+                  src={g.src}
+                  alt={g.alt}
+                  width={g.w}
+                  height={g.h}
+                  sizes="(min-width: 768px) 33vw, 50vw"
+                  className="photo-grade h-auto w-full"
+                />
               </div>
             ))}
           </div>

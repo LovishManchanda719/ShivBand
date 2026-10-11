@@ -1208,7 +1208,7 @@ export default function AdminDashboardPage() {
                       setPhotoUrlInput(e.target.value);
                       setPhotoPreview(e.target.value);
                     }}
-                    placeholder="https://... or /images/101.jpg"
+                    placeholder="https://... or /images/dhol-wale-baraat.jpg"
                     className={`w-full p-3 rounded-xl border text-xs ${
                       isDarkMode
                         ? "bg-gray-800 border-gray-700 text-white"

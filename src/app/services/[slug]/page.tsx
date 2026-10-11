@@ -102,13 +102,16 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           <div className="lg:col-span-5">
             <div className="relative mx-auto aspect-[4/5] max-w-md overflow-hidden rounded-t-[999px] rounded-b-3xl bg-sand ring-1 ring-gold/50 ring-offset-4 ring-offset-ivory">
               {lead ? (
-                <Image src={lead.src} alt={lead.alt} fill priority sizes="(min-width: 1024px) 36vw, 90vw" className="photo-grade object-cover" />
+                <Image src={lead.src} alt={lead.alt} fill priority sizes="(min-width: 1024px) 36vw, 90vw" style={lead.focus ? { objectPosition: lead.focus } : undefined} className="photo-grade object-cover" />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center bg-maroon">
                   <ServiceIcon name={s.icon} className="h-24 w-24 text-gold-light" strokeWidth={0.9} />
                 </div>
               )}
             </div>
+            {s.illustrativeImages && lead && (
+              <p className="mt-3 text-center text-[12px] text-stone-light">Illustrative image</p>
+            )}
           </div>
         </div>
       </section>
@@ -168,6 +171,9 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
               </div>
             ))}
           </div>
+          {s.illustrativeImages && (
+            <p className="mt-4 text-[12px] text-stone-light">Illustrative images. Ask us for photos and videos from recent events.</p>
+          )}
           <div className="mt-8">
             <Link href="/gallery/photos" className="link-underline">
               More photos <ArrowRight className="h-4 w-4" strokeWidth={1.5} />

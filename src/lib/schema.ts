@@ -16,7 +16,7 @@ export const localBusinessSchema = () => ({
     "Shiv Band & Light House is a family-run wedding band in Krishna Nagar, East Delhi, serving Delhi NCR since 1996 with brass band, baraat band, ghodi, flower baggi, rath, dhol wale and chhatri lights.",
   url: SITE_URL,
   logo: `${SITE_URL}/icon.svg`,
-  image: [`${SITE_URL}/images/50.jpg`, `${SITE_URL}/images/107.jpg`, `${SITE_URL}/images/2.jpg`, `${SITE_URL}/images/1.jpg`],
+  image: [`${SITE_URL}/images/shiv-band-brass-band-procession.jpg`, `${SITE_URL}/images/groom-ghodi-chhatri-lights.jpg`, `${SITE_URL}/images/2.jpg`, `${SITE_URL}/images/1.jpg`],
   telephone: SITE.phones[0].tel,
   email: SITE.email,
   foundingDate: String(SITE.foundingYear),

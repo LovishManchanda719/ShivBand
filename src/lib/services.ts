@@ -21,8 +21,9 @@ export interface Service {
   intro: string[]; // paragraphs
   includes: string[];
   occasions: string[];
-  images: { src: string; alt: string }[]; // may be empty until real photos are added
+  images: { src: string; alt: string; focus?: string }[]; // focus = CSS object-position; may be empty until real photos are added
   videos?: { src: string; poster: string; title: string }[]; // short muted clips from real events
+  illustrativeImages?: boolean; // true when photos are illustrations, not from a real event
   faqs: ServiceFaq[];
 }
 
@@ -66,9 +67,9 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Baraat procession", "Groom entry", "Jaimala", "Engagement and roka", "Religious processions"],
     images: [
-      { src: "/images/50.jpg", alt: "Shiv Band brass band playing in a night baraat procession in Delhi" },
+      { src: "/images/shiv-band-brass-band-procession.jpg", alt: "Shiv Band brass band playing in a night baraat procession in Delhi" },
       { src: "/images/3.jpg", alt: "Shiv Band trumpet player in red ceremonial uniform" },
-      { src: "/images/103.jpg", alt: "Wedding band musicians walking with chhatri lights at night" },
+      { src: "/images/brass-band-chhatri-lights.jpg", alt: "Wedding band musicians walking with chhatri lights at night" },
       { src: "/images/108.jpg", alt: "Shiv Band wedding band uniforms displayed at the Krishna Nagar shop" },
     ],
     faqs: [
@@ -131,7 +132,7 @@ export const SERVICES: Service[] = [
     occasions: ["Groom's ghudchadi", "Baraat procession", "Sehrabandi", "Pre-wedding photo shoots"],
     images: [
       { src: "/images/2.jpg", alt: "Decorated white wedding ghodi with traditional shringar by Shiv Band" },
-      { src: "/images/107.jpg", alt: "Groom riding a decorated ghodi under chhatri lights in a Delhi baraat" },
+      { src: "/images/groom-ghodi-chhatri-lights.jpg", alt: "Groom riding a decorated ghodi under chhatri lights in a Delhi baraat" },
     ],
     faqs: [
       {
@@ -232,7 +233,7 @@ export const SERVICES: Service[] = [
       "Can play alongside the brass band",
     ],
     occasions: ["Baraat", "Mehndi", "Sangeet", "Roka", "Jago night", "Bride and groom entry"],
-    images: [{ src: "/images/101.jpg", alt: "Shiv Band dhol players ready for a wedding baraat at night" }],
+    images: [{ src: "/images/dhol-wale-baraat.jpg", alt: "Shiv Band dhol players ready for a wedding baraat at night" }],
     faqs: [
       {
         q: "Can I book dhol wale without the full band?",
@@ -285,8 +286,8 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Evening baraat", "Groom entry", "Venue entrance", "Religious processions"],
     images: [
-      { src: "/images/103.jpg", alt: "Crystal chhatri lights lighting up a night baraat in Delhi" },
-      { src: "/images/107.jpg", alt: "Baraat with chhatri lights and light strings around the groom's ghodi" },
+      { src: "/images/brass-band-chhatri-lights.jpg", alt: "Crystal chhatri lights lighting up a night baraat in Delhi" },
+      { src: "/images/groom-ghodi-chhatri-lights.jpg", alt: "Baraat with chhatri lights and light strings around the groom's ghodi" },
     ],
     faqs: [
       {
@@ -331,7 +332,11 @@ export const SERVICES: Service[] = [
       "Can be combined with brass band, dhol, ghodi and lights",
     ],
     occasions: ["Baraat procession", "Groom entry", "Bride entry", "Jaimala", "Reception welcome"],
-    images: [],
+    images: [
+      { src: "/images/bagpiper/bagpiper-band-wedding.jpg", alt: "Illustration of a bagpiper band in red tartan uniforms at a night wedding" },
+      { src: "/images/bagpiper/bagpiper-band-entry.jpg", alt: "Illustration of bagpipers leading a wedding entry under chhatri lights" },
+    ],
+    illustrativeImages: true,
     faqs: [
       {
         q: "Can the bagpiper band play with the brass band?",
@@ -375,7 +380,12 @@ export const SERVICES: Service[] = [
       "Can be combined with the band and dhol",
     ],
     occasions: ["Milni", "Pheras", "Vidaai", "Griha pravesh", "Religious functions"],
-    images: [],
+    images: [
+      { src: "/images/shehnai/shehnai-band-baraat.jpg", alt: "Illustration of shehnai players in red and gold Shiv Band uniforms at a night wedding" },
+      { src: "/images/shehnai/shehnai-players-wedding.jpg", alt: "Illustration of shehnai players leading a wedding entry under chhatri lights" },
+      { src: "/images/shehnai/shehnai-player-closeup.jpg", alt: "Illustration of a shehnai player in ceremonial turban at a wedding" },
+    ],
+    illustrativeImages: true,
     faqs: [
       {
         q: "When is shehnai usually played at a wedding?",
@@ -420,11 +430,11 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Groom entry", "Couple entry", "Vidaai", "Pre-wedding shoots"],
     images: [
-      { src: "/images/vintage-car/red-vintage-car-baraat.jpg", alt: "Groom in a decorated red vintage car leading a night baraat with chhatri lights in Delhi" },
+      { src: "/images/vintage-car/red-vintage-car-groom.jpg", alt: "Groom in a decorated red vintage car leading a night baraat with chhatri lights in Delhi" },
       { src: "/images/vintage-car/white-vintage-car-baraat.jpg", alt: "Family dancing on a white vintage car during a Delhi baraat with chhatri lights" },
     ],
     videos: [
-      { src: "/images/vintage-car/vintage-car-baraat.mp4", poster: "/images/vintage-car/red-vintage-car-baraat.jpg", title: "Red vintage car leading the baraat" },
+      { src: "/images/vintage-car/vintage-car-baraat.mp4", poster: "/images/vintage-car/red-vintage-car-groom.jpg", title: "Red vintage car leading the baraat" },
       { src: "/images/vintage-car/vintage-car-bride.mp4", poster: "/images/vintage-car/white-vintage-car-baraat.jpg", title: "White vintage car with the family" },
     ],
     faqs: [
@@ -474,8 +484,8 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Full wedding baraat", "Destination baraats within Delhi NCR"],
     images: [
-      { src: "/images/107.jpg", alt: "Complete baraat with ghodi, band and chhatri lights by Shiv Band" },
-      { src: "/images/50.jpg", alt: "Shiv Band brass band leading a full baraat procession" },
+      { src: "/images/groom-ghodi-chhatri-lights.jpg", alt: "Complete baraat with ghodi, band and chhatri lights by Shiv Band", focus: "32% 50%" },
+      { src: "/images/shiv-band-brass-band-procession.jpg", alt: "Shiv Band brass band leading a full baraat procession" },
     ],
     faqs: [
       {

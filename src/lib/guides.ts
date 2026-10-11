@@ -29,7 +29,7 @@ export const GUIDES: Guide[] = [
     published: "2026-10-11",
     updated: "2026-10-11",
     readMinutes: 6,
-    image: { src: "/images/107.jpg", alt: "Groom on a decorated ghodi with chhatri lights during a Delhi baraat" },
+    image: { src: "/images/groom-ghodi-chhatri-lights.jpg", alt: "Groom on a decorated ghodi with chhatri lights during a Delhi baraat" },
     intro:
       "The baraat is the loudest, happiest part of a North Indian wedding — and the part that goes wrong most easily when nobody owns the details. This checklist covers everything families in Delhi usually need to decide, in the order it makes sense to decide it.",
     sections: [

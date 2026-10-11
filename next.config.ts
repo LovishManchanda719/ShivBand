@@ -86,16 +86,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-
-  // SEO: Ensure /favicon.ico requests from Google-Favicon & Bing bots serve the 192x192 Royal SB icon
-  async rewrites() {
-    return [
-      {
-        source: '/favicon.ico',
-        destination: '/icon',
-      },
-    ];
-  },
 };
 
 export default nextConfig;
