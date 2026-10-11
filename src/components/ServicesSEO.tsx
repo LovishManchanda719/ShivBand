@@ -22,37 +22,37 @@ const coreServices = [
   {
     icon: Music,
     title: "Royal Wedding Brass Band & Baraat",
-    subtitle: "Best Wedding Band Near You in Delhi NCR",
+    subtitle: "Best Wedding Band & Baraat Band Near You in Delhi",
     description:
-      "Searching for the nearest wedding band near me or best baraat band in Delhi? Shiv Band & Light House delivers 21-piece to 51-piece royal uniformed brass bands, clarinet & trumpet symphonies, and patriotic & Bollywood baraat hits.",
-    keywords: "Wedding Band Near Me • Baraat Brass Band • Band Baaja Delhi",
+      "Searching for the best wedding band near me or best baraat band near me in Delhi? Shiv Band & Light House delivers 21-piece to 51-piece royal uniformed brass bands, clarinet & trumpet symphonies, and patriotic & Bollywood baraat hits.",
+    keywords: "Best Wedding Band Near Me • Baraat Band • Band Baaja Delhi",
     accent: "from-amber-500 to-orange-500",
   },
   {
     icon: Crown,
-    title: "Royal Groom Ghodi / Ghori / Ghoddii Wala",
-    subtitle: "Best Ghoddii Wala & White Wedding Horse",
+    title: "Royal Groom Ghodi & Ghori Wala",
+    subtitle: "Best Ghodi Wala Near Me & White Wedding Horse",
     description:
-      "Looking for the best ghoddii wala near me or best ghoddii near me? We provide healthy, Calm, royally trained snow-white wedding mares (Ghodi / Ghori) adorned with silver & golden ceremonial zardozi saddle shringar.",
-    keywords: "Best Ghoddii Wala Near Me • Ghodi Near Me • Royal Ghori Delhi",
+      "Looking for the best ghodi wala near me or best ghodi near me? We provide healthy, calm, royally trained snow-white wedding mares (Ghodi / Ghori) adorned with silver & golden ceremonial zardozi saddle shringar.",
+    keywords: "Best Ghodi Wala Near Me • Ghodi Near Me • Royal Ghori Delhi",
     accent: "from-teal-500 to-emerald-500",
   },
   {
     icon: Sparkles,
-    title: "Luxury Flower Buggy / Baggi & Rath Chariot",
-    subtitle: "Nearest Buggy Near Me & Bahubali Rath Entry",
+    title: "Luxury Flower Baggi & Rath Chariot",
+    subtitle: "Best Baggi Near Me & Royal Bahubali Rath Entry",
     description:
-      "Find the best buggy near me and nearest buggy near me with our Victorian horse-drawn carriages, fresh orchid & rose flower baggi (bagghi), and LED-illuminated 2-horse & 4-horse Royal Bahubali Rath Chariots.",
-    keywords: "Nearest Buggy Near Me • Best Buggy Near Me • Flower Baggi & Rath",
+      "Find the best baggi near me and nearest baggi near me with our Victorian horse-drawn carriages, fresh orchid & rose flower baggi, and LED-illuminated 2-horse & 4-horse Royal Bahubali Rath Chariots.",
+    keywords: "Best Baggi Near Me • Nearest Baggi Near Me • Flower Baggi & Rath",
     accent: "from-rose-500 to-amber-500",
   },
   {
     icon: Flame,
-    title: "Punjabi Dhol / Ddhol Wale & Nashik Tasha",
-    subtitle: "Best Ddhol Wale Near Me for Non-Stop Bhangra",
+    title: "Punjabi Dhol Wale & Nashik Tasha",
+    subtitle: "Best Dhol Wale Near Me for Non-Stop Bhangra",
     description:
-      "Hire the best ddhol wale near me (Punjabi dhol players) dressed in traditional Kurta-Tehmat & Turban for baraat processions, jaimala, bride/groom entry, Jago nights, and roka ceremonies across Delhi NCR.",
-    keywords: "Best Ddhol Wale Near Me • Punjabi Dhol Near Me • Dhol Tasha",
+      "Hire the best dhol wale near me (Punjabi dhol players) dressed in traditional Kurta-Tehmat & Turban for baraat processions, jaimala, bride/groom entry, Jago nights, and roka ceremonies across Delhi NCR.",
+    keywords: "Best Dhol Wale Near Me • Punjabi Dhol Near Me • Dhol Tasha",
     accent: "from-purple-500 to-pink-500",
   },
   {
@@ -60,17 +60,17 @@ const coreServices = [
     title: "Vintage Fancy Light House & Chhatri Lights",
     subtitle: "Spectacular Wedding Illumination & Road Lights",
     description:
-      "As Krishna Nagar's premier Light House since 1996, we provide crystal chandelier umbrellas (Chhatri lights), vintage maharaja lanterns, LED light pillars, cold pyro fireworks, and silent trolly generators.",
+      "As Krishna Nagar's premier Light House since 1996, we provide crystal chandelier umbrellas (Chhatri lights), vintage maharaja lanterns, LED light pillars, cold pyro fireworks, and silent trolley generators.",
     keywords: "Fancy Light House Near Me • Chhatri Lights • Baraat Lighting",
     accent: "from-cyan-500 to-teal-500",
   },
   {
     icon: ShieldCheck,
     title: "Complete Wedding Baraat Packages",
-    subtitle: "All-in-One Band + Ghodi + Buggy + Dhol + Lights",
+    subtitle: "All-in-One Band + Ghodi + Baggi + Dhol + Lights",
     description:
       "Book customized all-in-one wedding packages directly with owner Manish Kumar (+91 98186 26259 / 98186 22259). Guaranteed punctual arrival, uniformed artists, and transparent pricing with zero middlemen.",
-    keywords: "Shiv Band & Light House • ShiftBand • Since 1996",
+    keywords: "Shiv Band & Light House • Krishna Nagar Delhi • Since 1996",
     accent: "from-emerald-500 to-teal-600",
   },
 ];
@@ -79,10 +79,10 @@ const areasServed = [
   "Krishna Nagar",
   "Old Govindpura",
   "Parwana Road",
+  "Geeta Colony",
   "Preet Vihar",
   "Laxmi Nagar",
   "Shahdara",
-  "Geeta Colony",
   "Nirman Vihar",
   "Mayur Vihar",
   "Karkardooma",
@@ -105,27 +105,27 @@ const areasServed = [
 const faqs = [
   {
     question:
-      "Which is the best wedding band, ghoddii wala, and buggy service near me in Delhi NCR?",
+      "Which is the best wedding band, baraat band, ghodi wala, and baggi service near me in Delhi NCR?",
     answer:
-      "Shiv Band & Light House (located at D-96 / C-40, Parwana Road, Old Govindpura, Krishna Nagar, New Delhi-110051) has been trusted by 1,000+ families since 1996. Whether you search for the nearest wedding band near me, best ghoddii wala near me (ghodi/ghori), best buggy near me (flower baggi/rath), or best ddhol wale near me (Punjabi dhol), we deliver complete royal baraat services across all of Delhi NCR.",
+      "Shiv Band & Light House (located at D-96 / C-40, Parwana Road, Old Govindpura, Krishna Nagar, New Delhi-110051) has been trusted by 1,000+ families since 1996. Whether you search for the best wedding band near me, best baraat band near me, best ghodi wala near me (ghori), best baggi near me (flower baggi & rath), or best dhol wale near me (Punjabi dhol), we deliver complete royal baraat services across all of Delhi NCR.",
   },
   {
     question:
-      "How do I book Shiv Band & Light House (or ShiftBand) for a wedding baraat?",
+      "How do I book Shiv Band & Light House for a wedding baraat?",
     answer:
-      "You can book online through our Contact page at shiv-band.vercel.app/contact, or call/WhatsApp owner Manish Kumar directly at +91 98186 26259 or +91 98186 22259. People searching for Shiv Band, Shiv Band and Light House, or even voice-searching ShiftBand & Light House can visit our shop daily from 9:00 AM to 9:00 PM near Laxmi Dairy, Krishna Nagar, Delhi.",
+      "You can book online through our Contact page at shiv-band.vercel.app/contact, or call/WhatsApp owner Manish Kumar directly at +91 98186 26259 or +91 98186 22259. Our shop is open daily from 9:00 AM to 9:00 PM near Laxmi Dairy, Old Govindpura, Krishna Nagar, Delhi.",
   },
   {
     question:
-      "Do you provide separate bookings for Ghodi (Ghoddii), Flower Buggy (Baggi), or Punjabi Dhol (Ddhol Wale)?",
+      "Do you provide separate bookings for Ghodi, Flower Baggi, or Punjabi Dhol Wale?",
     answer:
-      "Yes! You can book individual services—such as only Punjabi dhol players (ddhol wale), a royal white wedding horse (ghodi / ghori / ghoddii), a decorated flower buggy (baggi / rath chariot), or fancy chhatri lighting—or combine them into a full royal baraat package.",
+      "Yes! You can book individual services—such as only Punjabi dhol wale, a royal white wedding horse (ghodi / ghori), a decorated flower baggi (rath chariot), or fancy chhatri lighting—or combine them into a full royal baraat package.",
   },
   {
     question:
       "Which areas in Delhi NCR does Shiv Band & Light House serve?",
     answer:
-      "While our main shop is in Old Govindpura, Krishna Nagar (East Delhi - 110051), our brass band, dhol, ghodi, buggy, and fancy lighting teams travel to wedding venues and banquet halls across all of East Delhi, Preet Vihar, Laxmi Nagar, Shahdara, South Delhi, North Delhi, West Delhi, Noida, Greater Noida, Ghaziabad, Gurgaon, and Faridabad.",
+      "While our main shop is in Old Govindpura, Krishna Nagar (East Delhi - 110051), our brass band, dhol wale, ghodi, baggi, and fancy lighting teams travel to wedding venues and banquet halls across all of East Delhi, Geeta Colony, Preet Vihar, Laxmi Nagar, Shahdara, South Delhi, North Delhi, West Delhi, Noida, Greater Noida, Ghaziabad, Gurgaon, and Faridabad.",
   },
 ];
 
@@ -150,7 +150,7 @@ const ServicesSEO: React.FC<ServicesSEOProps> = ({ isDarkMode }) => {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4">
-            Best Wedding Band, Ghodi, Buggy, Dhol &amp; Light House in Delhi
+            Best Wedding Band, Baraat Band, Ghodi, Baggi &amp; Dhol Wale in Delhi
           </h2>
 
           <p
@@ -160,15 +160,15 @@ const ServicesSEO: React.FC<ServicesSEOProps> = ({ isDarkMode }) => {
           >
             From royal brass bands and vintage fancy lighting to decorated white{" "}
             <strong className="font-semibold text-amber-500">
-              ghodi (ghori / ghoddii)
+              ghodi (ghori wala)
             </strong>
             , luxury{" "}
             <strong className="font-semibold text-teal-500">
-              flower buggy (baggi / rath)
+              flower baggi (rath chariot)
             </strong>
             , and high-energy{" "}
             <strong className="font-semibold text-emerald-500">
-              Punjabi dhol (ddhol wale)
+              Punjabi dhol wale
             </strong>{" "}
             — Shiv Band &amp; Light House makes every groom&apos;s entry legendary.
           </p>
@@ -242,7 +242,7 @@ const ServicesSEO: React.FC<ServicesSEOProps> = ({ isDarkMode }) => {
               <h3 className="text-xl sm:text-2xl font-black flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-teal-500 shrink-0" />
                 <span>
-                  Areas We Serve — Nearest Wedding Band, Ghodi, Buggy &amp; Dhol
+                  Areas We Serve — Best Wedding Band, Ghodi, Baggi &amp; Dhol Wale
                   Near You
                 </span>
               </h3>
