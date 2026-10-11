@@ -69,10 +69,11 @@ export const metadata: Metadata = {
   category: "Wedding & Event Services",
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/icon", type: "image/png", sizes: "32x32" },
+      { url: "/favicon.ico", sizes: "192x192", type: "image/png" },
+      { url: "/icon", sizes: "192x192", type: "image/png" },
+      { url: "/icon.svg", sizes: "any", type: "image/svg+xml" },
     ],
-    shortcut: ["/icon.svg"],
+    shortcut: ["/favicon.ico"],
     apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
   },
   alternates: {
