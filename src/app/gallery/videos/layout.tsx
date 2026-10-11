@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Live Wedding Band & Barat Performance Videos",
+  title: "Videos — Live Wedding Band & Baraat Performances",
   description:
-    "Watch live wedding brass band, Punjabi dhol, and fancy light house performance videos by Shiv Band & Light House, Krishna Nagar, Delhi.",
-  alternates: {
-    canonical: "/gallery/videos",
-  },
+    "Watch Shiv Band & Light House perform live at baraats across Delhi NCR — brass band, dhol wale, ghodi and chhatri lights.",
+  alternates: { canonical: "/gallery/videos" },
 };
 
-export default function VideoGalleryLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function VideoGalleryLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

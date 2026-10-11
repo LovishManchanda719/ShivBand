@@ -1,15 +1,6 @@
-import type { Metadata } from "next";
-import GalleryPage from "@/components/GalleryPage";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Wedding Photo & Video Gallery",
-  description:
-    "Explore wedding barat photos and live performance videos by Shiv Band & Light House in Krishna Nagar, Old Govindpura, New Delhi.",
-  alternates: {
-    canonical: "/gallery",
-  },
-};
-
-export default function Page() {
-  return <GalleryPage />;
-}
+// /gallery has no content of its own; send visitors (and search engines) to the photo gallery.
+export default function GalleryIndex() {
+  redirect("/gallery/photos");
+}

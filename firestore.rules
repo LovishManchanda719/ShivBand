@@ -55,7 +55,10 @@ service cloud.firestore {
              data.preferredDate is string &&
              data.preferredDate.size() <= 30 &&
              data.preferredTime is string &&
-             data.preferredTime.size() <= 30;
+             data.preferredTime.size() <= 30 &&
+             data.status == "pending" &&
+             request.resource.data.keys().size() <= 15 &&
+             (!("additionalDetails" in data) || (data.additionalDetails is string && data.additionalDetails.size() <= 1500));
     }
 
     // Validate analytics event payload (write-only privacy-safe telemetry)
@@ -67,7 +70,9 @@ service cloud.firestore {
              data.path is string &&
              data.path.size() <= 200 &&
              data.visitorId is string &&
-             data.visitorId.size() <= 100;
+             data.visitorId.size() <= 100 &&
+             request.resource.data.keys().size() <= 45 &&
+             (!("metadata" in data) || (data.metadata is string && data.metadata.size() <= 600));
     }
 
     // Videos collection (Public Read, Admin-Only Write)
@@ -81,6 +86,7 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isAdmin();
     }
+
 
     // Users collection (Strict Owner-Only Access + Admin)
     match /users/{userId} {
@@ -137,7 +143,8 @@ service cloud.firestore {
     // Feedback collection (Preserved from original rules, secured so only owner/admin can read/modify)
     match /feedback/{feedbackId} {
       allow read: if isAdmin() || (isAuthenticated() && resource.data.userId == request.auth.uid);
-      allow create: if true;
+      allow create: if request.resource.data.keys().size() <= 12 &&
+        (!("message" in request.resource.data) || request.resource.data.message.size() <= 2000);
       allow update, delete: if isAdmin() || (isAuthenticated() && request.auth.uid == resource.data.userId);
     }
 

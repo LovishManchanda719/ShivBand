@@ -1,10 +1,12 @@
 "use client";
 
-import { logEvent } from "firebase/analytics";
+import { logEvent, setConsent } from "firebase/analytics";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db, auth, initFirebaseAnalytics } from "./firebaseConfig";
 
-export const ADMIN_EMAIL = "lovishmanchanda719@gmail.com";
+export { ADMIN_EMAIL } from "./admin";
+
+export const ANALYTICS_CONSENT_KEY = "sb_analytics_consent";
 
 export type AnalyticsEventName =
   | "page_view"
@@ -118,74 +120,36 @@ export const getVisitorGeoLocation = async (): Promise<GeoLocationInfo> => {
     latitude: null,
     longitude: null,
   };
-
   if (typeof window === "undefined") return defaultGeo;
 
   try {
     const cached = sessionStorage.getItem("sb_geo_info");
-    if (cached) {
-      return JSON.parse(cached) as GeoLocationInfo;
-    }
+    if (cached) return JSON.parse(cached) as GeoLocationInfo;
   } catch {
     // ignore storage errors
   }
 
+  // Approximate city comes from our own server (hosting provider's location headers).
+  // The IP address is never sent to third parties or stored.
   if (!geoPromise) {
-    geoPromise = (async () => {
-      try {
-        const res = await fetch("https://ipwho.is/", { cache: "force-cache" });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.success !== false) {
-            const info: GeoLocationInfo = {
-              city: (data.city || "Unknown").slice(0, 80),
-              region: (data.region || "Unknown").slice(0, 80),
-              country: (data.country || "India").slice(0, 80),
-              postal: String(data.postal || "").slice(0, 20),
-              isp: String(data.connection?.isp || data.org || "").slice(0, 100),
-              ip: String(data.ip || "").slice(0, 45),
-              latitude: typeof data.latitude === "number" ? data.latitude : null,
-              longitude: typeof data.longitude === "number" ? data.longitude : null,
-            };
-            try {
-              sessionStorage.setItem("sb_geo_info", JSON.stringify(info));
-            } catch {
-              // ignore
-            }
-            return info;
-          }
-        }
-      } catch {
-        // Fallback to ipapi.co if ipwho.is is unreachable
+    geoPromise = fetch("/api/geo", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d: { city?: string; region?: string; country?: string } | null) => {
+        const info: GeoLocationInfo = {
+          ...defaultGeo,
+          city: d?.city || "Unknown",
+          region: d?.region || "Unknown",
+          country: d?.country || "India",
+        };
         try {
-          const res2 = await fetch("https://ipapi.co/json/");
-          if (res2.ok) {
-            const d2 = await res2.json();
-            const info: GeoLocationInfo = {
-              city: (d2.city || "Unknown").slice(0, 80),
-              region: (d2.region || "Unknown").slice(0, 80),
-              country: (d2.country_name || "India").slice(0, 80),
-              postal: String(d2.postal || "").slice(0, 20),
-              isp: String(d2.org || "").slice(0, 100),
-              ip: String(d2.ip || "").slice(0, 45),
-              latitude: typeof d2.latitude === "number" ? d2.latitude : null,
-              longitude: typeof d2.longitude === "number" ? d2.longitude : null,
-            };
-            try {
-              sessionStorage.setItem("sb_geo_info", JSON.stringify(info));
-            } catch {
-              // ignore
-            }
-            return info;
-          }
+          sessionStorage.setItem("sb_geo_info", JSON.stringify(info));
         } catch {
           // ignore
         }
-      }
-      return defaultGeo;
-    })();
+        return info;
+      })
+      .catch(() => defaultGeo);
   }
-
   return geoPromise;
 };
 
@@ -228,8 +192,8 @@ export const getVisitorProfile = (): VisitorProfile | null => {
       isReturningVisitor: isReturningVisitor && visitCount > 1,
       visitCount: Math.max(1, visitCount),
       userId: auth.currentUser?.uid || "guest",
-      userEmail: auth.currentUser?.email || "guest",
-      userName: auth.currentUser?.displayName || "Guest Visitor",
+      userEmail: "",
+      userName: "",
       deviceType: detectDeviceType(ua),
       os: detectOS(ua),
       browser: detectBrowser(ua),
@@ -248,21 +212,6 @@ export const getVisitorProfile = (): VisitorProfile | null => {
   }
 };
 
-const maskIpAddress = (rawIp: string): string => {
-  if (!rawIp) return "";
-  if (rawIp.includes(".")) {
-    const parts = rawIp.split(".");
-    if (parts.length === 4) {
-      return `${parts[0]}.${parts[1]}.xxx.xxx`;
-    }
-  }
-  if (rawIp.includes(":")) {
-    const parts = rawIp.split(":");
-    return `${parts.slice(0, 2).join(":")}:xxxx:xxxx`;
-  }
-  return "masked";
-};
-
 export const trackAnalyticsEvent = async (
   eventName: AnalyticsEventName,
   metadata: Record<string, string | number | boolean> = {}
@@ -270,10 +219,9 @@ export const trackAnalyticsEvent = async (
   if (typeof window === "undefined") return;
 
   try {
-    // Respect user privacy opt-out under DPDP Act 2023
-    if (localStorage.getItem("sb_analytics_opt_out") === "true") {
-      return;
-    }
+    // Anonymous analytics run by default (no IP, no name/email, no third-party lookups).
+    // Visitors can switch them off on the privacy page.
+    if (localStorage.getItem("sb_analytics_opt_out") === "true") return;
 
     const path = window.location.pathname || "/";
     // Don't pollute visitor analytics with admin dashboard actions
@@ -287,6 +235,7 @@ export const trackAnalyticsEvent = async (
     // 1. Log to Firebase / Google Analytics 4 (if enabled)
     const ga = await initFirebaseAnalytics();
     if (ga) {
+      setConsent({ ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "granted" });
       logEvent(ga, eventName as string, {
         page_path: path,
         traffic_source: profile?.trafficSource || "Direct",
@@ -307,8 +256,9 @@ export const trackAnalyticsEvent = async (
         isReturningVisitor: profile.isReturningVisitor,
         visitCount: profile.visitCount,
         userId: auth.currentUser?.uid || profile.userId,
-        userEmail: (auth.currentUser?.email || profile.userEmail).slice(0, 120),
-        userName: (auth.currentUser?.displayName || profile.userName).slice(0, 100),
+        // Names and emails are deliberately not stored with analytics.
+        userEmail: "",
+        userName: "",
         deviceType: profile.deviceType,
         os: profile.os,
         browser: profile.browser,
@@ -325,8 +275,7 @@ export const trackAnalyticsEvent = async (
         region: geo.region,
         country: geo.country,
         postal: geo.postal,
-        isp: geo.isp,
-        ip: maskIpAddress(geo.ip),
+        // IP address and ISP are deliberately not stored (data minimisation).
         dateString: now.toISOString().split("T")[0],
         dayOfWeek: days[now.getDay()],
         hourOfDay: now.getHours(),

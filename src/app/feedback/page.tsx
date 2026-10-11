@@ -1,331 +1,200 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "@/context/ThemeContext";
-import { useAuth } from "@/context/AuthContext";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { collection, addDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { addDoc, collection } from "firebase/firestore";
 import { signInAnonymously } from "firebase/auth";
-import { db, auth } from "@/lib/firebaseConfig";
-import { CheckCircle, MessageSquare, User as UserIcon } from "lucide-react";
+import { CircleCheck, ExternalLink, LoaderCircle, Send } from "lucide-react";
+import { SITE } from "@/lib/site";
+import { auth, db } from "@/lib/firebaseConfig";
+import { useAuth } from "@/context/AuthContext";
+import { trackAnalyticsEvent } from "@/lib/analytics";
+import { PageHeader, PageShell } from "@/components/site/PageShell";
 
-// Vibrant SVG Flower Emblem Avatars for reviewers
-const flowerSvgs = [
-  // Golden Marigold Flower Emblem
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23f59e0b'/><path d='M50 20c4 8 16 8 20 0c0 9 8 16 0 20c9 4 9 16 0 20c8 4 0 16 0 20c-4-8-16-8-20 0c0-9-8-16 0-20c-9-4-9-16 0-20c-8-4 0-16 0-20z' fill='%23ffffff' opacity='0.95'/><circle cx='50' cy='50' r='14' fill='%23d97706'/></svg>",
-  // Royal Rose Flower Emblem
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23e11d48'/><circle cx='50' cy='50' r='32' fill='%23ffffff' opacity='0.9'/><path d='M50 26a24 24 0 1 0 0 48a24 24 0 1 0 0-48z' fill='none' stroke='%23be123c' stroke-width='6'/><circle cx='50' cy='50' r='12' fill='%23be123c'/></svg>",
-  // Teal Lotus Flower Emblem
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%230d9488'/><path d='M50 20C36 38 30 50 50 80C70 50 64 38 50 20Z' fill='%23ffffff'/><path d='M22 50C38 40 48 50 78 50C62 60 52 50 22 50Z' fill='%23ccfbf1'/></svg>",
-  // Sunflower Amber Emblem
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23d97706'/><circle cx='50' cy='50' r='26' fill='%2378350f'/><circle cx='50' cy='50' r='38' stroke='%23fef08a' stroke-width='6' stroke-dasharray='10 6' fill='none'/></svg>",
-  // Emerald Royal Floral Emblem
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='50' fill='%23059669'/><path d='M50 22L58 42L78 50L58 58L50 78L42 58L22 50L42 42Z' fill='%23ffffff'/><circle cx='50' cy='50' r='10' fill='%23f59e0b'/></svg>"
+const clean = (s: string, max: number) => s.replace(/<[^>]*>?/gm, "").replace(/[<>]/g, "").trim().slice(0, max);
+
+const RATINGS = [
+  { v: 5, label: "Excellent" },
+  { v: 4, label: "Very good" },
+  { v: 3, label: "Good" },
+  { v: 2, label: "Fair" },
+  { v: 1, label: "Poor" },
 ];
 
-const getFlowerAvatarUrl = (name: string, photoURL?: string): string => {
-  if (photoURL && photoURL.startsWith("data:image")) {
-    return photoURL;
-  }
-  let hash = 0;
-  for (let i = 0; i < (name || "Guest").length; i++) {
-    hash += (name || "Guest").charCodeAt(i);
-  }
-  return flowerSvgs[hash % flowerSvgs.length];
-};
-
-// Rating component
-const StarRating = ({ 
-  rating, 
-  setRating 
-}: { 
-  rating: number, 
-  setRating: (rating: number) => void 
-}) => {
-  return (
-    <div className="flex space-x-1">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <motion.span
-          key={star}
-          whileHover={{ scale: 1.2 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setRating(star)}
-          className={`cursor-pointer text-3xl select-none transition-colors ${
-            star <= rating ? "text-amber-400" : "text-gray-300 dark:text-gray-600"
-          }`}
-        >
-          ★
-        </motion.span>
-      ))}
-    </div>
-  );
-};
-
-// Input Sanitizer for XSS & payload length security protection
-const sanitizeInput = (str: string, maxLen = 1000): string => {
-  return str
-    .replace(/<[^>]*>?/gm, '')
-    .replace(/[<>]/g, '')
-    .trim()
-    .slice(0, maxLen);
-};
-
-const FeedbackPage: React.FC = () => {
-  const { isDarkMode, toggleDarkMode } = useTheme();
+export default function FeedbackPage() {
   const { user } = useAuth();
-  
-  // Form state
-  const [name, setName] = useState(user?.displayName || "");
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(5);
   const [honeypot, setHoneypot] = useState("");
-  const [lastSubmittedAt, setLastSubmittedAt] = useState<number>(0);
-  
-  // Submission state
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  // Form validation
-  const validateForm = () => {
-    if (!name.trim()) {
-      alert("Please enter your name");
-      return false;
-    }
-    if (rating < 1 || rating > 5) {
-      alert("Please select a rating star between 1 and 5");
-      return false;
-    }
-    if (!comment.trim()) {
-      alert("Please write your review comment");
-      return false;
-    }
-    return true;
-  };
+  useEffect(() => {
+    if (user?.displayName && !name) setName(user.displayName);
+  }, [user, name]);
 
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (honeypot) return;
+    const errs: Record<string, string> = {};
+    if (!name.trim()) errs.name = "Please enter your name";
+    if (!rating) errs.rating = "Please choose a rating";
+    if (comment.trim().length < 10) errs.comment = "Please write at least a sentence about your experience";
+    setErrors(errs);
+    if (Object.keys(errs).length) return;
 
-    // Anti-bot honeypot check
-    if (honeypot) {
-      return;
-    }
-
-    // Rate-limit: 30 seconds cooldown between review submissions
-    const now = Date.now();
-    if (now - lastSubmittedAt < 30000) {
-      alert("Please wait 30 seconds before submitting another review.");
-      return;
-    }
-    
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
+    setStatus("sending");
     try {
-      let activeUserId = user?.uid || "guest";
-      const assignedFlowerAvatar = getFlowerAvatarUrl(name.trim(), user?.photoURL || undefined);
-
-      // If user is not logged in, authenticate anonymously in background to fulfill Firestore security rules
       if (!auth.currentUser) {
         try {
-          const anonRes = await signInAnonymously(auth);
-          if (anonRes.user) {
-            activeUserId = anonRes.user.uid;
-          }
-        } catch (authError) {
-          console.warn("Background anonymous auth notice:", authError);
+          await signInAnonymously(auth);
+        } catch {
+          /* continue as guest */
         }
       }
-
-      // Add review to Firestore with sanitized inputs and flower avatar
       await addDoc(collection(db, "reviews"), {
-        name: sanitizeInput(name, 80),
-        rating: Math.min(5, Math.max(1, Math.round(rating))),
-        comment: sanitizeInput(comment, 1200),
+        name: clean(name, 80),
+        rating,
+        comment: clean(comment, 1200),
+        location: clean(location, 80),
         date: new Date(),
         likes: 0,
         dislikes: 0,
-        userId: activeUserId,
-        photoURL: assignedFlowerAvatar,
-        location: "Delhi NCR"
+        userId: auth.currentUser?.uid || "guest",
+        photoURL: user?.photoURL || "",
       });
-
-      const { trackAnalyticsEvent } = await import("@/lib/analytics");
+      fetch("/api/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        keepalive: true,
+        body: JSON.stringify({ type: "review", name, rating, comment, location }),
+      }).catch(() => undefined);
       trackAnalyticsEvent("review_submitted", { rating });
-
-      // Reset form and show success message
-      setLastSubmittedAt(Date.now());
-      if (!user) setName("");
-      setComment("");
-      setRating(5);
-      setSubmitStatus("success");
-      
-      setTimeout(() => {
-        setSubmitStatus("idle");
-      }, 4000);
-    } catch (error: unknown) {
-      console.error("Error submitting review:", error);
-      const err = error as { code?: string; message?: string };
-      if (err?.code === "permission-denied" || err?.message?.includes("permissions")) {
-        alert("Firestore Permission Notice: To allow guest reviews without login, please set 'allow read, create: if true;' for the reviews collection in your Firebase Console Firestore Rules.");
-      }
-      setSubmitStatus("error");
-      
-      setTimeout(() => {
-        setSubmitStatus("idle");
-      }, 4000);
-    } finally {
-      setIsSubmitting(false);
+      setStatus("sent");
+    } catch (err) {
+      console.error("Review submit failed", err);
+      setStatus("error");
     }
   };
 
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-300 ${
-      isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
-    }`}>
-      <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-      
-      <main className="flex-grow container mx-auto px-4 pt-24 sm:pt-28 pb-16">
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 font-bold text-xs uppercase tracking-wider mb-3">
-            <MessageSquare className="w-3.5 h-3.5" />
-            <span>Public Feedback & Reviews</span>
-          </div>
+    <PageShell>
+      <PageHeader
+        crumbs={[
+          { name: "Home", path: "/" },
+          { name: "Reviews", path: "/reviews" },
+          { name: "Write a review", path: "/feedback" },
+        ]}
+        eyebrow="Your experience"
+        title={
+          <>
+            How was your <em className="italic text-maroon">baraat</em>?
+          </>
+        }
+        intro="Your words help other families choose. Your name and review will be shown publicly on this website."
+      >
+        <a href={SITE.googleReviewUrl} target="_blank" rel="noopener noreferrer" className="link-underline mt-8">
+          Prefer Google? Review us on Google <ExternalLink className="h-4 w-4" strokeWidth={1.5} />
+        </a>
+      </PageHeader>
 
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight mb-3">
-            Write a Review
-          </h1>
-          <p className={`text-sm sm:text-base ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-            Share your experience with Shiv Band & Light House.
-          </p>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className={`max-w-xl mx-auto p-6 sm:p-8 rounded-2xl shadow-xl border ${
-            isDarkMode 
-              ? "bg-gray-900 border-gray-800 text-white" 
-              : "bg-white border-gray-200 text-gray-900"
-          }`}
-        >
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Hidden Anti-Bot Honeypot Field */}
-            <input
-              type="text"
-              name="company_website"
-              value={honeypot}
-              onChange={(e) => setHoneypot(e.target.value)}
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              className="hidden"
-            />
-            
-            {/* Name Input */}
-            <div>
-              <label htmlFor="name" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
-                Your Name <span className="text-red-500">*</span>
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className={`w-full p-3 pl-10 rounded-xl border text-sm transition-colors ${
-                    isDarkMode 
-                      ? "bg-gray-800 border-gray-700 text-white focus:border-teal-500" 
-                      : "bg-gray-50 border-gray-300 focus:border-teal-500"
-                  }`}
-                  placeholder="Enter your full name"
-                />
-                <UserIcon className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+      <section className="container pb-24">
+        <div className="max-w-2xl rounded-3xl border border-line bg-white p-6 sm:p-10">
+          {status === "sent" ? (
+            <div className="py-6 text-center" role="status">
+              <CircleCheck className="mx-auto h-10 w-10 text-gold" strokeWidth={1.25} />
+              <h2 className="mt-4 font-display text-3xl text-ink">Thank you</h2>
+              <p className="mx-auto mt-2 max-w-sm text-[15px] text-stone">
+                Your review has been posted. Would you share it on Google too? It helps other families find us.
+              </p>
+              <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+                <a href={SITE.googleReviewUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                  <ExternalLink className="h-4 w-4" strokeWidth={1.75} /> Post on Google
+                </a>
+                <Link href="/reviews" className="btn-outline">
+                  See all reviews
+                </Link>
               </div>
             </div>
+          ) : (
+            <form onSubmit={submit} noValidate className="space-y-6">
+              <input type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} className="hidden" aria-hidden="true" />
 
-            {/* Rating Stars */}
-            <div>
-              <label htmlFor="rating" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
-                Your Rating <span className="text-red-500">*</span>
-              </label>
-              <StarRating rating={rating} setRating={setRating} />
-            </div>
+              <fieldset>
+                <legend className="field-label">Your rating</legend>
+                <div className="grid grid-cols-5 gap-2">
+                  {RATINGS.slice()
+                    .reverse()
+                    .map((r) => (
+                      <button
+                        type="button"
+                        key={r.v}
+                        onClick={() => setRating(r.v)}
+                        aria-pressed={rating === r.v}
+                        className={`flex flex-col items-center rounded-xl border px-1 py-3 transition-colors ${
+                          rating === r.v ? "border-maroon bg-maroon text-ivory" : "border-line text-ink hover:border-stone-light"
+                        }`}
+                      >
+                        <span className="font-display text-2xl leading-none">{r.v}</span>
+                        <span className={`mt-1 text-[10px] uppercase tracking-[0.12em] ${rating === r.v ? "text-ivory/80" : "text-stone"}`}>
+                          {r.label}
+                        </span>
+                      </button>
+                    ))}
+                </div>
+                {errors.rating && <p className="mt-1.5 text-[13px] text-maroon">{errors.rating}</p>}
+              </fieldset>
 
-            {/* Review Comment */}
-            <div>
-              <label htmlFor="comment" className="block mb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">
-                Your Review <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                id="comment"
-                rows={4}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                required
-                className={`w-full p-3 rounded-xl border text-sm transition-colors ${
-                  isDarkMode 
-                    ? "bg-gray-800 border-gray-700 text-white focus:border-teal-500" 
-                    : "bg-gray-50 border-gray-300 focus:border-teal-500"
-                }`}
-                placeholder="Tell us about the barat music, dhol energy, and lighting setup..."
-              />
-            </div>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="fb-name" className="field-label">
+                    Your name
+                  </label>
+                  <input id="fb-name" className="field" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
+                  {errors.name && <p className="mt-1.5 text-[13px] text-maroon">{errors.name}</p>}
+                </div>
+                <div>
+                  <label htmlFor="fb-loc" className="field-label">
+                    Area <span className="normal-case tracking-normal text-stone-light">(optional)</span>
+                  </label>
+                  <input id="fb-loc" className="field" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Preet Vihar" />
+                </div>
+              </div>
 
-            {/* Submit Button */}
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-3.5 rounded-xl font-bold text-sm text-white shadow-lg transition-all ${
-                isSubmitting
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 hover:from-amber-600 hover:to-emerald-600 shadow-teal-500/20"
-              }`}
-            >
-              {isSubmitting ? "Publishing Review..." : "Publish Review"}
-            </motion.button>
+              <div>
+                <label htmlFor="fb-comment" className="field-label">
+                  Your review
+                </label>
+                <textarea
+                  id="fb-comment"
+                  className="field min-h-[140px] resize-y"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="How were the band, ghodi, dhol and lights on the day?"
+                />
+                {errors.comment && <p className="mt-1.5 text-[13px] text-maroon">{errors.comment}</p>}
+              </div>
 
-            {/* Success / Error Messages */}
-            <AnimatePresence>
-              {submitStatus === "success" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-3 text-sm font-semibold"
-                >
-                  <CheckCircle className="w-5 h-5 shrink-0" />
-                  <span>Thank you! Your review has been published successfully.</span>
-                </motion.div>
+              {status === "error" && (
+                <p className="rounded-xl bg-maroon/5 px-4 py-3 text-[14px] text-maroon" role="alert">
+                  Your review could not be posted right now. Please try again in a moment.
+                </p>
               )}
 
-              {submitStatus === "error" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-sm font-semibold"
-                >
-                  Failed to publish review. Please try again or check Firestore rules in Firebase Console.
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-          </form>
-        </motion.div>
-      </main>
-
-      <Footer isDarkMode={isDarkMode} />
-    </div>
+              <button type="submit" disabled={status === "sending"} className="btn-primary w-full">
+                {status === "sending" ? (
+                  <LoaderCircle className="h-4 w-4 animate-spin" strokeWidth={1.75} />
+                ) : (
+                  <Send className="h-4 w-4" strokeWidth={1.75} />
+                )}
+                {status === "sending" ? "Posting" : "Post review"}
+              </button>
+            </form>
+          )}
+        </div>
+      </section>
+    </PageShell>
   );
-};
-
-export default FeedbackPage;
+}

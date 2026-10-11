@@ -1,40 +1,29 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shiv Band & Light House — website
 
-## Getting Started
+Next.js 15 (App Router) + Tailwind + Firebase site for Shiv Band & Light House, Krishna Nagar, Delhi.
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/lib/site.ts` — business details (phones, address, hours, socials, hero photos). Change them here once.
+- `src/lib/services.ts` — every service page (`/services/[slug]`): copy, photos, FAQ and SEO fields.
+- `src/lib/schema.ts` — structured data (LocalBusiness, Service, FAQ, Breadcrumbs).
+- `src/components/site/*` — redesigned UI (hero, booking form, reviews, FAQ, page shell).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## SEO checklist after deploying
 
-## Learn More
+1. Set `NEXT_PUBLIC_SITE_URL` in Vercel to the final domain (e.g. `https://www.shivbandlighthouse.in`).
+2. Submit `/sitemap.xml` in Google Search Console.
+3. Keep the Google Business Profile name, address and phone exactly the same as in `src/lib/site.ts`.
+4. Add the production domain to Firebase → Authentication → Settings → Authorized domains (needed for Google sign-in).
 
-To learn more about Next.js, take a look at the following resources:
+## Bing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# ShivBand
->>>>>>> 354c74cade635210793c5cef9f671097d0281ecf
+- Verify in Bing Webmaster Tools (import from Google Search Console, or set `NEXT_PUBLIC_BING_SITE_VERIFICATION`).
+- IndexNow key file: `/public/b8f4d9e2a1c647389012abcdef345678.txt`. Admin → Photos → **Notify Bing of site changes** submits every page.

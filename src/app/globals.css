@@ -2,73 +2,112 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Keyframe animations */
-@keyframes float {
-  0% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translate(-15px, -25px) rotate(15deg) scale(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(15px, 25px) rotate(-15deg) scale(0.9);
-    opacity: 0.7;
-  }
-}
-
-.animate-float {
-  animation-name: float;
-  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-@keyframes subtle-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.animate-subtle-float {
-  animation: subtle-float 4s ease-in-out infinite;
-}
-
-/* Base styles */
 @layer base {
-  /* Disable global transitions for dark mode toggle */
+  :root {
+    --background: 36 45% 95%;
+    --foreground: 24 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 24 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 24 10% 10%;
+    --primary: 352 59% 30%;
+    --primary-foreground: 36 45% 96%;
+    --secondary: 34 33% 90%;
+    --secondary-foreground: 24 10% 10%;
+    --muted: 34 33% 90%;
+    --muted-foreground: 25 6% 41%;
+    --accent: 34 33% 90%;
+    --accent-foreground: 24 10% 10%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 33 28% 84%;
+    --input: 33 28% 84%;
+    --ring: 38 52% 48%;
+    --radius: 0.75rem;
+  }
+
   * {
     @apply border-border;
-    transition: none; /* Removed transitions */
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-ivory font-sans text-ink antialiased;
     overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: #f1e4c8;
+    color: #1c1917;
+  }
+
+  :focus-visible {
+    outline: 2px solid #b8893b;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-/* If you want transitions for other properties except colors */
-@layer base {
-  * {
-    @apply border-border;
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+@layer components {
+  /* Small letter-spaced label used above headings and in navigation */
+  .eyebrow {
+    @apply font-sans text-[11px] font-medium uppercase tracking-caps text-stone;
   }
-}
 
-@layer base {
-  .dark * {
-    transition: none; /* Specifically disable transitions in dark mode */
+  /* Warm, consistent grade applied to every photo so mixed phone shots read as one set */
+  .photo-grade {
+    filter: saturate(0.92) contrast(1.03) sepia(0.08);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[13px] font-medium uppercase tracking-[0.14em] transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-maroon text-ivory hover:bg-maroon-deep;
+  }
+  .btn-outline {
+    @apply btn border border-ink/20 text-ink hover:border-ink/50 hover:bg-white/60;
+  }
+  .btn-ghost-light {
+    @apply btn border border-white/60 text-white backdrop-blur-[2px] hover:bg-white/10;
+  }
+  .btn-light {
+    @apply btn bg-ivory text-ink hover:bg-white;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[15px] text-ink placeholder:text-stone-light transition-colors focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20;
+  }
+  .field-label {
+    @apply mb-1.5 block text-[12px] font-medium uppercase tracking-[0.14em] text-stone;
+  }
+
+  .link-underline {
+    @apply relative inline-flex items-center gap-1.5 text-[13px] font-medium uppercase tracking-[0.14em] text-ink after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-100 after:bg-gold after:transition-transform hover:after:scale-x-50;
+  }
+
+  .prose-site p {
+    @apply mb-4 text-[16px] leading-[1.75] text-stone;
+  }
+  .prose-site h2 {
+    @apply mb-3 mt-10 font-display text-2xl text-ink;
+  }
+  .prose-site ul {
+    @apply mb-4 list-disc space-y-1 pl-5 text-stone;
   }
 }

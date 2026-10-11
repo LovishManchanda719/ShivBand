@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { db } from "@/lib/firebaseConfig";
 import { ADMIN_EMAIL } from "@/lib/analytics";
+import NotifyBingButton from "@/components/admin/NotifyBingButton";
 import {
   collection,
   getDocs,
@@ -41,10 +42,9 @@ import {
   CheckCircle2,
   XCircle,
   Clock,
-  Star,
   Search,
   Lock,
-  Sparkles,
+  Images,
 } from "lucide-react";
 
 interface AnalyticsRecord {
@@ -404,11 +404,11 @@ export default function AdminDashboardPage() {
         ...prev,
       ]);
 
+      setPhotoStatusMsg("Photo added to Gallery successfully!");
       setPhotoTitle("");
       setPhotoDescription("");
       setPhotoUrlInput("");
       setPhotoPreview("");
-      setPhotoStatusMsg("✅ Photo added to Gallery successfully!");
     } catch (err) {
       console.error("Error adding photo:", err);
       alert(
@@ -466,7 +466,7 @@ export default function AdminDashboardPage() {
       setVideoTitle("");
       setVideoDescription("");
       setVideoYoutubeLink("");
-      setVideoStatusMsg("✅ Video added to Video Gallery!");
+      setVideoStatusMsg("Video added to Video Gallery!");
     } catch (err) {
       console.error("Error adding video:", err);
       alert("Failed to add video. Check Firestore rules in Firebase Console.");
@@ -528,11 +528,11 @@ export default function AdminDashboardPage() {
   const getEventBadge = (eventName: string) => {
     switch (eventName) {
       case "phone_call_click":
-        return "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+        return "bg-maroon/15 text-emerald-400 border-maroon/30";
       case "whatsapp_inquiry_click":
         return "bg-green-500/15 text-green-400 border-green-500/30";
       case "booking_submitted":
-        return "bg-amber-500/15 text-amber-400 border-amber-500/30";
+        return "bg-gold/15 text-gold border-gold/30";
       case "review_submitted":
         return "bg-purple-500/15 text-purple-400 border-purple-500/30";
       case "gallery_photo_view":
@@ -540,7 +540,7 @@ export default function AdminDashboardPage() {
         return "bg-cyan-500/15 text-cyan-400 border-cyan-500/30";
       case "engaged_30s":
       case "scroll_75_percent":
-        return "bg-teal-500/15 text-teal-400 border-teal-500/30";
+        return "bg-maroon/15 text-gold border-maroon/30";
       default:
         return "bg-blue-500/15 text-blue-400 border-blue-500/30";
     }
@@ -551,11 +551,11 @@ export default function AdminDashboardPage() {
     return (
       <div
         className={`min-h-screen flex flex-col ${
-          isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
+          isDarkMode ? "bg-gray-950 text-white" : "bg-ivory text-ink"
         }`}
       >
         <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-        <main className="flex-grow flex items-center justify-center px-4 pt-24 pb-16">
+        <main className="flex-grow flex items-center justify-center px-4 pt-10 pb-16">
           <div
             className={`max-w-md w-full p-8 rounded-2xl border text-center shadow-2xl ${
               isDarkMode ? "bg-gray-900 border-gray-800" : "bg-white border-gray-200"
@@ -573,21 +573,21 @@ export default function AdminDashboardPage() {
               {user ? (
                 <>
                   You are currently signed in as{" "}
-                  <strong className="text-amber-500">{user.email}</strong>. This
+                  <strong className="text-gold">{user.email}</strong>. This
                   dashboard is restricted exclusively to{" "}
-                  <strong className="text-teal-500">{ADMIN_EMAIL}</strong>.
+                  <strong className="text-maroon">{ADMIN_EMAIL}</strong>.
                 </>
               ) : (
                 <>
                   Please sign in with the administrator account (
-                  <strong className="text-teal-500">{ADMIN_EMAIL}</strong>) to view
+                  <strong className="text-maroon">{ADMIN_EMAIL}</strong>) to view
                   visitor analytics and manage gallery photos.
                 </>
               )}
             </p>
             <Link
               href="/login"
-              className="inline-flex items-center justify-center w-full py-3 px-6 rounded-xl bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 text-white font-bold text-sm shadow-lg"
+              className="inline-flex items-center justify-center w-full py-3 px-6 rounded-xl bg-maroon text-white font-bold text-sm shadow-lg"
             >
               Sign In as Administrator
             </Link>
@@ -601,20 +601,20 @@ export default function AdminDashboardPage() {
   return (
     <div
       className={`min-h-screen flex flex-col transition-colors duration-300 ${
-        isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
+        isDarkMode ? "bg-gray-950 text-white" : "bg-ivory text-ink"
       }`}
     >
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
 
-      <main className="flex-grow container mx-auto px-3 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-20 max-w-7xl">
+      <main className="flex-grow container mx-auto px-3 sm:px-6 lg:px-8 pt-10 sm:pt-10 pb-20 max-w-7xl">
         {/* Top Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 font-bold text-xs uppercase tracking-wider mb-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold/10 border border-gold/20 text-gold font-bold text-xs uppercase tracking-wider mb-2">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Verified Admin • {ADMIN_EMAIL}</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-black tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-display font-normal tracking-tight">
               Shiv Band Command Center
             </h1>
             <p
@@ -630,7 +630,7 @@ export default function AdminDashboardPage() {
           <button
             onClick={fetchAllAdminData}
             disabled={isLoadingData}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs sm:text-sm shadow-md transition-all self-start md:self-auto"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-maroon hover:bg-maroon-deep text-white font-bold text-xs sm:text-sm shadow-md transition-all self-start md:self-auto"
           >
             <RefreshCw
               className={`w-4 h-4 ${isLoadingData ? "animate-spin" : ""}`}
@@ -679,7 +679,7 @@ export default function AdminDashboardPage() {
                 }
                 className={`px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition-all ${
                   active
-                    ? "bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 text-white shadow-lg"
+                    ? "bg-maroon text-white shadow-lg"
                     : isDarkMode
                     ? "bg-gray-900 text-gray-300 hover:bg-gray-800 border border-gray-800"
                     : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
@@ -691,7 +691,7 @@ export default function AdminDashboardPage() {
                   className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${
                     active
                       ? "bg-black/25 text-white"
-                      : "bg-teal-500/15 text-teal-500"
+                      : "bg-maroon/15 text-maroon"
                   }`}
                 >
                   {tab.badge}
@@ -732,7 +732,7 @@ export default function AdminDashboardPage() {
                     : "bg-white border-gray-200"
                 }`}
               >
-                <div className="flex items-center justify-between text-teal-500 mb-2">
+                <div className="flex items-center justify-between text-maroon mb-2">
                   <Users className="w-5 h-5" />
                   <span className="text-[10px] font-bold uppercase">Unique</span>
                 </div>
@@ -751,7 +751,7 @@ export default function AdminDashboardPage() {
                     : "bg-white border-gray-200"
                 }`}
               >
-                <div className="flex items-center justify-between text-emerald-500 mb-2">
+                <div className="flex items-center justify-between text-maroon mb-2">
                   <PhoneCall className="w-5 h-5" />
                   <span className="text-[10px] font-bold uppercase">Calls</span>
                 </div>
@@ -789,7 +789,7 @@ export default function AdminDashboardPage() {
                     : "bg-white border-gray-200"
                 }`}
               >
-                <div className="flex items-center justify-between text-amber-500 mb-2">
+                <div className="flex items-center justify-between text-gold mb-2">
                   <Calendar className="w-5 h-5" />
                   <span className="text-[10px] font-bold uppercase">Bookings</span>
                 </div>
@@ -831,7 +831,7 @@ export default function AdminDashboardPage() {
                     : "bg-white border-gray-200"
                 }`}
               >
-                <h3 className="text-sm font-black uppercase tracking-wider text-teal-500 mb-4 flex items-center gap-2">
+                <h3 className="text-sm font-black uppercase tracking-wider text-maroon mb-4 flex items-center gap-2">
                   <MapPin className="w-4 h-4" />
                   <span>Top Visitor Locations</span>
                 </h3>
@@ -845,9 +845,9 @@ export default function AdminDashboardPage() {
                         className="flex items-center justify-between"
                       >
                         <span className="font-semibold truncate pr-2">
-                          📍 {city}
+                          {city}
                         </span>
-                        <span className="px-2 py-0.5 rounded-full bg-teal-500/10 text-teal-400 font-bold">
+                        <span className="px-2 py-0.5 rounded-full bg-maroon/10 text-gold font-bold">
                           {count}
                         </span>
                       </div>
@@ -864,7 +864,7 @@ export default function AdminDashboardPage() {
                     : "bg-white border-gray-200"
                 }`}
               >
-                <h3 className="text-sm font-black uppercase tracking-wider text-amber-500 mb-4 flex items-center gap-2">
+                <h3 className="text-sm font-black uppercase tracking-wider text-gold mb-4 flex items-center gap-2">
                   <Globe className="w-4 h-4" />
                   <span>Where Visitors Come From</span>
                 </h3>
@@ -878,7 +878,7 @@ export default function AdminDashboardPage() {
                         className="flex items-center justify-between"
                       >
                         <span className="font-semibold">{src}</span>
-                        <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 font-bold">
+                        <span className="px-2 py-0.5 rounded-full bg-gold/10 text-gold font-bold">
                           {count}
                         </span>
                       </div>
@@ -895,7 +895,7 @@ export default function AdminDashboardPage() {
                     : "bg-white border-gray-200"
                 }`}
               >
-                <h3 className="text-sm font-black uppercase tracking-wider text-emerald-500 mb-4 flex items-center gap-2">
+                <h3 className="text-sm font-black uppercase tracking-wider text-maroon mb-4 flex items-center gap-2">
                   <Eye className="w-4 h-4" />
                   <span>Most Visited Pages</span>
                 </h3>
@@ -911,7 +911,7 @@ export default function AdminDashboardPage() {
                         <span className="font-mono font-semibold truncate pr-2">
                           {page}
                         </span>
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold">
+                        <span className="px-2 py-0.5 rounded-full bg-maroon/10 text-emerald-400 font-bold">
                           {count} views
                         </span>
                       </div>
@@ -935,7 +935,7 @@ export default function AdminDashboardPage() {
                 <div className="space-y-3 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-2 font-semibold">
-                      <Smartphone className="w-4 h-4 text-teal-400" /> Mobile
+                      <Smartphone className="w-4 h-4 text-gold" /> Mobile
                       Phones
                     </span>
                     <span className="font-bold">
@@ -944,7 +944,7 @@ export default function AdminDashboardPage() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-2 font-semibold">
-                      <Monitor className="w-4 h-4 text-amber-400" /> Desktop /
+                      <Monitor className="w-4 h-4 text-gold" /> Desktop /
                       Laptop
                     </span>
                     <span className="font-bold">
@@ -1009,11 +1009,11 @@ export default function AdminDashboardPage() {
                   >
                     <option value="all">All Events ({analyticsLogs.length})</option>
                     <option value="page_view">Page Views</option>
-                    <option value="phone_call_click">📞 Phone Call Clicks</option>
-                    <option value="whatsapp_inquiry_click">💬 WhatsApp Clicks</option>
-                    <option value="gallery_photo_view">📸 Photo Views</option>
-                    <option value="booking_submitted">📅 Bookings</option>
-                    <option value="review_submitted">⭐ Reviews</option>
+                    <option value="phone_call_click">Phone Call Clicks</option>
+                    <option value="whatsapp_inquiry_click">WhatsApp Clicks</option>
+                    <option value="gallery_photo_view">Photo Views</option>
+                    <option value="booking_submitted">Bookings</option>
+                    <option value="review_submitted">Reviews</option>
                     <option value="engaged_30s">⏱️ 30s+ Engaged</option>
                   </select>
                 </div>
@@ -1077,14 +1077,14 @@ export default function AdminDashboardPage() {
 
                           <td className="py-3 px-4">
                             <div className="font-bold flex items-center gap-1">
-                              <MapPin className="w-3 h-3 text-teal-500 shrink-0" />
+                              <MapPin className="w-3 h-3 text-maroon shrink-0" />
                               <span>
                                 {log.city && log.city !== "Unknown"
                                   ? `${log.city}, ${log.region || ""}`
                                   : "Delhi / India"}
                               </span>
                               {log.postal && (
-                                <span className="text-[10px] text-amber-500">
+                                <span className="text-[10px] text-gold">
                                   ({log.postal})
                                 </span>
                               )}
@@ -1100,7 +1100,7 @@ export default function AdminDashboardPage() {
                                 ? log.userEmail
                                 : `Guest #${(log.visitorId || "").slice(-6)}`}
                             </div>
-                            <div className="text-[10px] text-teal-500 font-semibold">
+                            <div className="text-[10px] text-maroon font-semibold">
                               {log.isReturningVisitor
                                 ? `Returning (Visit #${log.visitCount || 2})`
                                 : "First-Time Visitor"}
@@ -1117,7 +1117,7 @@ export default function AdminDashboardPage() {
                           </td>
 
                           <td className="py-3 px-4">
-                            <div className="font-bold text-amber-500">
+                            <div className="font-bold text-gold">
                               {log.trafficSource || "Direct"}
                             </div>
                             <div className="font-mono text-[11px] text-gray-400 truncate max-w-[180px]">
@@ -1137,6 +1137,9 @@ export default function AdminDashboardPage() {
         {/* TAB 2: PHOTO GALLERY MANAGER */}
         {activeTab === "photos" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-3">
+              <NotifyBingButton />
+            </div>
             {/* Upload New Photo Form */}
             <div
               className={`p-6 rounded-2xl border h-fit ${
@@ -1146,7 +1149,7 @@ export default function AdminDashboardPage() {
               }`}
             >
               <h2 className="text-xl font-black mb-1 flex items-center gap-2">
-                <Plus className="w-5 h-5 text-amber-500" />
+                <Plus className="w-5 h-5 text-gold" />
                 <span>Add New Photo to Gallery</span>
               </h2>
               <p className="text-xs text-gray-400 mb-6">
@@ -1154,7 +1157,7 @@ export default function AdminDashboardPage() {
                 URL. It will appear immediately at the top of{" "}
                 <Link
                   href="/gallery/photos"
-                  className="text-teal-400 underline"
+                  className="text-gold underline"
                 >
                   /gallery/photos
                 </Link>
@@ -1169,11 +1172,11 @@ export default function AdminDashboardPage() {
                   <label
                     className={`flex flex-col items-center justify-center p-5 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${
                       isDarkMode
-                        ? "border-gray-700 hover:border-teal-500 bg-gray-800/50"
-                        : "border-gray-300 hover:border-teal-500 bg-gray-50"
+                        ? "border-gray-700 hover:border-maroon bg-gray-800/50"
+                        : "border-gray-300 hover:border-maroon bg-gray-50"
                     }`}
                   >
-                    <Upload className="w-6 h-6 text-teal-500 mb-1.5" />
+                    <Upload className="w-6 h-6 text-maroon mb-1.5" />
                     <span className="text-xs font-bold">
                       Click to choose photo (JPG, PNG, WebP)
                     </span>
@@ -1215,7 +1218,7 @@ export default function AdminDashboardPage() {
                 </div>
 
                 {photoPreview && (
-                  <div className="relative rounded-xl overflow-hidden border border-teal-500/40 bg-black aspect-video">
+                  <div className="relative rounded-xl overflow-hidden border border-maroon/40 bg-black aspect-video">
                     <img
                       src={photoPreview}
                       alt="Preview"
@@ -1260,7 +1263,7 @@ export default function AdminDashboardPage() {
                 </div>
 
                 {photoStatusMsg && (
-                  <div className="p-3 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-400 text-xs font-bold">
+                  <div className="p-3 rounded-xl bg-maroon/15 border border-maroon/30 text-gold text-xs font-bold">
                     {photoStatusMsg}
                   </div>
                 )}
@@ -1268,7 +1271,7 @@ export default function AdminDashboardPage() {
                 <button
                   type="submit"
                   disabled={isUploadingPhoto}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 text-white font-bold text-sm shadow-lg hover:opacity-95 transition-all"
+                  className="w-full py-3.5 rounded-xl bg-maroon text-white font-bold text-sm shadow-lg hover:opacity-95 transition-all"
                 >
                   {isUploadingPhoto
                     ? "Publishing to Gallery..."
@@ -1285,7 +1288,7 @@ export default function AdminDashboardPage() {
                 </h3>
                 <Link
                   href="/gallery/photos"
-                  className="text-xs font-bold text-teal-500 hover:underline"
+                  className="text-xs font-bold text-maroon hover:underline"
                 >
                   View Public Photo Gallery →
                 </Link>
@@ -1299,7 +1302,7 @@ export default function AdminDashboardPage() {
                       : "bg-white border-gray-200 text-gray-500"
                   }`}
                 >
-                  <Sparkles className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+                  <Images className="w-8 h-8 text-gold mx-auto mb-2" />
                   <p className="text-sm font-bold">
                     No custom photos uploaded via Admin yet.
                   </p>
@@ -1371,14 +1374,14 @@ export default function AdminDashboardPage() {
               }`}
             >
               <h2 className="text-xl font-black mb-1 flex items-center gap-2">
-                <VideoIcon className="w-5 h-5 text-amber-500" />
+                <VideoIcon className="w-5 h-5 text-gold" />
                 <span>Add YouTube Performance Video</span>
               </h2>
               <p className="text-xs text-gray-400 mb-6">
                 Paste any YouTube video or Shorts link to feature it on{" "}
                 <Link
                   href="/gallery/videos"
-                  className="text-teal-400 underline"
+                  className="text-gold underline"
                 >
                   /gallery/videos
                 </Link>
@@ -1440,7 +1443,7 @@ export default function AdminDashboardPage() {
                 </div>
 
                 {videoStatusMsg && (
-                  <div className="p-3 rounded-xl bg-teal-500/15 border border-teal-500/30 text-teal-400 text-xs font-bold">
+                  <div className="p-3 rounded-xl bg-maroon/15 border border-maroon/30 text-gold text-xs font-bold">
                     {videoStatusMsg}
                   </div>
                 )}
@@ -1448,7 +1451,7 @@ export default function AdminDashboardPage() {
                 <button
                   type="submit"
                   disabled={isUploadingVideo}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 via-teal-500 to-emerald-500 text-white font-bold text-sm shadow-lg"
+                  className="w-full py-3.5 rounded-xl bg-maroon text-white font-bold text-sm shadow-lg"
                 >
                   {isUploadingVideo ? "Adding Video..." : "Publish Video"}
                 </button>
@@ -1487,7 +1490,7 @@ export default function AdminDashboardPage() {
                           href={v.youtubeLink}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-[11px] text-teal-400 underline mt-1 inline-block"
+                          className="text-[11px] text-gold underline mt-1 inline-block"
                         >
                           {v.youtubeLink}
                         </a>
@@ -1512,7 +1515,7 @@ export default function AdminDashboardPage() {
             {/* Customer Bookings */}
             <div>
               <h2 className="text-xl font-black mb-4 flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-teal-500" />
+                <Calendar className="w-5 h-5 text-maroon" />
                 <span>Customer Event Bookings ({bookings.length})</span>
               </h2>
               {bookings.length === 0 ? (
@@ -1541,7 +1544,7 @@ export default function AdminDashboardPage() {
                           <h3 className="font-black text-base">{b.name}</h3>
                           <a
                             href={`tel:${b.phone}`}
-                            className="text-xs font-bold text-teal-400 hover:underline flex items-center gap-1 mt-0.5"
+                            className="text-xs font-bold text-gold hover:underline flex items-center gap-1 mt-0.5"
                           >
                             <PhoneCall className="w-3.5 h-3.5" /> {b.phone}
                           </a>
@@ -1549,10 +1552,10 @@ export default function AdminDashboardPage() {
                         <span
                           className={`px-2.5 py-1 rounded-full text-[11px] font-bold uppercase ${
                             b.status === "confirmed"
-                              ? "bg-emerald-500/15 text-emerald-400"
+                              ? "bg-maroon/15 text-emerald-400"
                               : b.status === "cancelled"
                               ? "bg-rose-500/15 text-rose-400"
-                              : "bg-amber-500/15 text-amber-400"
+                              : "bg-gold/15 text-gold"
                           }`}
                         >
                           {b.status}
@@ -1561,12 +1564,12 @@ export default function AdminDashboardPage() {
 
                       <div className="text-xs text-gray-400 space-y-1 mb-4">
                         <div>
-                          📅 <strong>Preferred Date:</strong> {b.preferredDate}{" "}
+                          <strong>Preferred Date:</strong> {b.preferredDate}{" "}
                           at {b.preferredTime}
                         </div>
                         {b.additionalDetails && (
                           <div>
-                            📝 <strong>Notes:</strong> {b.additionalDetails}
+                            <strong>Notes:</strong> {b.additionalDetails}
                           </div>
                         )}
                       </div>
@@ -1576,7 +1579,7 @@ export default function AdminDashboardPage() {
                           onClick={() =>
                             handleUpdateBookingStatus(b.id, "confirmed")
                           }
-                          className="px-3 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 font-bold text-xs flex items-center gap-1"
+                          className="px-3 py-1.5 rounded-lg bg-maroon/15 hover:bg-maroon/25 text-emerald-400 font-bold text-xs flex items-center gap-1"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5" /> Confirm
                         </button>
@@ -1598,7 +1601,7 @@ export default function AdminDashboardPage() {
             {/* Customer Reviews Moderation */}
             <div>
               <h2 className="text-xl font-black mb-4 flex items-center gap-2">
-                <Star className="w-5 h-5 text-amber-500" />
+                <MessageSquare className="w-5 h-5 text-gold" />
                 <span>Customer Reviews ({reviews.length})</span>
               </h2>
               {reviews.length === 0 ? (
@@ -1625,8 +1628,8 @@ export default function AdminDashboardPage() {
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-sm">{r.name}</span>
-                          <span className="text-amber-400 text-xs font-bold">
-                            {"★".repeat(r.rating || 5)}
+                          <span className="text-gold text-xs font-bold">
+                            {`${r.rating || 0}/5`}
                           </span>
                         </div>
                         <p className="text-xs text-gray-400 mt-1">

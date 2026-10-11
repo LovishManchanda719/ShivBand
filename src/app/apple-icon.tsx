@@ -17,10 +17,10 @@ export default function AppleIcon() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #b91c1c 0%, #dc2626 50%, #7f1d1d 100%)",
+          background: "#7A1F2B",
           borderRadius: "38px",
-          border: "6px solid #fbbf24",
-          color: "#fde047",
+          border: "6px solid #B8893B",
+          color: "#F1E4C8",
           fontFamily: "Georgia, serif",
         }}
       >

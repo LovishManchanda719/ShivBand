@@ -2,14 +2,12 @@ import type { Metadata } from "next";
 import ReviewsPage from "@/components/Reviews";
 
 export const metadata: Metadata = {
-  title: "Customer Reviews & Ratings",
+  title: "Customer Reviews",
   description:
-    "Read verified customer reviews and 5-star ratings for Shiv Band & Light House in Krishna Nagar, Old Govindpura, Delhi NCR.",
-  alternates: {
-    canonical: "/reviews",
-  },
+    "Reviews from families who booked Shiv Band & Light House, Krishna Nagar, Delhi, for their baraat — wedding band, ghodi, baggi, dhol and lights.",
+  alternates: { canonical: "/reviews" },
 };
 
 export default function Reviews() {
   return <ReviewsPage />;
-}
+}
