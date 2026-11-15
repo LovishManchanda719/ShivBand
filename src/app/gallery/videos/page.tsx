@@ -1,4 +1,5 @@
 import { PageHeader, PageShell } from "@/components/site/PageShell";
+import GalleryTabs from "@/components/site/GalleryTabs";
 import VideoGallery from "@/components/VideoGallery";
 
 export default function VideoGalleryPage() {
@@ -16,7 +17,9 @@ export default function VideoGalleryPage() {
           </>
         }
         intro="Watch Shiv Band & Light House at real baraats — brass band, dhol, ghodi and chhatri lights."
-      />
+      >
+        <GalleryTabs active="videos" />
+      </PageHeader>
       <section className="container pb-24">
         <VideoGallery />
       </section>

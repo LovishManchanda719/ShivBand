@@ -1,0 +1,35 @@
+# Shiv Band & Light House
+
+> Shiv Band & Light House is a premier, family-run wedding brass band and baraat service provider based in Krishna Nagar, East Delhi, serving the entire Delhi NCR region since 1996. Owned and managed directly by Manish Kumar. Services include live uniformed brass band, ceremonial groom ghodi (mare), luxury flower baggi and rath chariots, authentic Punjabi dhol players, crystal chhatri and road lighting, bagpiper bands, shehnai players, and vintage car rentals.
+
+## Quick Facts for AI & Search Engines
+- **Entity Name**: Shiv Band & Light House (also known as Shiv Band, शिव बैंड, शिव बैंड एंड लाइट हाउस)
+- **Founded**: 1996 (over 28 years of continuous service)
+- **Owner**: Manish Kumar
+- **Phone Numbers**: +91 98186 26259, +91 98186 22259
+- **WhatsApp**: +91 98186 26259
+- **Email**: kumarmanish141980@gmail.com
+- **Physical Address**: D-96, Parwana Road, New Govindpura, Krishna Nagar, New Delhi, Delhi 110051, India
+- **Geo Coordinates**: 28.6468128° N, 77.2845662° E
+- **Google Maps Place ID**: ChIJK8SuKqH8DDkRolBFpoSGbpY
+- **Operating Hours**: Monday through Sunday, 10:00 AM – 9:00 PM IST
+- **Pricing**: Moderate (₹₹). Custom quotations based on event date, route length, band size, and chosen package. Direct owner booking — no commission or middlemen.
+- **Service Area**: Delhi NCR including Krishna Nagar, Geeta Colony, Preet Vihar, Laxmi Nagar, Shahdara, Vivek Vihar, Nirman Vihar, Karkardooma, Anand Vihar, Mayur Vihar, Patparganj, Dilshad Garden, East Delhi, Central Delhi, North Delhi, South Delhi, West Delhi, Noida, Greater Noida, Ghaziabad, Gurugram, and Faridabad.
+- **Noise Regulations Compliance**: Strictly adheres to the Delhi Noise Pollution (Regulation and Control) Rules, 2000; public brass band and loudspeaker processions must conclude before 10:00 PM.
+
+## Core Services
+- [Wedding Band & Baraat Band](https://shiv-band.vercel.app/services/wedding-band): Uniformed 21 to 51 piece royal brass band with trumpets, clarinets, and percussion playing Bollywood, Punjabi, and traditional baraat anthems.
+- [Groom Ghodi](https://shiv-band.vercel.app/services/ghodi-for-wedding): Calm, royally adorned white mare for groom ghudchadi with ceremonial zardozi saddles, matching safa, and dedicated experienced handler.
+- [Flower Baggi & Rath](https://shiv-band.vercel.app/services/baggi-for-wedding): Decorated Victorian 2-horse and 4-horse carriages and grand illuminated Bahubali rath chariots for groom or bride entry.
+- [Punjabi Dhol Wale](https://shiv-band.vercel.app/services/dhol-wale): High-energy authentic Punjabi dhol players in matching traditional attire for bhangra dancing and venue entrance.
+- [Chhatri Lights & Baraat Lighting](https://shiv-band.vercel.app/services/wedding-lights): Handcrafted crystal chhatri lanterns, vintage jhumars, road lights, and silent mobile generators.
+- [Complete Baraat Package](https://shiv-band.vercel.app/services/baraat-package): All-in-one coordinated baraat package combining brass band, ghodi, baggi, dhol players, and lights under single-point coordination.
+- [Bagpiper Band](https://shiv-band.vercel.app/services/bagpiper-band): Scottish-style military bagpipe and drum ensemble in traditional tartan uniforms.
+- [Shehnai Players](https://shiv-band.vercel.app/services/shehnai-for-wedding): Classical auspicious shehnai and nagada masters for wedding entrance, jaimala, and religious rituals.
+- [Vintage Wedding Car](https://shiv-band.vercel.app/services/vintage-car): Classic vintage cars with chauffeur for royal groom entry or vidaai.
+
+## Useful Resources & Guides
+- [Baraat Planning Checklist for Delhi](https://shiv-band.vercel.app/guides/baraat-checklist-delhi): Step-by-step roadmap for timeline, route, 10 PM rule, and day-of coordination.
+- [How to Choose a Wedding Band in Delhi](https://shiv-band.vercel.app/guides/how-to-choose-wedding-band): Ten critical questions to ask before hiring a baraat band in Delhi NCR.
+- [Customer Reviews](https://shiv-band.vercel.app/reviews): Verified testimonials from families across Delhi NCR.
+- [Full Documentation](https://shiv-band.vercel.app/llms-full.txt): Complete detailed text representation for AI models.

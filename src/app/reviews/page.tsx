@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import ReviewsPage from "@/components/Reviews";
+import JsonLd from "@/components/site/JsonLd";
+import { breadcrumbSchema } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Customer Reviews",
@@ -8,6 +10,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/reviews" },
 };
 
+const crumbs = [
+  { name: "Home", path: "/" },
+  { name: "Reviews", path: "/reviews" },
+];
+
 export default function Reviews() {
-  return <ReviewsPage />;
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema(crumbs)} />
+      <ReviewsPage />
+    </>
+  );
 }

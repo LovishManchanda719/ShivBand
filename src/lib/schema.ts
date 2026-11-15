@@ -15,7 +15,7 @@ export const localBusinessSchema = () => ({
   description:
     "Shiv Band & Light House is a family-run wedding band in Krishna Nagar, East Delhi, serving Delhi NCR since 1996 with brass band, baraat band, ghodi, flower baggi, rath, dhol wale and chhatri lights.",
   url: SITE_URL,
-  logo: `${SITE_URL}/icon.svg`,
+  logo: `${SITE_URL}/apple-icon`,
   image: [`${SITE_URL}/images/shiv-band-brass-band-procession.jpg`, `${SITE_URL}/images/groom-ghodi-chhatri-lights.jpg`, `${SITE_URL}/images/2.jpg`, `${SITE_URL}/images/1.jpg`],
   telephone: SITE.phones[0].tel,
   email: SITE.email,
@@ -47,13 +47,38 @@ export const localBusinessSchema = () => ({
     areaServed: "IN",
     availableLanguage: ["en", "hi", "pa"],
   })),
-  areaServed: AREAS_SERVED.map((name) => ({ "@type": "Place", name: `${name}, Delhi NCR` })),
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Delhi" },
+    { "@type": "AdministrativeArea", name: "Delhi NCR" },
+    ...AREAS_SERVED.map((name) => ({ "@type": "Place", name: `${name}, Delhi NCR` })),
+  ],
   knowsLanguage: ["en", "hi", "pa"],
+  knowsAbout: [
+    "Wedding Brass Band",
+    "Baraat Processions",
+    "Groom Ghodi",
+    "Flower Baggi",
+    "Rath Chariot",
+    "Punjabi Dhol",
+    "Chhatri Lights",
+    "Bagpiper Band",
+    "Shehnai",
+    "Vintage Wedding Car Rental",
+  ],
   makesOffer: SERVICES.map((s) => ({
     "@type": "Offer",
     itemOffered: { "@type": "Service", name: s.h1, url: `${SITE_URL}/services/${s.slug}` },
   })),
-  sameAs: [SITE.social.instagram, SITE.social.facebook, SITE.social.youtube, SITE.mapsUrl],
+  sameAs: [
+    SITE.social.instagram,
+    SITE.social.facebook,
+    SITE.social.youtube,
+    SITE.mapsUrl,
+    "https://en.wikipedia.org/wiki/Brass_band",
+    "https://en.wikipedia.org/wiki/Baraat",
+    "https://www.wikidata.org/wiki/Q10886",
+    "https://www.wikidata.org/wiki/Q1353",
+  ],
 });
 
 export const websiteSchema = () => ({
@@ -77,7 +102,10 @@ export const serviceSchema = (s: Service) => ({
   url: `${SITE_URL}/services/${s.slug}`,
   image: s.images.length ? s.images.map((i) => (i.src.startsWith("http") ? i.src : `${SITE_URL}${i.src}`)) : `${SITE_URL}/opengraph-image`,
   provider: { "@id": BUSINESS_ID },
-  areaServed: AREAS_SERVED.map((name) => ({ "@type": "Place", name: `${name}, Delhi NCR` })),
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Delhi NCR" },
+    ...AREAS_SERVED.map((name) => ({ "@type": "Place", name: `${name}, Delhi NCR` })),
+  ],
 });
 
 export const faqSchema = (faqs: ServiceFaq[]) => ({

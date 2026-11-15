@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Check, MessageCircle, Phone } from "lucide-react";
+import { Check, MessageCircle, Phone, Sparkles } from "lucide-react";
 import { PageShell } from "@/components/site/PageShell";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import ServiceCard from "@/components/site/ServiceCard";
@@ -93,6 +93,22 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
 
         <div className="container max-w-3xl py-14">
           <p className="text-[19px] leading-[1.75] text-ink/85">{g.intro}</p>
+
+          {g.keyTakeaways && g.keyTakeaways.length > 0 && (
+            <div className="mt-8 rounded-2xl border border-gold/40 bg-sand/60 p-6 sm:p-7">
+              <p className="eyebrow flex items-center gap-2 text-maroon">
+                <Sparkles className="h-4 w-4 text-gold" strokeWidth={2} /> Key Takeaways
+              </p>
+              <ul className="mt-4 space-y-2.5">
+                {g.keyTakeaways.map((tip) => (
+                  <li key={tip} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink/90">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-gold" strokeWidth={2.25} />
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           {g.sections.map((sec) => (
             <section key={sec.heading} className="mt-12">
               <h2 className="font-display text-[28px] leading-tight text-ink">{sec.heading}</h2>

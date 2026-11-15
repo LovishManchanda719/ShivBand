@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
-import { CalendarCheck, CircleUser, LogOut, Menu, MessageCircle, Phone, ShieldCheck, UserRound, X } from "lucide-react";
+import { CalendarCheck, Camera, ChevronDown, CircleUser, LogOut, Menu, MessageCircle, Phone, Play, ShieldCheck, UserRound, X } from "lucide-react";
 import Logo from "./Logo";
 import { auth } from "@/lib/firebaseConfig";
 import { useAuth } from "@/context/AuthContext";
@@ -129,16 +129,49 @@ const Navbar: React.FC<NavbarProps> = ({ variant = "solid" }) => {
 
           <ul className="hidden items-center gap-9 md:flex">
             {NAV_LINKS.map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className={`text-[12px] font-medium uppercase tracking-[0.2em] transition-colors ${
-                    isActive(l.href) ? (overlay ? "text-white" : "text-ink") : linkTone
-                  }`}
-                  aria-current={isActive(l.href) ? "page" : undefined}
-                >
-                  {l.label}
-                </Link>
+              <li key={l.href} className="relative group">
+                {l.label === "Gallery" ? (
+                  <>
+                    <Link
+                      href={l.href}
+                      className={`inline-flex items-center gap-1.5 py-2 text-[12px] font-medium uppercase tracking-[0.2em] transition-colors ${
+                        isActive(l.href) ? (overlay ? "text-white" : "text-ink") : linkTone
+                      }`}
+                      aria-current={isActive(l.href) ? "page" : undefined}
+                    >
+                      {l.label}
+                      <ChevronDown className="h-3 w-3 opacity-60 transition-transform group-hover:rotate-180" />
+                    </Link>
+                    <div className="invisible absolute -left-4 top-full z-50 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                      <div className="w-48 rounded-2xl border border-line bg-white p-1.5 shadow-xl ring-1 ring-black/5">
+                        <Link
+                          href="/gallery/photos"
+                          className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-[13px] font-medium text-ink transition-colors hover:bg-sand"
+                        >
+                          <Camera className="h-4 w-4 text-gold" strokeWidth={1.75} />
+                          <span>Photos</span>
+                        </Link>
+                        <Link
+                          href="/gallery/videos"
+                          className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-[13px] font-medium text-ink transition-colors hover:bg-sand"
+                        >
+                          <Play className="h-4 w-4 text-gold" strokeWidth={1.75} />
+                          <span>Videos</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <Link
+                    href={l.href}
+                    className={`block py-2 text-[12px] font-medium uppercase tracking-[0.2em] transition-colors ${
+                      isActive(l.href) ? (overlay ? "text-white" : "text-ink") : linkTone
+                    }`}
+                    aria-current={isActive(l.href) ? "page" : undefined}
+                  >
+                    {l.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -190,13 +223,39 @@ const Navbar: React.FC<NavbarProps> = ({ variant = "solid" }) => {
               </button>
             </div>
             <ul className="flex flex-1 flex-col justify-center gap-2 px-8">
-              {[{ href: "/", label: "Home" }, ...NAV_LINKS].map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="block py-2 font-display text-[40px] leading-tight text-ink">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
+              {[{ href: "/", label: "Home" }, ...NAV_LINKS].map((l) =>
+                l.label === "Gallery" ? (
+                  <li key={l.href} className="py-2">
+                    <span className="block font-display text-[40px] leading-tight text-ink">Gallery</span>
+                    <div className="mt-3 flex gap-3">
+                      <Link
+                        href="/gallery/photos"
+                        onClick={() => setOpen(false)}
+                        className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-sm font-medium text-ink shadow-sm"
+                      >
+                        <Camera className="h-4 w-4 text-gold" strokeWidth={1.75} /> Photos
+                      </Link>
+                      <Link
+                        href="/gallery/videos"
+                        onClick={() => setOpen(false)}
+                        className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-sm font-medium text-ink shadow-sm"
+                      >
+                        <Play className="h-4 w-4 text-gold" strokeWidth={1.75} /> Videos
+                      </Link>
+                    </div>
+                  </li>
+                ) : (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className="block py-2 font-display text-[40px] leading-tight text-ink"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
             <div className="space-y-3 border-t border-line px-8 py-6">
               <p className="eyebrow">{SITE.hours.label}</p>

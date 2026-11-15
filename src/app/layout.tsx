@@ -30,9 +30,9 @@ const hindi = Tiro_Devanagari_Hindi({
   display: "swap",
 });
 
-const DEFAULT_TITLE = "Shiv Band & Light House | Best Wedding Band, Baraat Band, Ghodi, Baggi & Dhol Wale in Delhi";
+const DEFAULT_TITLE = "Shiv Band & Light House | Wedding Band, Ghodi & Dhol in Delhi";
 const DEFAULT_DESC =
-  "Shiv Band & Light House, Krishna Nagar, Delhi — live wedding band and baraat band, decorated ghodi, flower baggi, dhol wale and chhatri lights across Delhi NCR since 1996. Call 98186 26259.";
+  "Shiv Band & Light House, Krishna Nagar, Delhi: live wedding band, ghodi, flower baggi, dhol wale & chhatri lights across Delhi NCR since 1996. Call 98186 26259.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

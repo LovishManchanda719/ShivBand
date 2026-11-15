@@ -12,6 +12,7 @@ import BookingForm from "@/components/site/BookingForm";
 import Faq from "@/components/site/Faq";
 import JsonLd from "@/components/site/JsonLd";
 import { SERVICES, getService } from "@/lib/services";
+import { GUIDES } from "@/lib/guides";
 import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
 import { SITE, SITE_URL, telLink, whatsappLink } from "@/lib/site";
 
@@ -53,6 +54,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
     { name: s.name, path: `/services/${s.slug}` },
   ];
   const related = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 3);
+  const relevantGuides = GUIDES.filter((g) => g.related.includes(s.slug));
   const [lead, ...more] = s.images;
 
   return (
@@ -174,9 +176,12 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           {s.illustrativeImages && (
             <p className="mt-4 text-[12px] text-stone-light">Illustrative images. Ask us for photos and videos from recent events.</p>
           )}
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap items-center gap-5">
             <Link href="/gallery/photos" className="link-underline">
               More photos <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+            </Link>
+            <Link href="/gallery/videos" className="link-underline text-maroon hover:text-ink">
+              Watch baraat videos <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
             </Link>
           </div>
         </section>
@@ -216,6 +221,31 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           </div>
         </div>
       </section>
+
+      {/* Helpful Planning Guides */}
+      {relevantGuides.length > 0 && (
+        <section className="container pb-16">
+          <div className="rounded-3xl border border-line bg-sand/40 p-6 sm:p-8">
+            <p className="eyebrow mb-2">Baraat Planning Advice</p>
+            <h3 className="font-display text-2xl text-ink">Helpful Guides for {s.name}</h3>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              {relevantGuides.map((g) => (
+                <Link
+                  key={g.slug}
+                  href={`/guides/${g.slug}`}
+                  className="group flex flex-col justify-between rounded-2xl border border-line bg-white p-5 transition-colors hover:border-gold"
+                >
+                  <div>
+                    <p className="font-display text-lg text-ink group-hover:text-maroon">{g.title}</p>
+                    <p className="mt-2 text-[14px] leading-relaxed text-stone">{g.description}</p>
+                  </div>
+                  <span className="link-underline mt-4 text-[13px] font-medium text-gold">Read guide &rarr;</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Booking */}
       <section id="book" className="scroll-mt-20 bg-sand/60 py-20 sm:py-24">

@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { db } from "@/lib/firebaseConfig";
 import { trackEvent } from "@/lib/analytics";
 import { PageHeader, PageShell } from "@/components/site/PageShell";
+import GalleryTabs from "@/components/site/GalleryTabs";
 import { LOCAL_PHOTOS, canonicalPhotoUrl } from "@/lib/photos";
 
 interface Photo {
@@ -91,7 +92,9 @@ export default function PhotoGalleryPage() {
           </>
         }
         intro="Band, ghodi, baggi, dhol and lights — real photos from Shiv Band & Light House, Krishna Nagar."
-      />
+      >
+        <GalleryTabs active="photos" />
+      </PageHeader>
 
       <section className="container pb-24">
         <div className="columns-2 gap-3 sm:gap-4 lg:columns-3">

@@ -16,6 +16,7 @@ export interface Guide {
   readMinutes: number;
   image: { src: string; alt: string };
   intro: string;
+  keyTakeaways?: string[]; // Quick bullet facts for AI overviews & skimmable reading
   sections: GuideSection[];
   related: string[]; // service slugs
 }
@@ -32,6 +33,13 @@ export const GUIDES: Guide[] = [
     image: { src: "/images/groom-ghodi-chhatri-lights.jpg", alt: "Groom on a decorated ghodi with chhatri lights during a Delhi baraat" },
     intro:
       "The baraat is the loudest, happiest part of a North Indian wedding — and the part that goes wrong most easily when nobody owns the details. This checklist covers everything families in Delhi usually need to decide, in the order it makes sense to decide it.",
+    keyTakeaways: [
+      "Fix 3 core basics first: wedding date, starting point, and venue address to size the band and route correctly.",
+      "Decide the groom entry mode early: calm white ghodi with a handler, fresh floral baggi, or luxury royal rath.",
+      "Follow the Delhi 10 PM rule: Under the Noise Pollution Rules 2000, outdoor loudspeaker music must conclude by 10 PM.",
+      "Book 1 to 3 months in advance for auspicious wedding season dates in Delhi NCR.",
+      "Book directly with one established house to coordinate band, ghodi, dhol, and lights under a single point of contact.",
+    ],
     sections: [
       {
         heading: "1. Fix the basics first: date, start point and venue",
@@ -98,6 +106,13 @@ export const GUIDES: Guide[] = [
     image: { src: "/images/3.jpg", alt: "Wedding band trumpet player in red ceremonial uniform" },
     intro:
       "Every band says it is the best. These questions help you see the difference between a band that will make your baraat memorable and one that will leave you making phone calls on the wedding night.",
+    keyTakeaways: [
+      "Confirm owner vs. broker: Always deal directly with the actual band owner to prevent miscommunication on the wedding day.",
+      "Specify band formation: Ask for the exact number of brass musicians and verify uniform and matching safas.",
+      "Check song customization: Ensure the band leader agrees in advance to your preferred Bollywood, Punjabi, or family songs.",
+      "Verify lighting and generators: Demand silent mobile trolley generators so equipment noise does not drown out the musicians.",
+      "Review genuine local proof: Check verified Google Business reviews and authentic unedited event videos before confirming.",
+    ],
     sections: [
       {
         heading: "The 10 questions",

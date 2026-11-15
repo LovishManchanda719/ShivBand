@@ -35,7 +35,7 @@ export const SERVICES: Service[] = [
     hindi: "शादी के लिए बैंड बाजा — बारात बैंड, दिल्ली",
     h1: "Wedding Band & Baraat Band in Delhi",
     tagline: "Uniformed brass band for the baraat, from Krishna Nagar to all of Delhi NCR.",
-    metaTitle: "Best Wedding Band & Baraat Band Near Me in Delhi",
+    metaTitle: "Wedding Band & Baraat Band in Delhi",
     metaDescription:
       "Book Shiv Band & Light House — a live uniformed brass band for your baraat. Trumpet, clarinet and drums playing Bollywood and Punjabi hits. Krishna Nagar, East Delhi. Call 98186 26259.",
     keywords: [
@@ -102,7 +102,7 @@ export const SERVICES: Service[] = [
     hindi: "शादी के लिए घोड़ी — दूल्हे की सजी हुई सफ़ेद घोड़ी",
     h1: "Ghodi for Wedding — Decorated White Ghodi for the Groom",
     tagline: "Calm, well-trained white ghodi with full shringar for the groom's entry.",
-    metaTitle: "Ghodi for Wedding in Delhi | Best Ghodi Wala Near Me",
+    metaTitle: "Ghodi for Wedding & Ghudchadi in Delhi",
     metaDescription:
       "Book a decorated white ghodi for the groom from Shiv Band & Light House, Krishna Nagar, Delhi. Calm, healthy, well-trained mares with traditional shringar. Call 98186 26259.",
     keywords: [
@@ -156,7 +156,7 @@ export const SERVICES: Service[] = [
     hindi: "शादी के लिए फूलों वाली बग्गी और रथ",
     h1: "Flower Baggi & Rath for Wedding in Delhi",
     tagline: "Flower-decorated baggi and royal rath for the groom or bride's entry.",
-    metaTitle: "Wedding Baggi & Flower Baggi Near Me in Delhi | Rath for Baraat",
+    metaTitle: "Wedding Baggi, Flower Baggi & Rath in Delhi",
     metaDescription:
       "Book a flower-decorated wedding baggi or royal rath from Shiv Band & Light House, Krishna Nagar, Delhi. Horse-drawn carriages for the groom or bride's entry. Call 98186 26259.",
     keywords: [
@@ -207,7 +207,7 @@ export const SERVICES: Service[] = [
     hindi: "शादी के लिए ढोल वाले — पंजाबी ढोल, दिल्ली",
     h1: "Dhol Wale for Wedding — Punjabi Dhol in Delhi",
     tagline: "Punjabi dhol players for the baraat, mehndi, sangeet and every entry.",
-    metaTitle: "Best Dhol Wale Near Me in Delhi | Punjabi Dhol for Wedding",
+    metaTitle: "Punjabi Dhol Wale for Wedding in Delhi",
     metaDescription:
       "Book Punjabi dhol wale for your baraat, mehndi or sangeet from Shiv Band & Light House, Krishna Nagar, Delhi. Dhol players in traditional dress. Call 98186 26259.",
     keywords: [
@@ -256,7 +256,7 @@ export const SERVICES: Service[] = [
     hindi: "बारात के लिए छत्री लाइट, झूमर और रोड लाइट",
     h1: "Chhatri Lights, Jhumar & Baraat Lighting in Delhi",
     tagline: "Crystal chhatri lights, jhumar and road lights that light up the evening baraat.",
-    metaTitle: "Chhatri Lights, Jhumar & Baraat Lighting in Delhi",
+    metaTitle: "Chhatri Lights & Baraat Lighting in Delhi",
     metaDescription:
       "Crystal chhatri (chattar) lights, jhumar lights, road lights and silent generators for your baraat from Shiv Band & Light House, Krishna Nagar, Delhi. Call 98186 26259.",
     keywords: [
@@ -311,7 +311,7 @@ export const SERVICES: Service[] = [
     hindi: "शादी के लिए बैगपाइपर बैंड",
     h1: "Bagpiper Band for Wedding in Delhi",
     tagline: "A uniformed bagpiper band for a royal, regal baraat entry.",
-    metaTitle: "Bagpiper Band for Wedding in Delhi | Bagpipe Band Near Me",
+    metaTitle: "Bagpiper Band for Wedding in Delhi",
     metaDescription:
       "Book a uniformed bagpiper band for your baraat or wedding entry from Shiv Band & Light House, Krishna Nagar, Delhi. Call 98186 26259.",
     keywords: [
@@ -359,7 +359,7 @@ export const SERVICES: Service[] = [
     hindi: "शादी के लिए शहनाई वादन",
     h1: "Shehnai for Wedding in Delhi — Live Shehnai Players",
     tagline: "Live shehnai for the pheras, milni and the moments that need tradition.",
-    metaTitle: "Shehnai for Wedding in Delhi | Shehnai Wala Near Me",
+    metaTitle: "Shehnai Players for Wedding in Delhi",
     metaDescription:
       "Book live shehnai players for your wedding, pheras, milni or griha pravesh from Shiv Band & Light House, Krishna Nagar, Delhi. Call 98186 26259.",
     keywords: [
@@ -408,7 +408,7 @@ export const SERVICES: Service[] = [
     hindi: "शादी के लिए विंटेज कार — दूल्हे की एंट्री और विदाई",
     h1: "Vintage Car for Wedding in Delhi — Groom Entry & Vidaai",
     tagline: "A decorated vintage car for the groom's entry or the couple's vidaai.",
-    metaTitle: "Vintage Car for Wedding in Delhi | Vintage Car on Rent for Baraat",
+    metaTitle: "Vintage Wedding Car on Rent in Delhi",
     metaDescription:
       "Book a decorated vintage car for the groom's entry or the couple's vidaai from Shiv Band & Light House, Krishna Nagar, Delhi. Call 98186 26259.",
     keywords: [
@@ -459,7 +459,7 @@ export const SERVICES: Service[] = [
     hindi: "पूरी बारात का पैकेज — बैंड, घोड़ी, बग्गी, ढोल और लाइट",
     h1: "Complete Baraat Package — Band, Ghodi, Baggi, Dhol, Lights & More",
     tagline: "Everything for the baraat from one family-run house, booked directly with the owner.",
-    metaTitle: "Complete Baraat Package in Delhi | Band, Ghodi, Baggi, Dhol & Lights",
+    metaTitle: "Complete Wedding Baraat Package in Delhi",
     metaDescription:
       "Book a complete baraat — brass band, ghodi, flower baggi, dhol and chhatri lights — directly with the owner of Shiv Band & Light House, Krishna Nagar, Delhi. Call 98186 26259.",
     keywords: [

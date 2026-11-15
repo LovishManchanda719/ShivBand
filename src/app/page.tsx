@@ -156,9 +156,14 @@ export default async function HomePage() {
         <section className="container py-20 sm:py-28" aria-labelledby="gallery-title">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <SectionHeading eyebrow="Gallery" title={<span id="gallery-title">From our baraats</span>} />
-            <Link href="/gallery/photos" className="link-underline shrink-0">
-              View all photos <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
-            </Link>
+            <div className="flex flex-wrap items-center gap-5 sm:gap-6">
+              <Link href="/gallery/photos" className="link-underline shrink-0">
+                Photos <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+              </Link>
+              <Link href="/gallery/videos" className="link-underline shrink-0 text-maroon hover:text-ink">
+                Videos <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+              </Link>
+            </div>
           </div>
           <div className="mt-12 columns-2 gap-3 md:columns-3 md:gap-4">
             {GALLERY.map((g, i) => (
