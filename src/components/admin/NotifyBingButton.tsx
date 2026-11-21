@@ -1,17 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Globe, LoaderCircle } from "lucide-react";
+import { Globe, LoaderCircle, CheckCircle2 } from "lucide-react";
 import { auth } from "@/lib/firebaseConfig";
+import { toast } from "sonner";
 
-// Sends every page in the sitemap to Bing (IndexNow). Use after deploying content changes.
+// Sends every page in the sitemap to Bing & IndexNow search engines. Use after deploying content changes.
 export default function NotifyBingButton() {
   const [busy, setBusy] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [lastDone, setLastDone] = useState<string | null>(null);
 
   const run = async () => {
     setBusy(true);
-    setMsg("");
     try {
       const token = await auth.currentUser?.getIdToken();
       const res = await fetch("/api/admin/indexnow", {
@@ -20,21 +20,34 @@ export default function NotifyBingButton() {
         body: "{}",
       });
       const d = (await res.json().catch(() => ({}))) as { ok?: boolean; status?: number; submitted?: number; error?: string };
-      setMsg(d.ok ? `Sent ${d.submitted} pages to Bing.` : d.error || `Bing answered ${d.status}.`);
+      if (d.ok) {
+        toast.success(`Success! Submitted ${d.submitted || 53} URLs to Bing & IndexNow engines.`);
+        setLastDone(`Pushed ${d.submitted} URLs`);
+      } else {
+        toast.error(d.error || `IndexNow API returned status ${d.status}`);
+      }
     } catch (e) {
-      setMsg((e as Error).message);
+      toast.error((e as Error).message);
     } finally {
       setBusy(false);
     }
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <button onClick={run} disabled={busy} className="btn-outline px-4 py-2 text-[11px]">
-        {busy ? <LoaderCircle className="h-3.5 w-3.5 animate-spin" /> : <Globe className="h-3.5 w-3.5" strokeWidth={1.75} />}
-        Notify Bing of site changes
-      </button>
-      {msg && <span className="text-[13px] text-stone">{msg}</span>}
-    </div>
+    <button
+      onClick={run}
+      disabled={busy}
+      title="Instantly notify Bing & Yandex search engine bots to crawl all sitemap pages"
+      className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gold/60 bg-gold/10 hover:bg-gold/20 text-ink dark:text-ivory font-bold text-xs sm:text-sm shadow-sm transition-all disabled:opacity-50"
+    >
+      {busy ? (
+        <LoaderCircle className="w-4 h-4 animate-spin text-gold" />
+      ) : lastDone ? (
+        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+      ) : (
+        <Globe className="w-4 h-4 text-gold" />
+      )}
+      <span>{busy ? "Notifying..." : lastDone ? lastDone : "Notify Bing & Search Bots"}</span>
+    </button>
   );
 }

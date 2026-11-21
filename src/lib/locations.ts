@@ -467,6 +467,102 @@ export const LOCATIONS: LocationInfo[] = [
       },
     ],
   },
+  {
+    slug: "karkardooma",
+    name: "Karkardooma",
+    shortRegion: "East Delhi (Banquet Corridor)",
+    h1: "Wedding Band, Ghodi & Dhol in Karkardooma, Delhi",
+    hindi: "कड़कड़डूमा में शादी का बैंड, घोड़ी और ढोल वाले",
+    metaTitle: "Wedding Band in Karkardooma, East Delhi | Ghodi, Baggi & Dhol | Shiv Band",
+    metaDescription:
+      "Book the best wedding brass band in Karkardooma & CBD Ground banquet belt. Uniformed musicians, groom ghodi, royal baggi & chhatri lights. Call 98186 26259.",
+    tagline:
+      "East Delhi's premier banquet corridor. Stationed just 8–10 minutes away in Krishna Nagar for rapid arrival across CBD Ground and Karkardooma Court road banquet halls.",
+    travelTimeFromHQ: "8–12 mins from Krishna Nagar HQ",
+    popularVenues: [
+      "CBD Ground Grand Banquets & Lawns",
+      "Karkardooma Institutional Area Banquet Strip",
+      "Surajmal Vihar / Karkardooma Metro Celebration Venues",
+      "Arya Samaj & Community Celebrations Karkardooma",
+    ],
+    coverageAreas: [
+      "Karkardooma",
+      "CBD Ground",
+      "Karkardooma Court Complex Area",
+      "Dayanand Vihar",
+      "Gitanjali Enclave",
+      "Saini Enclave",
+      "Surajmal Vihar",
+      "Yojana Vihar",
+    ],
+    keywords: [
+      "wedding band Karkardooma",
+      "CBD ground banquet wedding band",
+      "dhol wale Karkardooma",
+      "ghodi baggi Karkardooma Delhi",
+      "best baraat band near Karkardooma court",
+      "wedding lights Karkardooma",
+    ],
+    faqs: [
+      {
+        q: "Can Shiv Band deploy to CBD Ground banquet halls on short notice?",
+        a: "Yes. Our head workshop is on Parwana Road, Krishna Nagar, just 8 to 12 minutes from the Karkardooma CBD Ground corridor. We provide seamless arrival, instrument setup, and procession timing for evening baraats.",
+      },
+      {
+        q: "Do Karkardooma banquets have specific sound timing regulations?",
+        a: "Delhi noise regulations restrict outdoor sound amplifiers after 10 PM. Because we are local experts, our band master coordinates the baraat procession timing so you get maximum celebratory dancing before transitioning indoors.",
+      },
+      {
+        q: "Do you supply flower baggi and groom ghodi in Karkardooma?",
+        a: "Yes, we arrange royal flower-decorated baggis, vintage entry cars, decorated white ghodis, Punjabi dhol players, and portable chhatri lights across all Karkardooma venues.",
+      },
+    ],
+  },
+  {
+    slug: "vivek-vihar",
+    name: "Vivek Vihar & Surajmal Vihar",
+    shortRegion: "East Delhi",
+    h1: "Wedding Band, Ghodi & Dhol in Vivek Vihar & Surajmal Vihar, Delhi",
+    hindi: "विवेक विहार और सूरजमल विहार में शादी का बैंड और ढोल वाले",
+    metaTitle: "Wedding Band in Vivek Vihar & Surajmal Vihar, Delhi | Shiv Band",
+    metaDescription:
+      "Trusted wedding brass band in Vivek Vihar, Surajmal Vihar & Jhilmil Colony. Groom white ghodi, flower baggi, dhol vadak & crystal lights. Call 98186 26259.",
+    tagline:
+      "Dignified brass melodies, high-energy Punjabi dhols, and royal groom entries for heritage families and celebrations across Vivek Vihar Phase 1 & 2.",
+    travelTimeFromHQ: "10–15 mins from Krishna Nagar HQ",
+    popularVenues: [
+      "Vivek Vihar Community Centres (Phase 1 & 2)",
+      "Yamuna Sports Complex Banquets & Lawns",
+      "Surajmal Vihar Colony Baraats",
+      "Jhilmil & Vivek Vihar Club Celebrations",
+    ],
+    coverageAreas: [
+      "Vivek Vihar Phase 1",
+      "Vivek Vihar Phase 2",
+      "Surajmal Vihar",
+      "Jhilmil Colony",
+      "Ramprastha Colony border",
+      "Brij Vihar border",
+      "Jwala Nagar",
+    ],
+    keywords: [
+      "wedding band Vivek Vihar",
+      "baraat band Surajmal Vihar",
+      "dhol wale Vivek Vihar Delhi",
+      "ghodi on rent Vivek Vihar",
+      "Yamuna sports complex wedding band",
+    ],
+    faqs: [
+      {
+        q: "Can you manage residential colony baraat processions in Vivek Vihar?",
+        a: "Yes. Our band leaders have navigated Vivek Vihar's gated blocks and broad avenues for over 25 years. We coordinate smooth movement, traffic flow, and timely ghudchadi ceremonies.",
+      },
+      {
+        q: "What packages work best for Vivek Vihar weddings?",
+        a: "Most families in Vivek Vihar and Surajmal Vihar book our Complete Royal Baraat Package — including an 11 or 21-piece brass band, 2 Punjabi dhols, decorated white ghodi, and mobile crystal chhatri lights with silent generator backup.",
+      },
+    ],
+  },
 ];
 
 export const getLocation = (slug: string) => LOCATIONS.find((l) => l.slug === slug);

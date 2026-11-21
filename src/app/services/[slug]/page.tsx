@@ -69,10 +69,11 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             "@context": "https://schema.org",
             "@type": "VideoObject",
             name: `${v.title} — ${SITE.name}`,
-            description: `${v.title} at a baraat in Delhi by ${SITE.name}.`,
-            thumbnailUrl: `${SITE_URL}${v.poster}`,
-            contentUrl: `${SITE_URL}${v.src}`,
-            uploadDate: "2026-10-11",
+            description: v.description || `${v.title} at a baraat in Delhi by ${SITE.name}.`,
+            thumbnailUrl: v.poster.startsWith("http") ? v.poster : `${SITE_URL}${v.poster}`,
+            contentUrl: v.youtubeId ? `https://www.youtube.com/watch?v=${v.youtubeId}` : `${SITE_URL}${v.src}`,
+            embedUrl: v.youtubeId ? `https://www.youtube-nocookie.com/embed/${v.youtubeId}` : undefined,
+            uploadDate: "2024-10-15",
           })),
         ]}
       />
@@ -190,21 +191,58 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
 
       {s.videos && s.videos.length > 0 && (
         <section className="container pb-20" aria-label={`${s.name} videos`}>
-          <h2 className="mb-8 font-display text-[30px] leading-tight text-ink sm:text-[38px]">See it at a real baraat</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="mb-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+            <div>
+              <p className="eyebrow text-gold mb-2 flex items-center gap-2">
+                <span className="font-hindi text-maroon font-semibold">असली बारात वीडियो</span>
+                <span>·</span>
+                <span>Live Baraat Proof</span>
+              </p>
+              <h2 className="font-display text-[30px] leading-tight text-ink sm:text-[38px]">
+                Watch {s.name} live in action
+              </h2>
+            </div>
+            <a
+              href={SITE.social.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-underline text-[14px] text-maroon hover:text-ink"
+            >
+              Watch more on YouTube &rarr;
+            </a>
+          </div>
+          <div className={`grid gap-6 ${s.videos.length > 2 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2"}`}>
             {s.videos.map((v) => (
-              <figure key={v.src}>
-                <video
-                  src={v.src}
-                  poster={v.poster}
-                  controls
-                  muted
-                  playsInline
-                  loop
-                  preload="none"
-                  className="aspect-[3/4] w-full rounded-2xl bg-ink object-cover"
-                />
-                <figcaption className="mt-2 text-[13px] text-stone">{v.title}</figcaption>
+              <figure key={v.youtubeId || v.src} className="flex flex-col">
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-ink shadow-sm">
+                  {v.youtubeId ? (
+                    <iframe
+                      src={`https://www.youtube-nocookie.com/embed/${v.youtubeId}?rel=0`}
+                      title={`${v.title} — Shiv Band Delhi`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="lazy"
+                      className="h-full w-full border-0"
+                    />
+                  ) : (
+                    <video
+                      src={v.src}
+                      poster={v.poster}
+                      controls
+                      muted
+                      playsInline
+                      loop
+                      preload="none"
+                      className="h-full w-full object-cover"
+                    />
+                  )}
+                </div>
+                <figcaption className="mt-3">
+                  <h3 className="font-display text-[17px] text-ink">{v.title}</h3>
+                  {v.description && (
+                    <p className="mt-1 text-[13px] leading-relaxed text-stone line-clamp-2">{v.description}</p>
+                  )}
+                </figcaption>
               </figure>
             ))}
           </div>

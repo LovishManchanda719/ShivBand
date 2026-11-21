@@ -8,6 +8,14 @@ export interface ServiceFaq {
   a: string;
 }
 
+export interface ServiceVideo {
+  src?: string;
+  poster: string;
+  title: string;
+  youtubeId?: string;
+  description?: string;
+}
+
 export interface Service {
   slug: string;
   icon: ServiceIcon;
@@ -22,7 +30,7 @@ export interface Service {
   includes: string[];
   occasions: string[];
   images: { src: string; alt: string; focus?: string }[]; // focus = CSS object-position; may be empty until real photos are added
-  videos?: { src: string; poster: string; title: string }[]; // short muted clips from real events
+  videos?: ServiceVideo[]; // short muted clips or YouTube reels from real events
   illustrativeImages?: boolean; // true when photos are illustrations, not from a real event
   faqs: ServiceFaq[];
   hindiFaqs?: ServiceFaq[];
@@ -80,6 +88,26 @@ export const SERVICES: Service[] = [
       { src: "/images/3.jpg", alt: "Shiv Band trumpet player in red ceremonial uniform" },
       { src: "/images/brass-band-chhatri-lights.jpg", alt: "Wedding band musicians walking with chhatri lights at night" },
       { src: "/images/108.jpg", alt: "Shiv Band wedding band uniforms displayed at the Krishna Nagar shop" },
+    ],
+    videos: [
+      {
+        youtubeId: "BmgF2MWPkDw",
+        poster: "https://i.ytimg.com/vi/BmgF2MWPkDw/hqdefault.jpg",
+        title: "Live Brass Band Performance at Baraat",
+        description: "Shiv Band performing live Bollywood and traditional baraati tunes on trumpets, clarinets, and side drums in red ceremonial uniform.",
+      },
+      {
+        youtubeId: "tWBjD2F0jsY",
+        poster: "https://i.ytimg.com/vi/tWBjD2F0jsY/hqdefault.jpg",
+        title: "Uniformed Brass Band Artists in Ceremonial Dress",
+        description: "Watch our synchronized brass band musicians playing energetic wedding tunes in matching traditional uniforms and ceremonial safa.",
+      },
+      {
+        youtubeId: "0uyTTUHOa-8",
+        poster: "https://i.ytimg.com/vi/0uyTTUHOa-8/hqdefault.jpg",
+        title: "Classic Ceremonial Uniform & Procession",
+        description: "Shiv Band musicians leading a joyful evening wedding baraat with festive fanfare across Delhi NCR.",
+      },
     ],
     faqs: [
       {
@@ -283,6 +311,26 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Baraat", "Mehndi", "Sangeet", "Roka", "Jago night", "Bride and groom entry"],
     images: [{ src: "/images/dhol-wale-baraat.jpg", alt: "Shiv Band dhol players ready for a wedding baraat at night" }],
+    videos: [
+      {
+        youtubeId: "33dtcWrf_WM",
+        poster: "https://i.ytimg.com/vi/33dtcWrf_WM/hqdefault.jpg",
+        title: "Thunderous Punjabi Dhol Beats at Baraat",
+        description: "High-energy Punjabi dhol players lifting the celebration with non-stop bhangra beats alongside baggi and lights.",
+      },
+      {
+        youtubeId: "JaMaJ02Icdg",
+        poster: "https://i.ytimg.com/vi/JaMaJ02Icdg/hqdefault.jpg",
+        title: "Live Dhol & Procession Performance in East Delhi",
+        description: "Traditional dhol players in ceremonial Punjabi attire performing live in a vibrant celebration procession.",
+      },
+      {
+        youtubeId: "BmgF2MWPkDw",
+        poster: "https://i.ytimg.com/vi/BmgF2MWPkDw/hqdefault.jpg",
+        title: "Baraat Music & Dhol Beats Celebration",
+        description: "Energetic wedding rhythm and brass fanfare keeping guests dancing throughout the baraat procession.",
+      },
+    ],
     faqs: [
       {
         q: "Can I book dhol wale without the full band?",

@@ -1383,16 +1383,19 @@ export default function AdminDashboardPage() {
             </p>
           </div>
 
-          <button
-            onClick={handleManualRefresh}
-            disabled={isLoadingData}
-            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-maroon hover:bg-maroon-deep text-white font-bold text-xs sm:text-sm shadow-md transition-all self-start md:self-auto"
-          >
-            <RefreshCw
-              className={`w-4 h-4 ${isLoadingData ? "animate-spin" : ""}`}
-            />
-            <span>{isLoadingData ? "Refreshing..." : "Refresh Live Data"}</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+            <NotifyBingButton />
+            <button
+              onClick={handleManualRefresh}
+              disabled={isLoadingData}
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-maroon hover:bg-maroon-deep text-white font-bold text-xs sm:text-sm shadow-md transition-all"
+            >
+              <RefreshCw
+                className={`w-4 h-4 ${isLoadingData ? "animate-spin" : ""}`}
+              />
+              <span>{isLoadingData ? "Refreshing..." : "Refresh Live Data"}</span>
+            </button>
+          </div>
         </div>
 
         {/* Navigation Tabs */}
@@ -2572,9 +2575,6 @@ export default function AdminDashboardPage() {
         {/* TAB 2: PHOTO GALLERY MANAGER */}
         {activeTab === "photos" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-3">
-              <NotifyBingButton />
-            </div>
             {/* Upload New Photo Form */}
             <div
               className={`p-6 rounded-2xl border h-fit ${
