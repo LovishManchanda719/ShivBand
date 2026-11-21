@@ -38,7 +38,7 @@ export default function NotifyBingButton() {
       onClick={run}
       disabled={busy}
       title="Instantly notify Bing & Yandex search engine bots to crawl all sitemap pages"
-      className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gold/60 bg-gold/10 hover:bg-gold/20 text-ink dark:text-ivory font-bold text-xs sm:text-sm shadow-sm transition-all disabled:opacity-50"
+      className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gold/60 bg-gold/10 hover:bg-gold/20 text-ink font-bold text-xs sm:text-sm shadow-sm transition-all disabled:opacity-50"
     >
       {busy ? (
         <LoaderCircle className="w-4 h-4 animate-spin text-gold" />
@@ -47,7 +47,7 @@ export default function NotifyBingButton() {
       ) : (
         <Globe className="w-4 h-4 text-gold" />
       )}
-      <span>{busy ? "Notifying..." : lastDone ? lastDone : "Notify Bing & Search Bots"}</span>
+      <span className="text-ink">{busy ? "Notifying..." : lastDone ? lastDone : "Notify Bing & Search Bots"}</span>
     </button>
   );
 }
