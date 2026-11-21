@@ -25,6 +25,7 @@ export interface Service {
   videos?: { src: string; poster: string; title: string }[]; // short muted clips from real events
   illustrativeImages?: boolean; // true when photos are illustrations, not from a real event
   faqs: ServiceFaq[];
+  hindiFaqs?: ServiceFaq[];
 }
 
 export const SERVICES: Service[] = [
@@ -46,12 +47,20 @@ export const SERVICES: Service[] = [
       "band baaja for wedding",
       "brass band for baraat",
       "Shiv Band",
-          "band baja near me",
+      "band baja near me",
       "band baaja baraat",
       "band wala near me",
       "brass band Delhi",
       "baraat band East Delhi",
       "wedding band Krishna Nagar",
+      "shaadi ke liye band",
+      "shaadi ke liye band baja",
+      "baraat band booking delhi",
+      "delhi me wedding band ka rate",
+      "band wale ka number",
+      "11 piece band price in delhi",
+      "शादी के लिए बैंड बाजा",
+      "बारात बैंड दिल्ली",
     ],
     intro: [
       "A baraat is only as good as its band baja. Shiv Band & Light House has been leading baraats out of Krishna Nagar since 1996 with a live, uniformed brass band — trumpets, clarinets, side drums and the big bass — playing the songs your family actually wants to dance to.",
@@ -94,6 +103,20 @@ export const SERVICES: Service[] = [
         a: "Popular wedding dates in the season fill quickly, so it is best to book as soon as your date is fixed. You can still call for last-minute dates and we will tell you honestly what is available.",
       },
     ],
+    hindiFaqs: [
+      {
+        q: "Shaadi ke liye band kaise book karein aur advance kitna dena hota hai? (शादी के लिए बारात बैंड कैसे बुक करें?)",
+        a: "Shiv Band book karna behad aasan hai. Aap seedhe Manish Kumar ji ko 98186 26259 par call ya WhatsApp karke apni shaadi ki date, venue aur area bata sakte hain. Sawa (wedding season) dates par bookings jaldi full hoti hain, isliye dates finalize hote hi chhota sa token advance dekar booking confirm kar sakte hain. Baaki payment event ke din hoti hai.",
+      },
+      {
+        q: "Delhi me baraat band ka rate / kharcha kitna aata hai? (दिल्ली में शादी के बैंड का क्या रेट है?)",
+        a: "Wedding band ka rate musicians ki sankhya (11, 21 ya 31 troop), uniform style aur procession ke distance par nirbhar karta hai. Shiv Band me basic brass band package ₹15,000 se shuru hota hai aur grand royal baraat packages (band, ghodi, baggi, lights aur dhol ke saath) ₹40,000 se ₹85,000+ tak uplabdh hain. Zero-surge guarantee ke sath exact package ke liye WhatsApp par direct quote le sakte hain.",
+      },
+      {
+        q: "Kya band wale latest Bollywood aur Punjabi gaane bajate hain? (क्या बैंड वाले नए गाने बजाते हैं?)",
+        a: "Haan, humare sabhi musicians well-trained aur ceremonial uniform me hote hain. 'Sauda Khara Khara', 'Mundian To Bach Ke', 'Kala Chashma', traditional baraati dhunein aur aapke parivaar ki pasandeeda playlist live trumpets aur clarinets par bajaye jaate hain. Aap advance me bhi apni pasandeeda song list share kar sakte hain.",
+      },
+    ],
   },
   {
     slug: "ghodi-for-wedding",
@@ -112,11 +135,17 @@ export const SERVICES: Service[] = [
       "ghori for wedding Delhi",
       "white horse for groom",
       "wedding ghodi booking",
-          "ghodi wala",
+      "ghodi wala",
       "ghori wala near me",
       "ghudchadi ghodi",
       "ghodi booking Delhi",
       "white ghodi for groom",
+      "dulhe ki ghodi kitne ki aati hai",
+      "dulhe ki ghodi price in delhi",
+      "ghudchadi ke liye ghodi booking",
+      "ghodi wale ka number",
+      "दूल्हे की सफेद घोड़ी",
+      "शादी के लिए घोड़ी",
     ],
     intro: [
       "The groom's ride on the ghodi is the moment everyone lines up to watch. Our white ghodis are healthy, calm and used to music, lights and crowds, so the groom can enjoy the ride and the photographs come out right.",
@@ -146,6 +175,20 @@ export const SERVICES: Service[] = [
       {
         q: "Where do you provide wedding ghodi?",
         a: "We are based in Krishna Nagar, East Delhi, and bring the ghodi to venues across Delhi NCR, including Noida, Ghaziabad, Gurugram and Faridabad.",
+      },
+    ],
+    hindiFaqs: [
+      {
+        q: "Dulhe ki ghodi kitne ki aati hai (Delhi me ghodi ka price kitna hai)? (दूल्हे की घोड़ी का किराया कितना होता है?)",
+        a: "Delhi NCR me groom entry aur ghudchadi rasam ke liye decorated white ghodi ka rate aamtaur par ₹5,000 se ₹12,000 ke beech hota hai. Isme sundar traditional shringar (zari work jhool, kalgi, moti mala), safed chhatri aur anubhavi handler (saees) shamil hote hain. Venue distance aur timing ke hisaab se exact rate ke liye 98186 26259 par WhatsApp karein.",
+      },
+      {
+        q: "Kya ghodi band baaja aur dhol ke shor se darti toh nahi? (क्या घोड़ी तेज आवाज और ढोल से डरती है?)",
+        a: "Bilkul nahi. Shiv Band ki sabhi ghodiyan shaadi ke maahol, tez dhol beats, brass instruments aur bheed ke beech chalne ke liye vishesh roop se trained hoti hain. Saath hi, humara anubhavi saees hamesha lagam pakad kar ghodi ke sath rehta hai taaki dulha poori tarah safe aur comfortable rahe.",
+      },
+      {
+        q: "Ghudchadi ke liye ghodi kitne samay pehle pahunchti hai? (घुड़चढ़ी के लिए घोड़ी कितने समय पहले पहुंचेगी?)",
+        a: "Ghodi aapke bataye gaye address par rasam ke tay samay se 30 se 45 minute pehle poore shringar ke sath ready ho jaati hai, taaki rasam, pooja aur photo sessions me koi jaldbazi na ho.",
       },
     ],
   },
@@ -217,10 +260,16 @@ export const SERVICES: Service[] = [
       "punjabi dhol players",
       "dhol for baraat",
       "dhol tasha Delhi",
-          "dhol wala near me",
+      "dhol wala near me",
       "dhol for mehndi",
       "dhol for sangeet",
       "punjabi dhol Delhi",
+      "dhol wale ka number",
+      "sangeet ke liye dhol wale",
+      "shaadi me dhol wale price",
+      "dhol wale contact number delhi",
+      "ढोल वाले का नंबर",
+      "शादी के लिए ढोल",
     ],
     intro: [
       "Nothing gets the baraat dancing faster than the dhol. Our dhol players perform in traditional dress and know exactly when to lift the energy — at the groom's departure, at the venue gate and during the bhangra in between.",
@@ -246,6 +295,20 @@ export const SERVICES: Service[] = [
       {
         q: "How do I check if dhol wale are free on my date?",
         a: "Call or WhatsApp 98186 26259, or send your date through the booking form and we will confirm availability.",
+      },
+    ],
+    hindiFaqs: [
+      {
+        q: "Delhi me shaadi, sangeet ya mehndi ke liye dhol wale ka rate kya hai? (दिल्ली में ढोल वाले का क्या रेट है?)",
+        a: "Ladies sangeet ya mehndi function ke liye 2 Punjabi dhol vadakon ka rate aamtaur par ₹3,500 se ₹7,000 ke beech hota hai (duration aur timings ke according). Baraat ke liye jahan loud aur continuous bhangra beats chahiye hote hain, wahan 2 se 4 dhol players book kiye jaate hain. Band ke sath add-on karne par package discount milta hai.",
+      },
+      {
+        q: "Kya sirf dhol wale book kar sakte hain bina poore band ke? (क्या बिना बैंड के सिर्फ ढोल वाले बुक कर सकते हैं?)",
+        a: "Haan, bilkul! Aap kisi bhi event ke liye sirf Punjabi dhol players book kar sakte hain — chahe ghar ki ghudchadi ho, ladies sangeet, mehendi, Jago night ya reception par bride-groom entry. Humare vadak traditional Punjabi attire (kurta-chadra aur pagri) me aate hain.",
+      },
+      {
+        q: "Dhol wale ka number kya hai direct booking ke liye? (ढोल वाले का कांटेक्ट नंबर क्या है?)",
+        a: "Aap seedha Shiv Band ke head Manish Kumar ji ko 98186 26259 par call ya WhatsApp kar sakte hain. Krishna Nagar, Preet Vihar, Laxmi Nagar, Noida, Ghaziabad ya pure Delhi NCR me humare dhol wale tay samay par pahuchete hain.",
       },
     ],
   },

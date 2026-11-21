@@ -8,12 +8,21 @@ export const BUSINESS_ID = `${SITE_URL}/#business`;
 // LocalBusiness and hard-coded numbers risk a manual action.
 export const localBusinessSchema = () => ({
   "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "EntertainmentBusiness"],
+  "@type": ["LocalBusiness", "EntertainmentBusiness", "PerformingGroup", "MusicGroup"],
   "@id": BUSINESS_ID,
   name: SITE.name,
+  legalName: "Shiv Band & Light House",
   alternateName: SITE.alternateNames,
+  slogan: "Baraat ki Shaan, Delhi NCR Since 1996",
+  brand: {
+    "@type": "Brand",
+    name: "Shiv Band",
+    alternateName: SITE.alternateNames,
+    url: SITE_URL,
+    logo: `${SITE_URL}/apple-icon`,
+  },
   description:
-    "Shiv Band & Light House is a family-run wedding band in Krishna Nagar, East Delhi, serving Delhi NCR since 1996 with brass band, baraat band, ghodi, flower baggi, rath, dhol wale and chhatri lights.",
+    "Shiv Band & Light House is a premier family-run wedding brass band in Krishna Nagar, East Delhi, serving all Delhi NCR since 1996 with live brass symphony, baraat band, groom ghodi, flower baggi, rath, Punjabi dhol wale and crystal chhatri lights.",
   url: SITE_URL,
   logo: `${SITE_URL}/apple-icon`,
   image: [`${SITE_URL}/images/shiv-band-brass-band-procession.jpg`, `${SITE_URL}/images/groom-ghodi-chhatri-lights.jpg`, `${SITE_URL}/images/2.jpg`, `${SITE_URL}/images/1.jpg`],
@@ -122,9 +131,60 @@ export const websiteSchema = () => ({
   "@id": `${SITE_URL}/#website`,
   url: `${SITE_URL}/`,
   name: SITE.name,
-  alternateName: ["Shiv Band", "Shiv Band and Light House"],
+  alternateName: ["Shiv Band", "Shiv Band and Light House", "Shiv Band Delhi"],
   inLanguage: "en-IN",
   publisher: { "@id": BUSINESS_ID },
+});
+
+export const siteNavigationSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": `${SITE_URL}/#navigation`,
+  name: "Shiv Band Main Navigation",
+  itemListElement: [
+    {
+      "@type": "SiteNavigationElement",
+      position: 1,
+      name: "Wedding Services",
+      description: "Brass band, ghodi, flower baggi, dhol wale, chhatri lights and vintage cars.",
+      url: `${SITE_URL}/services`,
+    },
+    {
+      "@type": "SiteNavigationElement",
+      position: 2,
+      name: "Baraat Packages & Pricing",
+      description: "Custom wedding band packages with transparent Zero-Surge pricing.",
+      url: `${SITE_URL}/packages`,
+    },
+    {
+      "@type": "SiteNavigationElement",
+      position: 3,
+      name: "Areas Served in Delhi NCR",
+      description: "Coverage across East Delhi, South Delhi, Noida, Ghaziabad, Gurugram & Faridabad.",
+      url: `${SITE_URL}/locations`,
+    },
+    {
+      "@type": "SiteNavigationElement",
+      position: 4,
+      name: "Live Photos & Video Gallery",
+      description: "Authentic live performance recordings and photography from real Delhi baraats.",
+      url: `${SITE_URL}/gallery/photos`,
+    },
+    {
+      "@type": "SiteNavigationElement",
+      position: 5,
+      name: "Customer Reviews",
+      description: "Verified customer testimonials and ratings from wedding families.",
+      url: `${SITE_URL}/reviews`,
+    },
+    {
+      "@type": "SiteNavigationElement",
+      position: 6,
+      name: "Contact & Booking",
+      description: "Direct contact with owner Manish Kumar, shop location on Parwana Road, Krishna Nagar.",
+      url: `${SITE_URL}/contact`,
+    },
+  ],
 });
 
 export const serviceSchema = (s: Service) => ({
@@ -219,8 +279,20 @@ export const locationBusinessSchema = (loc: {
 
 export const HOME_FAQS: ServiceFaq[] = [
   {
+    q: "Is Shiv Band affiliated with Shiv Mohan Band?",
+    a: "No. Shiv Band & Light House (est. 1996 in Krishna Nagar, East Delhi, owned by Manish Kumar) is an independent family-run heritage brass band. We are completely independent of Shiv Mohan Band (Karol Bagh / Rajouri Garden). Shiv Band is celebrated across Delhi NCR for our strict Zero-Surge pricing policy, cruelty-free trained white ghodis, in-house uniformed brass musicians, and direct owner supervision on every single baraat.",
+  },
+  {
     q: "Where is Shiv Band & Light House located?",
     a: "Our shop is at D-96, Parwana Road, New Govindpura (near Laxmi Dairy), Krishna Nagar, New Delhi 110051. We are open every day from 10 AM to 9 PM.",
+  },
+  {
+    q: "Who is the owner of Shiv Band in Delhi?",
+    a: "Shiv Band & Light House was founded in 1996 and is personally managed by Manish Kumar (Manish Manchanda). Customers interact directly with Manish Kumar with zero broker markups or commission agents.",
+  },
+  {
+    q: "What is Shiv Band's official contact number?",
+    a: "Shiv Band's direct booking numbers are +91 98186 26259 and +91 98186 22259. You can also contact us on WhatsApp at 919818626259 or visit our official website at https://shivband.in.",
   },
   {
     q: "Does Shiv Band charge surge pricing on peak wedding season or auspicious (Saya) dates?",

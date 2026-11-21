@@ -47,10 +47,10 @@ export default async function HomePage() {
           <div className="grid gap-12 md:grid-cols-12 md:gap-8">
             <div className="md:col-span-6">
               <SectionHeading
-                eyebrow="Wedding band in Delhi"
+                eyebrow="Heritage Wedding Band in Delhi"
                 title={
                   <>
-                    Baraat ki <em className="italic text-maroon">shaan</em>, from Krishna Nagar since {SITE.foundingYear}.
+                    Baraat ki <em className="italic text-maroon">shaan</em>, Shiv Band from Krishna Nagar since {SITE.foundingYear}.
                   </>
                 }
               />
@@ -90,7 +90,7 @@ export default async function HomePage() {
             <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <SectionHeading
                 eyebrow="What we bring"
-                title={<span id="services-title">Everything your baraat needs</span>}
+                title={<span id="services-title">Wedding Baraat Services by Shiv Band</span>}
                 intro="Book a single service or the complete baraat. Every service is our own — no outsourcing, no middlemen."
               />
               <Link href="/services" className="link-underline shrink-0">
@@ -131,7 +131,7 @@ export default async function HomePage() {
               eyebrow="How booking works"
               title={
                 <>
-                  Three steps to a <em className="italic text-gold-light">grand</em> entry
+                  Three steps to book <em className="italic text-gold-light">Shiv Band</em>
                 </>
               }
             />
@@ -160,7 +160,7 @@ export default async function HomePage() {
         {/* Gallery preview */}
         <section className="container py-20 sm:py-28" aria-labelledby="gallery-title">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading eyebrow="Gallery" title={<span id="gallery-title">From our baraats</span>} />
+            <SectionHeading eyebrow="Live Baraat Gallery" title={<span id="gallery-title">Shiv Band at Real Delhi Baraats</span>} />
             <div className="flex flex-wrap items-center gap-5 sm:gap-6">
               <Link href="/gallery/photos" className="link-underline shrink-0">
                 Photos <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
@@ -190,8 +190,8 @@ export default async function HomePage() {
         <section className="bg-sand/60 py-20 sm:py-28" aria-labelledby="reviews-title">
           <div className="container">
             <SectionHeading
-              eyebrow="Reviews"
-              title={<span id="reviews-title">Words from our families</span>}
+              eyebrow="Customer Reviews"
+              title={<span id="reviews-title">Words from Families Who Chose Shiv Band</span>}
               className="mb-12"
             />
             <ReviewsList limit={3} />
@@ -210,7 +210,7 @@ export default async function HomePage() {
         <section className="container py-20 sm:py-28">
           <div className="grid gap-14 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <SectionHeading eyebrow="Good to know" title="Questions families ask" />
+              <SectionHeading eyebrow="Good to know" title="Frequently Asked Questions About Shiv Band" />
               <details className="group mt-12 lg:hidden">
                 <summary className="eyebrow flex cursor-pointer list-none items-center justify-between border-y border-line py-4 [&::-webkit-details-marker]:hidden">
                   Areas we serve
@@ -232,6 +232,40 @@ export default async function HomePage() {
             </div>
             <div className="lg:col-span-7 lg:col-start-6">
               <Faq items={HOME_FAQS} />
+            </div>
+          </div>
+        </section>
+
+        {/* Brand Verification & Entity Disambiguation */}
+        <section className="container pb-16">
+          <div className="rounded-3xl border border-gold/40 bg-sand/30 p-8 sm:p-12 shadow-sm">
+            <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-8">
+                <p className="eyebrow text-gold mb-2 flex items-center gap-2">
+                  <span>Official Brand Verification</span>
+                  <span>·</span>
+                  <span className="font-hindi text-maroon font-semibold">असली शिव बैंड पहचान</span>
+                </p>
+                <h2 className="font-display text-[26px] leading-tight text-ink sm:text-[32px]">
+                  Shiv Band &amp; Light House — Delhi NCR Heritage Since 1996
+                </h2>
+                <p className="mt-3 text-[15px] leading-relaxed text-stone">
+                  Shiv Band &amp; Light House (Parwana Road, Krishna Nagar, East Delhi) is an independent, family-run brass band owned and managed directly by <strong>Manish Kumar</strong> since 1996. We are completely independent of Shiv Mohan Band (Karol Bagh) and third-party commission agents. When booking on <strong>shivband.in</strong> or calling <strong>98186 26259</strong>, you receive genuine Zero-Surge pricing, uniformed musicians, trained white ghodis, and direct owner supervision on your baraat.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row lg:col-span-4 lg:flex-col lg:items-end">
+                <a href={telLink(0)} className="btn-primary w-full text-center sm:w-auto">
+                  <Phone className="h-4 w-4" /> Call Manish Kumar
+                </a>
+                <a
+                  href={whatsappLink("Namaste Shiv Band, I would like to verify booking availability for my wedding date.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline w-full text-center sm:w-auto"
+                >
+                  <WhatsAppIcon className="h-4 w-4" /> Verify on WhatsApp
+                </a>
+              </div>
             </div>
           </div>
         </section>

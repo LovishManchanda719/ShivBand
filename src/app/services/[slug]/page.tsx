@@ -64,7 +64,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         data={[
           serviceSchema(s),
           breadcrumbSchema(crumbs),
-          faqSchema(s.faqs),
+          faqSchema([...s.faqs, ...(s.hindiFaqs || [])]),
           ...(s.videos || []).map((v) => ({
             "@context": "https://schema.org",
             "@type": "VideoObject",
@@ -212,7 +212,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       )}
 
       {/* FAQ */}
-      <section className={`container ${more.length > 0 ? "pb-20" : "py-20"}`}>
+      <section className={`container ${more.length > 0 ? "pb-16" : "py-16"}`}>
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <SectionHeading eyebrow="FAQ" title={`${s.name}: common questions`} />
@@ -222,6 +222,42 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           </div>
         </div>
       </section>
+
+      {/* Hindi & Hinglish Search FAQs */}
+      {s.hindiFaqs && s.hindiFaqs.length > 0 && (
+        <section className="container pb-20">
+          <div className="rounded-3xl border border-gold/40 bg-sand/30 p-8 sm:p-12 shadow-sm">
+            <div className="grid gap-10 lg:grid-cols-12">
+              <div className="lg:col-span-5">
+                <p className="eyebrow text-gold mb-2 flex items-center gap-2">
+                  <span className="font-hindi text-maroon font-semibold">अक्सर पूछे जाने वाले सवाल</span>
+                  <span>·</span>
+                  <span>Hinglish FAQs</span>
+                </p>
+                <h2 className="font-display text-[26px] leading-tight text-ink sm:text-[32px]">
+                  {s.name} — ज़रूरी सवाल और जवाब
+                </h2>
+                <p className="mt-3 text-[15px] leading-relaxed text-stone">
+                  दिल्ली एनसीआर में शादी, बारात और बुकिंग से जुड़े सबसे आम सवाल। सीधा रेट और बुकिंग जानकारी के लिए कॉल या व्हाट्सएप करें।
+                </p>
+                <div className="mt-6">
+                  <a
+                    href={whatsappLink(`Namaste Shiv Band, mujhe ${s.name} ke rate aur booking ke baare me jankari chahiye.`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-[14px] font-medium text-maroon hover:text-ink transition-colors"
+                  >
+                    <WhatsAppIcon className="h-4 w-4" /> व्हाट्सएप पर तुरंत रेट पूछें &rarr;
+                  </a>
+                </div>
+              </div>
+              <div className="lg:col-span-7">
+                <Faq items={s.hindiFaqs} />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Helpful Planning Guides */}
       {relevantGuides.length > 0 && (

@@ -5,7 +5,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import JsonLd from "@/components/site/JsonLd";
 import { Toaster } from "@/components/ui/sonner";
-import { localBusinessSchema, websiteSchema } from "@/lib/schema";
+import { localBusinessSchema, siteNavigationSchema, websiteSchema } from "@/lib/schema";
 import { SITE, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -31,13 +31,13 @@ const hindi = Tiro_Devanagari_Hindi({
   display: "swap",
 });
 
-const DEFAULT_TITLE = "Shiv Band & Light House | Wedding Band, Ghodi & Dhol in Delhi";
+const DEFAULT_TITLE = "Shiv Band™ | Best Wedding Brass Band in Delhi NCR · Since 1996";
 const DEFAULT_DESC =
-  "Shiv Band & Light House, Krishna Nagar, Delhi: live wedding band, ghodi, flower baggi, dhol wale & chhatri lights across Delhi NCR since 1996. Call 98186 26259.";
+  "Shiv Band & Light House (Krishna Nagar, Delhi): Premier wedding brass band, decorated ghodi, flower baggi rath, Punjabi dhol wale & chhatri lights across Delhi NCR since 1996. Call 98186 26259.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: DEFAULT_TITLE, template: "%s | Shiv Band & Light House" },
+  title: { default: DEFAULT_TITLE, template: "%s | Shiv Band" },
   description: DEFAULT_DESC,
   applicationName: SITE.name,
   authors: [{ name: SITE.name }],
@@ -46,16 +46,23 @@ export const metadata: Metadata = {
   category: "Wedding services",
   keywords: [
     "Shiv Band",
+    "Shiv Band Delhi",
+    "Shiv Band Krishna Nagar",
     "Shiv Band and Light House",
     "Shiv Band & Light House",
+    "Shiv Band contact number",
+    "Shiv Band price",
+    "Shiv Band reviews",
+    "Shiv Band official website",
     "best wedding bands near me",
     "best baraat band near me",
+    "wedding band in Delhi",
     "ghodi for wedding",
     "baggi for wedding",
     "best dhol wale near me",
-    "wedding band in Delhi",
     "band baaja Krishna Nagar",
     "शिव बैंड",
+    "शिव बैंड दिल्ली",
   ],
   alternates: { canonical: "/" },
   icons: {
@@ -114,7 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/apple-icon" />
       </head>
       <body suppressHydrationWarning>
-        <JsonLd data={[localBusinessSchema(), websiteSchema()]} />
+        <JsonLd data={[localBusinessSchema(), websiteSchema(), siteNavigationSchema()]} />
         <ThemeProvider>
           <AuthProvider>
             <AnalyticsTracker />

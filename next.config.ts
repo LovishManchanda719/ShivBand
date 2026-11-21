@@ -23,6 +23,31 @@ const nextConfig: NextConfig = {
   poweredByHeader: false, // Security: Remove X-Powered-By header
   compress: true, // Speed: Enable Brotli / Gzip compression
 
+  async redirects() {
+    return [
+      {
+        source: '/services/baggi-for-wedding',
+        destination: '/services/flower-baggi-rath',
+        permanent: true,
+      },
+      {
+        source: '/services/shehnai-for-wedding',
+        destination: '/services/shehnai-wedding',
+        permanent: true,
+      },
+      {
+        source: '/services/vintage-car',
+        destination: '/services/vintage-car-wedding',
+        permanent: true,
+      },
+      {
+        source: '/about',
+        destination: '/#about',
+        permanent: true,
+      },
+    ];
+  },
+
   // Speed: Modern Next.js Image Optimization
   images: {
     remotePatterns: [
