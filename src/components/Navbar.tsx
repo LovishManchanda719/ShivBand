@@ -5,7 +5,8 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
-import { CalendarCheck, Camera, ChevronDown, CircleUser, LogOut, Menu, MessageCircle, Phone, Play, ShieldCheck, UserRound, X } from "lucide-react";
+import { CalendarCheck, Camera, ChevronDown, CircleUser, LogOut, Menu, Phone, Play, ShieldCheck, UserRound, X } from "lucide-react";
+import WhatsAppIcon from "./icons/WhatsAppIcon";
 import Logo from "./Logo";
 import { auth } from "@/lib/firebaseConfig";
 import { useAuth } from "@/context/AuthContext";
@@ -48,7 +49,15 @@ const Navbar: React.FC<NavbarProps> = ({ variant = "solid" }) => {
   }, [open]);
 
   const isActive = (href: string) =>
-    href === "/services" ? pathname.startsWith("/services") : href === "/gallery/photos" ? pathname.startsWith("/gallery") : pathname === href;
+    href === "/services"
+      ? pathname.startsWith("/services")
+      : href === "/locations"
+      ? pathname.startsWith("/locations")
+      : href === "/packages"
+      ? pathname.startsWith("/packages")
+      : href === "/gallery/photos"
+      ? pathname.startsWith("/gallery")
+      : pathname === href;
 
   const handleSignOut = async () => {
     await signOut(auth);
@@ -271,7 +280,7 @@ const Navbar: React.FC<NavbarProps> = ({ variant = "solid" }) => {
               <Phone className="h-4 w-4" strokeWidth={1.75} /> Call
             </a>
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-outline bg-white py-3">
-              <MessageCircle className="h-4 w-4" strokeWidth={1.75} /> WhatsApp
+              <WhatsAppIcon className="h-4 w-4" /> WhatsApp
             </a>
           </div>
           </>,

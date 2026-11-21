@@ -3,6 +3,7 @@ import {
   collection, 
   doc, 
   updateDoc, 
+  deleteDoc, 
   getDoc, 
   setDoc,
   onSnapshot,
@@ -169,6 +170,12 @@ export const updateBookingStatus = async (
 ) => {
   const bookingRef = doc(db, "bookings", bookingId);
   await updateDoc(bookingRef, { status });
+};
+
+// Delete booking
+export const deleteBooking = async (bookingId: string) => {
+  const bookingRef = doc(db, "bookings", bookingId);
+  await deleteDoc(bookingRef);
 };
 // Add these to your existing firebase.ts file
 

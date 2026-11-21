@@ -10,6 +10,7 @@ import { auth, db } from "@/lib/firebaseConfig";
 import { useAuth } from "@/context/AuthContext";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { PageHeader, PageShell } from "@/components/site/PageShell";
+import { toast } from "@/components/ui/sonner";
 
 const clean = (s: string, max: number) => s.replace(/<[^>]*>?/gm, "").replace(/[<>]/g, "").trim().slice(0, max);
 
@@ -73,9 +74,11 @@ export default function FeedbackPage() {
       }).catch(() => undefined);
       trackAnalyticsEvent("review_submitted", { rating });
       setStatus("sent");
+      toast.success("Thank you! Your review has been submitted.");
     } catch (err) {
       console.error("Review submit failed", err);
       setStatus("error");
+      toast.error("Failed to submit review. Please try again.");
     }
   };
 

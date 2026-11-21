@@ -1,9 +1,10 @@
-import { Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { PageHeader, PageShell } from "@/components/site/PageShell";
 import BookingForm from "@/components/site/BookingForm";
 import JsonLd from "@/components/site/JsonLd";
-import { breadcrumbSchema } from "@/lib/schema";
-import { SITE, telLink, whatsappLink } from "@/lib/site";
+import { BUSINESS_ID, breadcrumbSchema } from "@/lib/schema";
+import { SITE, SITE_URL, telLink, whatsappLink } from "@/lib/site";
 
 const crumbs = [
   { name: "Home", path: "/" },
@@ -13,7 +14,19 @@ const crumbs = [
 export default function ContactPage() {
   return (
     <PageShell>
-      <JsonLd data={breadcrumbSchema(crumbs)} />
+      <JsonLd
+        data={[
+          breadcrumbSchema(crumbs),
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contact Shiv Band & Light House",
+            url: `${SITE_URL}/contact`,
+            description: "Direct contact, shop location, telephone and WhatsApp booking for Shiv Band in Krishna Nagar, East Delhi.",
+            mainEntity: { "@id": BUSINESS_ID },
+          },
+        ]}
+      />
       <PageHeader
         crumbs={crumbs}
         eyebrow="Contact & booking"
@@ -49,8 +62,8 @@ export default function ContactPage() {
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 rounded-2xl border border-line bg-white p-5 transition-colors hover:border-gold"
               >
-                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-ink">
-                  <MessageCircle className="h-4 w-4" strokeWidth={1.75} />
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xs">
+                  <WhatsAppIcon className="h-5 w-5 fill-white" />
                 </span>
                 <span>
                   <span className="eyebrow block">WhatsApp</span>

@@ -28,6 +28,7 @@ import {
   Timestamp
 } from 'firebase/firestore';
 import Image from 'next/image';
+import { toast } from "@/components/ui/sonner";
 
 // Predefined Avatars
 const predefinedAvatars = [
@@ -127,10 +128,10 @@ const ProfilePage: React.FC = () => {
       }, { merge: true }); // This will create the document if it doesn't exist
   
       setIsEditing(false); // Exit edit mode
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile");
+      toast.error("Failed to update profile");
     }
   };
 

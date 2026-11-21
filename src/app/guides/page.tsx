@@ -6,7 +6,7 @@ import { PageHeader, PageShell } from "@/components/site/PageShell";
 import JsonLd from "@/components/site/JsonLd";
 import { GUIDES } from "@/lib/guides";
 import { breadcrumbSchema } from "@/lib/schema";
-
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Baraat Planning Guides",
@@ -23,7 +23,24 @@ const crumbs = [
 export default async function GuidesPage() {
   return (
     <PageShell>
-      <JsonLd data={breadcrumbSchema(crumbs)} />
+      <JsonLd
+        data={[
+          breadcrumbSchema(crumbs),
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Baraat & Wedding Planning Guides for Delhi NCR",
+            description: "Practical guides and budgeting advice for planning wedding processions in Delhi NCR.",
+            itemListElement: GUIDES.map((g, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: g.title,
+              url: `${SITE_URL}/guides/${g.slug}`,
+              description: g.description,
+            })),
+          },
+        ]}
+      />
       <PageHeader
         crumbs={crumbs}
         eyebrow="Guides"

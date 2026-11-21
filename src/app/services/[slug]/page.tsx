@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Check, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, Check, Phone } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { PageShell } from "@/components/site/PageShell";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import SectionHeading from "@/components/site/SectionHeading";
@@ -149,7 +150,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                 ))}
               </ul>
               <p className="mt-8 border-t border-line pt-6 text-[14px] text-stone">
-                Prices depend on date, size and combination. Call or WhatsApp for an exact quote.
+                Prices depend on troop size, setup and distance. Call or WhatsApp for an exact custom quote.
               </p>
               <a
                 href={whatsappLink(`Hello Shiv Band, I would like a quote for ${s.name}.`)}
@@ -157,7 +158,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                 rel="noopener noreferrer"
                 className="btn-outline mt-5 w-full bg-white"
               >
-                <MessageCircle className="h-4 w-4" strokeWidth={1.5} /> Get a quote on WhatsApp
+                <WhatsAppIcon className="h-4 w-4" /> Get a quote on WhatsApp
               </a>
             </div>
           </div>

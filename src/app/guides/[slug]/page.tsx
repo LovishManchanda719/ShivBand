@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Check, MessageCircle, Phone, Sparkles } from "lucide-react";
+import { Check, Phone } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { PageShell } from "@/components/site/PageShell";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import ServiceCard from "@/components/site/ServiceCard";
@@ -55,6 +56,23 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
   const related = SERVICES.filter((s) => g.related.includes(s.slug));
   const heroSrc = g.image.src;
 
+  const howToSchema =
+    g.slug === "baraat-checklist-delhi" || g.slug === "how-to-choose-wedding-band"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: g.title,
+          description: g.description,
+          image: `${SITE_URL}${g.image.src}`,
+          step: g.sections.map((sec, idx) => ({
+            "@type": "HowToStep",
+            position: idx + 1,
+            name: sec.heading,
+            text: sec.paragraphs?.join(" ") || sec.list?.join("; ") || sec.heading,
+          })),
+        }
+      : null;
+
   return (
     <PageShell>
       <JsonLd
@@ -71,7 +89,12 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
             publisher: { "@id": BUSINESS_ID },
             mainEntityOfPage: `${SITE_URL}/guides/${g.slug}`,
             inLanguage: "en-IN",
+            speakable: {
+              "@type": "SpeakableSpecification",
+              cssSelector: ["h1", "article p", ".eyebrow"],
+            },
           },
+          ...(howToSchema ? [howToSchema] : []),
           breadcrumbSchema(crumbs),
         ]}
       />
@@ -96,8 +119,8 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
 
           {g.keyTakeaways && g.keyTakeaways.length > 0 && (
             <div className="mt-8 rounded-2xl border border-gold/40 bg-sand/60 p-6 sm:p-7">
-              <p className="eyebrow flex items-center gap-2 text-maroon">
-                <Sparkles className="h-4 w-4 text-gold" strokeWidth={2} /> Key Takeaways
+              <p className="eyebrow text-maroon">
+                Key Takeaways
               </p>
               <ul className="mt-4 space-y-2.5">
                 {g.keyTakeaways.map((tip) => (
@@ -138,7 +161,7 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
                 <Phone className="h-4 w-4" strokeWidth={1.5} /> {SITE.phones[0].display}
               </a>
               <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-ghost-light">
-                <MessageCircle className="h-4 w-4" strokeWidth={1.5} /> WhatsApp
+                <WhatsAppIcon className="h-4 w-4" /> WhatsApp
               </a>
             </div>
           </aside>

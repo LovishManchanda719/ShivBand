@@ -21,7 +21,9 @@ export const localBusinessSchema = () => ({
   email: SITE.email,
   foundingDate: String(SITE.foundingYear),
   founder: { "@type": "Person", name: SITE.owner },
-  priceRange: "₹₹",
+  priceRange: "₹₹ (Transparent Family Rates · Zero-Surge Guarantee)",
+  currenciesAccepted: "INR",
+  paymentAccepted: "Cash, UPI, Net Banking",
   address: {
     "@type": "PostalAddress",
     streetAddress: SITE.address.street,
@@ -69,6 +71,34 @@ export const localBusinessSchema = () => ({
     "@type": "Offer",
     itemOffered: { "@type": "Service", name: s.h1, url: `${SITE_URL}/services/${s.slug}` },
   })),
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Baraat & Wedding Band Packages",
+    itemListElement: [
+      {
+        "@type": "OfferCatalog",
+        name: "Traditional Baraat Package",
+        description: "11-15 brass musicians, decorated ghodi with handler, 2 Punjabi dhol players, crystal chhatri lanterns, and generator trolley.",
+        url: `${SITE_URL}/packages`,
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "Grand Celebration Package",
+        description: "21-piece brass orchestra, decorated white mare, 2-horse luxury flower baggi, 4 Punjabi dholis, crystal chhatri & vintage jhumar lighting.",
+        url: `${SITE_URL}/packages`,
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "Royal Maharaja VIP Package",
+        description: "31+ piece grand brass symphony, 4-horse royal rath or vintage car, 6 Punjabi dhol masters, full chhatri, jhumar and road lighting with zero-surge guarantee.",
+        url: `${SITE_URL}/packages`,
+      },
+    ],
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "#about p", ".faq-answer"],
+  },
   sameAs: [
     SITE.social.instagram,
     SITE.social.facebook,
@@ -76,8 +106,13 @@ export const localBusinessSchema = () => ({
     SITE.mapsUrl,
     "https://en.wikipedia.org/wiki/Brass_band",
     "https://en.wikipedia.org/wiki/Baraat",
+    "https://en.wikipedia.org/wiki/Ghudchari",
+    "https://en.wikipedia.org/wiki/Dhol",
+    "https://en.wikipedia.org/wiki/Shehnai",
+    "https://en.wikipedia.org/wiki/Bagpipes",
     "https://www.wikidata.org/wiki/Q10886",
     "https://www.wikidata.org/wiki/Q1353",
+    "https://www.wikidata.org/wiki/Q38968",
   ],
 });
 
@@ -106,6 +141,21 @@ export const serviceSchema = (s: Service) => ({
     { "@type": "AdministrativeArea", name: "Delhi NCR" },
     ...AREAS_SERVED.map((name) => ({ "@type": "Place", name: `${name}, Delhi NCR` })),
   ],
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "INR",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      priceCurrency: "INR",
+      description: "Custom family rates with Zero-Surge Pricing Guarantee based purely on troop configuration and venue distance.",
+    },
+    availability: "https://schema.org/InStock",
+    url: `${SITE_URL}/packages`,
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", ".service-description", ".faq-answer"],
+  },
 });
 
 export const faqSchema = (faqs: ServiceFaq[]) => ({
@@ -129,25 +179,75 @@ export const breadcrumbSchema = (items: { name: string; path: string }[]) => ({
   })),
 });
 
+export const locationBusinessSchema = (loc: {
+  slug: string;
+  name: string;
+  metaDescription: string;
+  coverageAreas: string[];
+  keywords: string[];
+}) => ({
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "EntertainmentBusiness"],
+  "@id": `${SITE_URL}/locations/${loc.slug}#business`,
+  name: `${SITE.name} — ${loc.name}`,
+  url: `${SITE_URL}/locations/${loc.slug}`,
+  description: loc.metaDescription,
+  telephone: SITE.phones[0].tel,
+  priceRange: "₹₹ (Transparent Family Rates · Zero-Surge Guarantee)",
+  currenciesAccepted: "INR",
+  paymentAccepted: "Cash, UPI, Net Banking",
+  parentOrganization: { "@id": BUSINESS_ID },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.locality,
+    addressRegion: SITE.address.region,
+    postalCode: SITE.address.postalCode,
+    addressCountry: SITE.address.country,
+  },
+  geo: { "@type": "GeoCoordinates", latitude: SITE.geo.lat, longitude: SITE.geo.lng },
+  areaServed: [
+    { "@type": "Place", name: `${loc.name}, Delhi NCR` },
+    ...loc.coverageAreas.map((c) => ({ "@type": "Place", name: `${c}, Delhi NCR` })),
+  ],
+  knowsAbout: loc.keywords,
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", ".loc-intro", ".faq-answer"],
+  },
+});
+
 export const HOME_FAQS: ServiceFaq[] = [
   {
     q: "Where is Shiv Band & Light House located?",
     a: "Our shop is at D-96, Parwana Road, New Govindpura (near Laxmi Dairy), Krishna Nagar, New Delhi 110051. We are open every day from 10 AM to 9 PM.",
   },
   {
-    q: "Which is a good wedding band near me in East Delhi?",
-    a: "Shiv Band & Light House has led baraats from Krishna Nagar since 1996 and covers Geeta Colony, Preet Vihar, Laxmi Nagar, Shahdara and the rest of Delhi NCR with brass band, ghodi, baggi, dhol wale and chhatri lights.",
+    q: "Does Shiv Band charge surge pricing on peak wedding season or auspicious (Saya) dates?",
+    a: "No. Shiv Band maintains a strict Zero-Surge Pricing policy. Our rates never inflate or surge based on auspicious dates or wedding season peaks. Event dates are checked strictly for troop and artist availability. Pricing is determined strictly by troop size (11 to 31+ players), vehicle selection (ghodi, baggi, rath, vintage car), and travel distance with zero middleman commissions.",
   },
   {
-    q: "Can I book ghodi, baggi or dhol separately?",
-    a: "Yes. Every service can be booked on its own — only a ghodi, only dhol wale, only lights — or combined into a complete baraat package.",
+    q: "Which is a good wedding band near me in East Delhi?",
+    a: "Shiv Band & Light House has led baraats from Krishna Nagar since 1996 and covers Geeta Colony, Preet Vihar, Laxmi Nagar, Shahdara, Mayur Vihar, and the rest of Delhi NCR with brass band, ghodi, baggi, dhol wale and chhatri lights.",
+  },
+  {
+    q: "What instruments and musicians are in a traditional wedding brass band?",
+    a: "A traditional brass band lineup includes trumpets, clarinets, euphoniums, side snare drums, master tasha, and dholak, all led by an experienced master conductor in matching ceremonial uniforms and traditional safas.",
+  },
+  {
+    q: "Can I book ghodi, baggi or dhol separately without the brass band?",
+    a: "Yes. Every service can be booked on its own — only a decorated ghodi, only Punjabi dhol players, only flower baggi, or only chhatri lights — or combined into an all-in-one complete baraat package for a 20% to 30% bundle savings.",
+  },
+  {
+    q: "Until what time can a wedding band perform in Delhi?",
+    a: "Under the Delhi Noise Pollution (Regulation and Control) Rules 2000, outdoor amplified brass band music and loudspeakers must conclude by 10:00 PM. Shiv Band coordinates route timing backwards from your venue arrival to ensure complete legal compliance.",
   },
   {
     q: "How do I book Shiv Band?",
-    a: "Call or WhatsApp the owner, Manish Kumar, on 98186 26259 or 98186 22259, or send your date and venue through the booking form. No account or login is needed.",
+    a: "Call or WhatsApp the owner, Manish Kumar, on 98186 26259 or 98186 22259, or send your date and venue through our online booking form. No account or registration is needed.",
   },
   {
-    q: "Do you serve Noida, Ghaziabad and Gurugram?",
-    a: "Yes. We are based in East Delhi and regularly travel to venues in Noida, Greater Noida, Ghaziabad, Gurugram and Faridabad.",
+    q: "Do you serve Noida, Ghaziabad, Gurugram, and Faridabad?",
+    a: "Yes. Centrally based in Krishna Nagar, East Delhi, our private transport fleet regularly travels across Noida, Greater Noida, Ghaziabad (Indirapuram, Vaishali), Gurugram (Golf Course & Sohna Road farmhouses), and Faridabad.",
   },
 ];

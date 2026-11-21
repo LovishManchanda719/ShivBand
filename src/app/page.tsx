@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, Clock, ExternalLink, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, ChevronDown, Clock, ExternalLink, MapPin, Phone } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import Hero from "@/components/site/Hero";
 import Footer from "@/components/Footer";
 import SectionHeading from "@/components/site/SectionHeading";
@@ -61,18 +62,22 @@ export default async function HomePage() {
                 decorated ghodi, flower baggi, dhol wale and crystal chhatri lights — all from one house, booked
                 directly with the owner.
               </p>
-              <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-line pt-8">
+              <dl className="mt-10 grid grid-cols-2 gap-4 border-t border-line pt-8 sm:grid-cols-4">
                 <div>
                   <dt className="eyebrow">Since</dt>
-                  <dd className="mt-2 font-display text-3xl text-ink">{SITE.foundingYear}</dd>
+                  <dd className="mt-2 font-display text-2xl text-ink sm:text-3xl">{SITE.foundingYear}</dd>
                 </div>
                 <div>
                   <dt className="eyebrow">Owner</dt>
-                  <dd className="mt-2 font-display text-xl leading-tight text-ink">{SITE.owner}</dd>
+                  <dd className="mt-2 font-display text-lg leading-tight text-ink sm:text-xl">{SITE.owner}</dd>
                 </div>
                 <div>
-                  <dt className="eyebrow">Open</dt>
-                  <dd className="mt-2 font-display text-xl leading-tight text-ink">Every day</dd>
+                  <dt className="eyebrow">Pricing Policy</dt>
+                  <dd className="mt-2 font-display text-lg leading-tight text-maroon sm:text-xl">Zero-Surge</dd>
+                </div>
+                <div>
+                  <dt className="eyebrow">Open Hours</dt>
+                  <dd className="mt-2 font-display text-lg leading-tight text-ink sm:text-xl">Daily 10am–9pm</dd>
                 </div>
               </dl>
             </div>
@@ -146,7 +151,7 @@ export default async function HomePage() {
                 <Phone className="h-4 w-4" strokeWidth={1.5} /> Call {SITE.phones[0].display}
               </a>
               <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-ghost-light">
-                <MessageCircle className="h-4 w-4" strokeWidth={1.5} /> WhatsApp us
+                <WhatsAppIcon className="h-4 w-4" /> WhatsApp us
               </a>
             </div>
           </div>

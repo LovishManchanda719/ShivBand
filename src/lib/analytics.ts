@@ -4,9 +4,22 @@ import { logEvent, setConsent } from "firebase/analytics";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db, auth, initFirebaseAnalytics } from "./firebaseConfig";
 
-export { ADMIN_EMAIL } from "./admin";
+import { ADMIN_EMAIL } from "./admin";
+export { ADMIN_EMAIL };
 
 export const ANALYTICS_CONSENT_KEY = "sb_analytics_consent";
+
+// Known admin visitor IDs or suffixes (e.g. Guest #c318bc, Guest #3195cf) that must never be tracked or counted
+export const ADMIN_EXCLUDED_VISITOR_IDS: string[] = ["c318bc", "3195cf"];
+
+export const isExcludedVisitorId = (visitorId?: string | null): boolean => {
+  if (!visitorId) return false;
+  const vid = visitorId.toLowerCase();
+  return ADMIN_EXCLUDED_VISITOR_IDS.some((id) => {
+    const target = id.toLowerCase();
+    return vid.endsWith(target) || vid.includes(target);
+  });
+};
 
 export type AnalyticsEventName =
   | "page_view"
@@ -165,6 +178,16 @@ export const getVisitorProfile = (): VisitorProfile | null => {
       isReturningVisitor = false;
     }
 
+    // Automatically silence analytics if this visitor is identified as the admin
+    if (isExcludedVisitorId(visitorId)) {
+      try {
+        localStorage.setItem("sb_analytics_opt_out", "true");
+        localStorage.setItem("sb_is_admin", "true");
+      } catch {
+        // ignore
+      }
+    }
+
     let sessionId = sessionStorage.getItem("sb_session_id");
     let visitCount = parseInt(localStorage.getItem("sb_visit_count") || "0", 10);
     if (!sessionId) {
@@ -212,6 +235,59 @@ export const getVisitorProfile = (): VisitorProfile | null => {
   }
 };
 
+export const isBotOrCrawler = (): boolean => {
+  if (typeof window === "undefined" || typeof navigator === "undefined") return true;
+  if (navigator.webdriver) return true;
+  const ua = (navigator.userAgent || "").toLowerCase();
+  const botTokens = [
+    "bot",
+    "crawl",
+    "spider",
+    "slurp",
+    "headless",
+    "phantom",
+    "puppeteer",
+    "playwright",
+    "selenium",
+    "ahrefs",
+    "semrush",
+    "petalbot",
+    "bingpreview",
+    "facebookexternalhit",
+    "yandex",
+    "baiduspider",
+    "duckduckbot",
+  ];
+  return botTokens.some((token) => ua.includes(token));
+};
+
+export const isForeignTraffic = (geo?: GeoLocationInfo | null): boolean => {
+  if (!geo) return false;
+  const country = (geo.country || "").toUpperCase();
+  // Shiv Band exclusively serves India / Delhi NCR weddings.
+  // Foreign hits (US/EU cloud datacenters) are automated crawlers & security scanners.
+  if (country && country !== "INDIA" && country !== "IN" && country !== "UNKNOWN") {
+    return true;
+  }
+  const city = (geo.city || "").toLowerCase();
+  const region = (geo.region || "").toLowerCase();
+  const foreignDatacenters = [
+    "dallas",
+    "boydton",
+    "the dalles",
+    "council bluffs",
+    "des moines",
+    "san jose",
+    "phoenix",
+    "ashburn",
+    "seattle",
+    "boardman",
+    "dublin",
+    "frankfurt",
+  ];
+  return foreignDatacenters.some((hub) => city.includes(hub) || region.includes(hub));
+};
+
 export const trackAnalyticsEvent = async (
   eventName: AnalyticsEventName,
   metadata: Record<string, string | number | boolean> = {}
@@ -219,9 +295,47 @@ export const trackAnalyticsEvent = async (
   if (typeof window === "undefined") return;
 
   try {
+    // 0. NEVER track local development, localhost, or preview runs
+    const hostname = window.location.hostname;
+    if (
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      hostname.endsWith(".local") ||
+      process.env.NODE_ENV === "development"
+    ) {
+      return;
+    }
+
+    // 1. Permanently ignore automated scrapers, headless browsers, and bots
+    if (isBotOrCrawler()) return;
+
     // Anonymous analytics run by default (no IP, no name/email, no third-party lookups).
-    // Visitors can switch them off on the privacy page.
+    // Visitors can switch them off on the privacy page or if identified as admin/excluded.
     if (localStorage.getItem("sb_analytics_opt_out") === "true") return;
+    if (localStorage.getItem("sb_is_admin") === "true") return;
+    if (localStorage.getItem("sb_exclude_me") === "true") return;
+
+    // Do not track if current user is logged in as the verified admin
+    if (auth.currentUser?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+      try {
+        localStorage.setItem("sb_is_admin", "true");
+        localStorage.setItem("sb_analytics_opt_out", "true");
+      } catch {
+        // ignore
+      }
+      return;
+    }
+
+    const currentVid = localStorage.getItem("sb_visitor_id");
+    if (isExcludedVisitorId(currentVid)) {
+      try {
+        localStorage.setItem("sb_is_admin", "true");
+        localStorage.setItem("sb_analytics_opt_out", "true");
+      } catch {
+        // ignore
+      }
+      return;
+    }
 
     const path = window.location.pathname || "/";
     // Don't pollute visitor analytics with admin dashboard actions
@@ -229,6 +343,9 @@ export const trackAnalyticsEvent = async (
 
     const profile = getVisitorProfile();
     const geo = await getVisitorGeoLocation();
+
+    // 2. Filter out foreign traffic and cloud datacenter bots
+    if (isForeignTraffic(geo)) return;
     const now = new Date();
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 

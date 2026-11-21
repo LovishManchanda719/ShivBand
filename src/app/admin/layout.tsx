@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard | Shiv Band & Light House",
+  title: "Admin Command Center",
   description: "Private Admin Panel for Shiv Band & Light House Analytics, Gallery & Bookings Management.",
   robots: {
     index: false,

@@ -4,11 +4,13 @@ import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { signInAnonymously } from "firebase/auth";
-import { Check, CircleCheck, LoaderCircle, MessageCircle, Send } from "lucide-react";
+import { Check, CircleCheck, LoaderCircle, Send } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { auth, db } from "@/lib/firebaseConfig";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 import { SERVICE_NAMES } from "@/lib/services";
 import { SITE, telLink, whatsappLink } from "@/lib/site";
+import { toast } from "@/components/ui/sonner";
 
 const clean = (s: string, max: number) =>
   s.replace(/<[^>]*>?/gm, "").replace(/[<>]/g, "").trim().slice(0, max);
@@ -118,8 +120,10 @@ export default function BookingForm({ defaultService, compact = false }: Props) 
     if (ok1 || ok2) {
       trackAnalyticsEvent("booking_submitted", { preferred_date: date });
       setStatus("sent");
+      toast.success("Booking request received! We'll call you shortly.");
     } else {
       setStatus("error");
+      toast.error("Could not send booking request. Please try again or call us.");
     }
   };
 
@@ -134,7 +138,7 @@ export default function BookingForm({ defaultService, compact = false }: Props) 
         </p>
         <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
           <a href={whatsappLink(summary())} target="_blank" rel="noopener noreferrer" className="btn-primary">
-            <MessageCircle className="h-4 w-4" strokeWidth={1.75} /> Send on WhatsApp
+            <WhatsAppIcon className="h-4 w-4" /> Send on WhatsApp
           </a>
           <a href={telLink()} className="btn-outline">
             Call {SITE.phones[0].display}
@@ -290,7 +294,7 @@ export default function BookingForm({ defaultService, compact = false }: Props) 
           {status === "sending" ? "Sending" : "Check availability"}
         </button>
         <a href={whatsappLink(summary())} target="_blank" rel="noopener noreferrer" className="btn-outline flex-1 bg-white">
-          <MessageCircle className="h-4 w-4" strokeWidth={1.75} /> Ask on WhatsApp
+          <WhatsAppIcon className="h-4 w-4" /> Ask on WhatsApp
         </a>
       </div>
       <p className="text-[12px] leading-relaxed text-stone">

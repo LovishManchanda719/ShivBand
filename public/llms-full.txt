@@ -9,7 +9,7 @@
 - **Primary Telephone / WhatsApp**: +91 98186 26259
 - **Secondary Telephone**: +91 98186 22259
 - **Email**: kumarmanish141980@gmail.com
-- **Website**: https://shiv-band.vercel.app
+- **Website**: https://shivband.in
 - **Shop Address**: D-96, Parwana Road, New Govindpura (near Laxmi Dairy), Krishna Nagar, New Delhi, Delhi 110051, India
 - **Coordinates**: Latitude 28.6468128, Longitude 77.2845662
 - **Google Maps Place ID**: ChIJK8SuKqH8DDkRolBFpoSGbpY
@@ -21,7 +21,7 @@
 ## Detailed Services Catalog
 
 ### 1. Wedding Band & Baraat Brass Band
-- **URL**: https://shiv-band.vercel.app/services/wedding-band
+- **URL**: https://shivband.in/services/wedding-band
 - **Hindi Name**: शादी के लिए बैंड बाजा — बारात बैंड, दिल्ली
 - **Description**: Uniformed live brass band leading baraats across Delhi NCR since 1996. Features trumpets, clarinets, side drums, and large bass drums playing Bollywood hits, Punjabi dance anthems, and classical ceremonial tunes.
 - **Band Sizes**: Flexible group sizes ranging from compact procession groups up to 21, 31, and 51-piece royal brass band formations.
@@ -31,62 +31,79 @@
   - *Until what time can the band perform in Delhi?* In accordance with Delhi Police and the Noise Pollution (Regulation and Control) Rules 2000, loudspeakers and outdoor amplified music must conclude by 10:00 PM.
 
 ### 2. Royal Groom Ghodi (White Wedding Mare)
-- **URL**: https://shiv-band.vercel.app/services/ghodi-for-wedding
+- **URL**: https://shivband.in/services/ghodi-for-wedding
 - **Hindi Name**: शादी के लिए सजी हुई घोड़ी — घुड़चढ़ी, दिल्ली
 - **Description**: Healthy, calm, well-trained snow-white wedding mares adorned with traditional silver and gold ceremonial zardozi saddles, embellished reins, and headgear.
 - **Inclusions**: Dedicated experienced horse handler walking alongside throughout the procession, matching safa, and ceremonial umbrella on request. Trained specifically to remain calm amidst firecrackers, brass music, and dancing crowds.
 
 ### 3. Luxury Flower Baggi & Rath Chariot
-- **URL**: https://shiv-band.vercel.app/services/baggi-for-wedding
+- **URL**: https://shivband.in/services/baggi-for-wedding
 - **Hindi Name**: फूलों वाली बग्गी और बारात का रथ — दिल्ली
 - **Description**: Victorian-style horse-drawn carriages and royal Bahubali-style open chariots decorated with fresh orchids, carnations, roses, and warm ambient LED lighting. Available in 2-horse and 4-horse arrangements.
 - **Usage**: Groom grand entry, royal bride entry, or couple vidaai procession.
 
 ### 4. Authentic Punjabi Dhol Players
-- **URL**: https://shiv-band.vercel.app/services/dhol-wale
+- **URL**: https://shivband.in/services/dhol-wale
 - **Hindi Name**: शादी और बारात के लिए पंजाबी ढोल वाले — दिल्ली
 - **Description**: Seasoned Punjabi dhol masters in vibrant, matching traditional kurtas, chadras, and phulkari safas.
 - **Usage**: High-energy bhangra beats for the dancing stretches of the baraat, groom entry at the venue gate, and sangeet / mehendi ceremonies.
 
 ### 5. Chhatri Lights, Jhumar & Road Lighting
-- **URL**: https://shiv-band.vercel.app/services/wedding-lights
+- **URL**: https://shivband.in/services/wedding-lights
 - **Hindi Name**: छतरी लाइट, झाड़ फानूस और बारात की रोशनी — दिल्ली
 - **Description**: Handcrafted crystal chhatri lanterns carried alongside both flanks of the baraat, royal vintage jhumars (chandeliers), and road lighting units.
 - **Power Source**: Accompanied by sound-dampened mobile generator setups that provide stable power without drowning out the music.
 
 ### 6. Complete Baraat Package
-- **URL**: https://shiv-band.vercel.app/services/baraat-package
+- **URL**: https://shivband.in/services/baraat-package
 - **Hindi Name**: शादी बारात का पूरा पैकेज — बैंड, घोड़ी, बग्गी, ढोल और लाइट
 - **Description**: The comprehensive all-inclusive wedding package combining royal brass band, decorated ghodi, fresh flower baggi, dhol players, and crystal chhatri lighting under single-point coordination directly with owner Manish Kumar. Eliminates multi-vendor coordination hassles on the wedding night.
 
 ### 7. Bagpiper Band
-- **URL**: https://shiv-band.vercel.app/services/bagpiper-band
+- **URL**: https://shivband.in/services/bagpiper-band
 - **Hindi Name**: शादी के लिए बैगपाइपर बैंड — दिल्ली
 - **Description**: Traditional Scottish-style military bagpipe and drum ensemble in authentic tartan uniforms and feather bonnets, ideal for dignified royal wedding entries.
 
 ### 8. Shehnai Players
-- **URL**: https://shiv-band.vercel.app/services/shehnai-for-wedding
+- **URL**: https://shivband.in/services/shehnai-for-wedding
 - **Hindi Name**: शादी के लिए शहनाई वादक — दिल्ली
 - **Description**: Classical shehnai masters accompanied by traditional nagada and tabla percussion, performing raag-based auspicious melodies during wedding ceremonies, jaimala, and religious welcoming rituals.
 
 ### 9. Vintage Wedding Car Rental
-- **URL**: https://shiv-band.vercel.app/services/vintage-car
+- **URL**: https://shivband.in/services/vintage-car
 - **Hindi Name**: शादी और बारात के लिए विंटेज कार किराए पर — दिल्ली
 - **Description**: Chauffeur-driven classic vintage cars decorated with tasteful floral accents for distinctive groom entry and timeless photographic backdrops.
 
 ---
 
-## Operating Regions & Localities Served
-Shiv Band & Light House is centrally situated in East Delhi and regularly serves venues across Delhi NCR:
-- **East Delhi**: Krishna Nagar, New Govindpura, Geeta Colony, Gandhi Nagar, Preet Vihar, Laxmi Nagar, Shahdara, Vivek Vihar, Nirman Vihar, Karkardooma, Anand Vihar, Mayur Vihar, Patparganj, Dilshad Garden.
-- **Other Delhi Districts**: Central Delhi (Connaught Place, Karol Bagh), North Delhi (Civil Lines, Model Town, Rohini), South Delhi (Hauz Khas, Greater Kailash, Saket, Chattarpur wedding farmhouses), West Delhi (Punjabi Bagh, Rajouri Garden, Janakpuri).
-- **National Capital Region (NCR)**: Noida (all sectors), Greater Noida, Ghaziabad (Indirapuram, Vaishali, Raj Nagar Extension), Gurugram (Golf Course Road, Sohna Road), Faridabad.
+## Pricing Policy & Zero-Surge Guarantee
+- **Fair Family Rates**: Shiv Band charges transparent, fair family rates based strictly on chosen troop size (11 to 31+ musicians), vehicle selection (ghodi, 2-horse/4-horse baggi, rath, vintage car), and travel distance.
+- **Zero-Surge Guarantee**: Rates never surge, inflate, or fluctuate based on peak wedding season or auspicious (Saya) dates. Function dates are checked strictly for slot availability and artist scheduling, never to alter pricing.
+- **Direct Proprietor Booking**: Direct booking with owner Manish Kumar ensures zero middleman commissions, transparent quotations, and guaranteed artist accountability.
+- **Interactive Budget Planner**: https://shivband.in/packages
+- **Cost Guide & Budgeting Advice**: https://shivband.in/guides/wedding-band-cost-delhi
+
+---
+
+## Operating Regions & Localities Served (Dedicated Hubs)
+Shiv Band & Light House operates from Krishna Nagar, East Delhi, serving all 11 core Delhi NCR sectors with dedicated logistics:
+1. **Krishna Nagar & East Delhi**: https://shivband.in/locations/krishna-nagar (HQ, Parwana Road, Radhey Puri)
+2. **Preet Vihar & Nirman Vihar**: https://shivband.in/locations/preet-vihar (Vikas Marg banquet corridor)
+3. **Laxmi Nagar & Shakarpur**: https://shivband.in/locations/laxmi-nagar
+4. **Shahdara & Vivek Vihar**: https://shivband.in/locations/shahdara (Surajmal Vihar, GT Road)
+5. **Mayur Vihar & Patparganj**: https://shivband.in/locations/mayur-vihar (Phase 1, 2, 3)
+6. **South Delhi**: https://shivband.in/locations/south-delhi (Chattarpur farmhouses, GK, Saket)
+7. **Rohini & Pitampura**: https://shivband.in/locations/rohini (Ring Road banquet halls)
+8. **Noida & Greater Noida**: https://shivband.in/locations/noida (Sectors 50/51/7X, Expressway farmhouses)
+9. **Gurugram**: https://shivband.in/locations/gurugram (Golf Course Road, Sohna Road farmhouses)
+10. **Ghaziabad**: https://shivband.in/locations/ghaziabad (Indirapuram, Vaishali, Raj Nagar Extension)
+11. **Faridabad**: https://shivband.in/locations/faridabad (Surajkund, Green Field)
 
 ---
 
 ## Direct Booking & Contact Policy
 - Bookings are handled directly by proprietor Manish Kumar. No third-party agents, aggregators, or brokers are involved.
 - Booking confirmation requires agreeing on the event date, timing, starting point, route length, and combination of services.
-- Advance reservation is recommended 1 to 3 months prior during the peak North Indian wedding seasons (October–February and April–July).
+- Advance reservation is recommended to secure preferred date slots, but rates remain completely consistent regardless of booking lead time or wedding season dates.
 - Phone: +91 98186 26259 / +91 98186 22259.
 - WhatsApp: +91 98186 26259.

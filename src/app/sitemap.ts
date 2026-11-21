@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SERVICES } from "@/lib/services";
 import { GUIDES } from "@/lib/guides";
+import { LOCATIONS } from "@/lib/locations";
 import { SITE_URL } from "@/lib/site";
 
 // Stable release date for static pages prevents false lastmod shifts on every crawler request
@@ -26,6 +27,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ...page(`/services/${s.slug}`, 0.9),
       images: s.images.map((i) => `${SITE_URL}${i.src}`),
     })),
+    page("/packages", 0.95, "weekly"),
+    page("/locations", 0.9, "weekly"),
+    ...LOCATIONS.map((l) => page(`/locations/${l.slug}`, 0.85, "monthly")),
     page("/contact", 0.9),
     page("/guides", 0.7),
     ...GUIDES.map((g) => page(`/guides/${g.slug}`, 0.7, "monthly", new Date(g.updated))),

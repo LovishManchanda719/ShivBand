@@ -1,7 +1,7 @@
 // Single source of truth for business details (NAP), used by pages, footer and structured data.
 // Set NEXT_PUBLIC_SITE_URL in Vercel once a custom domain is connected.
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://shiv-band.vercel.app").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://shivband.in").replace(/\/$/, "");
 
 export const SITE = {
   name: "Shiv Band & Light House",
@@ -89,6 +89,7 @@ export const NOTIFY_EMAIL_DEFAULT = "lovishmanchanda719@gmail.com";
 
 export const NAV_LINKS = [
   { href: "/services", label: "Services" },
+  { href: "/packages", label: "Packages" },
   { href: "/gallery/photos", label: "Gallery" },
   { href: "/reviews", label: "Reviews" },
   { href: "/contact", label: "Contact" },

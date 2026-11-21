@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shiv Band & Light House — Project Documentation</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 16mm 14mm 16mm 14mm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+    
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1c1917;
+      background: #ffffff;
+      line-height: 1.55;
+      font-size: 13px;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Cover / Header */
+    .header-banner {
+      border-bottom: 2px solid #881337;
+      padding-bottom: 16px;
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .brand-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #881337;
+      letter-spacing: -0.5px;
+      margin: 0 0 4px 0;
+    }
+
+    .brand-subtitle {
+      font-size: 13px;
+      font-weight: 500;
+      color: #78716c;
+      margin: 0;
+    }
+
+    .meta-badge {
+      text-align: right;
+      font-size: 11px;
+      color: #78716c;
+    }
+
+    .meta-badge strong {
+      display: block;
+      color: #1c1917;
+      font-size: 12px;
+    }
+
+    /* Section Typography */
+    h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #881337;
+      border-bottom: 1px solid #fecdd3;
+      padding-bottom: 5px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3 {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #292524;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin: 0 0 10px 0;
+      color: #44403c;
+    }
+
+    /* Cards & Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
+      border-radius: 8px;
+      padding: 12px 14px;
+      page-break-inside: avoid;
+    }
+
+    .card-title {
+      font-weight: 700;
+      color: #881337;
+      font-size: 12.5px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card p {
+      font-size: 12px;
+      color: #57534e;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* Lists */
+    ul {
+      margin: 0 0 12px 0;
+      padding-left: 18px;
+    }
+
+    li {
+      margin-bottom: 4px;
+      color: #44403c;
+    }
+
+    li strong {
+      color: #1c1917;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px 0;
+      font-size: 12px;
+      page-break-inside: avoid;
+    }
+
+    th {
+      background: #fdf2f4;
+      color: #881337;
+      font-weight: 700;
+      text-align: left;
+      padding: 8px 10px;
+      border: 1px solid #fecdd3;
+    }
+
+    td {
+      padding: 7px 10px;
+      border: 1px solid #e7e5e4;
+      color: #44403c;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: #fafaf9;
+    }
+
+    /* Tech Tags */
+    .badge {
+      display: inline-block;
+      background: #f5f5f4;
+      border: 1px solid #d6d3d1;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #292524;
+      margin-right: 4px;
+    }
+
+    .badge-primary {
+      background: #fff1f2;
+      border-color: #fda4af;
+      color: #9f1239;
+    }
+
+    /* Directory Tree */
+    .code-tree {
+      background: #1c1917;
+      color: #f5f5f4;
+      padding: 12px 14px;
+      border-radius: 6px;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 11px;
+      line-height: 1.45;
+      margin: 10px 0 16px 0;
+      page-break-inside: avoid;
+    }
+
+    .comment {
+      color: #a8a29e;
+    }
+
+    /* Footer */
+    .footer-note {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid #e7e5e4;
+      font-size: 11px;
+      color: #78716c;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Banner -->
+  <div class="header-banner">
+    <div>
+      <h1 class="brand-title">Shiv Band &amp; Light House</h1>
+      <p class="brand-subtitle">Project Documentation: Overview, Concept &amp; Technology Stack</p>
+    </div>
+    <div class="meta-badge">
+      <strong>Krishna Nagar, East Delhi</strong>
+      <span>Est. 1996 • v0.1.0 • Delhi NCR</span>
+    </div>
+  </div>
+
+  <!-- 1. Overview & Concept -->
+  <h2>1. Executive Summary &amp; Concept</h2>
+  <p>
+    <strong>Shiv Band &amp; Light House</strong> is a specialized web platform designed for an established family-owned brass band and event lighting service operating in Krishna Nagar, East Delhi since 1996. The platform modernizes traditional wedding band booking by replacing fragmented third-party listings with an authentic, fast, and authoritative online destination.
+  </p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Direct Customer Trust</div>
+      <p>Presents high-resolution real procession photos, verified client testimonials, clear service inclusions, and consistent business details (NAP: Name, Address, Phone) matched with Google Business Profile.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Frictionless Lead Generation</div>
+      <p>Enables instant contact via one-tap WhatsApp chat, click-to-call, and an interactive reservation form that captures venue, dates, and package requirements.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Hyper-Local Intent SEO</div>
+      <p>Targets high-intent Delhi NCR wedding queries with bilingual headings (Hindi/English), Schema.org structured data, and tailored wedding checklists.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Real-Time Owner Control</div>
+      <p>Provides a password-protected admin portal with custom cookieless analytics, inquiry tracking, review moderation, and Bing IndexNow instant indexing.</p>
+    </div>
+  </div>
+
+  <!-- 2. Services Breakdown -->
+  <h2>2. Service Catalog &amp; Offerings</h2>
+  <p>Every offering is backed by a programmatic catalog (<code>src/lib/services.ts</code>) generating dedicated SEO landing pages with distinct FAQ schemas, inclusions, and photo galleries:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Service</th>
+        <th style="width: 28%;">Hindi / Local Title</th>
+        <th>Key Inclusions &amp; Scope</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Wedding Band</strong></td>
+        <td>शादी के लिए बैंड बाजा</td>
+        <td>Uniformed brass band (trumpets, clarinets, master drum), Bollywood &amp; Punjabi procession repertoire.</td>
+      </tr>
+      <tr>
+        <td><strong>Ghodi for Wedding</strong></td>
+        <td>शादी की घोड़ी</td>
+        <td>Well-trained, calm white mare, royal velvet saaz, floral chhatri, and dedicated handler.</td>
+      </tr>
+      <tr>
+        <td><strong>Flower Baggi &amp; Rath</strong></td>
+        <td>फूलों वाली बग्गी / रथ</td>
+        <td>Illuminated royal carriage, fresh floral adornment, matching horse pair, and driver in uniform.</td>
+      </tr>
+      <tr>
+        <td><strong>Dhol Wale</strong></td>
+        <td>बारात और लेडीज संगीत ढोल</td>
+        <td>Authentic Punjabi dhol players in matching kurta-pyjama for high-energy dancing and entry.</td>
+      </tr>
+      <tr>
+        <td><strong>Wedding Lights</strong></td>
+        <td>बारात की लाइटें व छतरी</td>
+        <td>Handheld trolley lights, royal chhatri lamps, silent mobile generator, and trained light-bearers.</td>
+      </tr>
+      <tr>
+        <td><strong>Bagpiper Band</strong></td>
+        <td>फौजी बैगपाइपर बैंड</td>
+        <td>Military-style uniformed bagpipers for grand VIP arrivals and ceremonial welcomes.</td>
+      </tr>
+      <tr>
+        <td><strong>Shehnai Vadak</strong></td>
+        <td>पारंपरिक शहनाई वादन</td>
+        <td>Live auspicious Shehnai with Tabla for traditional Mandap entrance and welcome rituals.</td>
+      </tr>
+      <tr>
+        <td><strong>Vintage Groom Cars</strong></td>
+        <td>विंटेज कार बारात एंट्री</td>
+        <td>Classic convertibles with experienced chauffeur for contemporary groom entries.</td>
+      </tr>
+      <tr>
+        <td><strong>Baraat Packages</strong></td>
+        <td>संपूर्ण बारात पैकेज</td>
+        <td>All-in-one coordinated bundle combining brass band, ghodi/baggi, dhol, and full procession lighting.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Page Break for Clean Printing -->
+  <div class="page-break"></div>
+
+  <!-- 3. Technology Stack -->
+  <h2>3. Technology Stack &amp; Architecture</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Layer</th>
+        <th style="width: 28%;">Technologies</th>
+        <th>Architectural Function</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Framework &amp; Core</strong></td>
+        <td>
+          <span class="badge badge-primary">Next.js 15 (App Router)</span>
+          <span class="badge">React 19</span>
+          <span class="badge">TypeScript 5</span>
+        </td>
+        <td>Full-stack React framework providing React Server Components (RSC), optimized builds, and type-safe server actions.</td>
+      </tr>
+      <tr>
+        <td><strong>Styling &amp; UI</strong></td>
+        <td>
+          <span class="badge">Tailwind CSS 3.4</span>
+          <span class="badge">Radix UI</span>
+          <span class="badge">Framer Motion</span>
+          <span class="badge">Lucide Icons</span>
+        </td>
+        <td>Responsive custom palette (maroon, gold, stone), accessible primitives (Dialog, Dropdown), and fluid micro-animations.</td>
+      </tr>
+      <tr>
+        <td><strong>Database &amp; Storage</strong></td>
+        <td>
+          <span class="badge badge-primary">Cloud Firestore</span>
+          <span class="badge">Firebase SDK 11</span>
+        </td>
+        <td>NoSQL real-time cloud database housing customer reviews, upvote states, booking leads, and custom site analytics.</td>
+      </tr>
+      <tr>
+        <td><strong>Authentication</strong></td>
+        <td>
+          <span class="badge">Firebase Auth</span>
+          <span class="badge">Google OAuth</span>
+        </td>
+        <td>Seamless client-side identity for verified customer feedback submission and profile preferences.</td>
+      </tr>
+      <tr>
+        <td><strong>Notifications</strong></td>
+        <td>
+          <span class="badge">Resend API</span>
+          <span class="badge">Edge / Node Runtime</span>
+        </td>
+        <td>Automated email delivery (<code>/api/notify</code>) sending structured lead details to the owner upon booking submission.</td>
+      </tr>
+      <tr>
+        <td><strong>SEO Engine</strong></td>
+        <td>
+          <span class="badge">Schema.org JSON-LD</span>
+          <span class="badge">IndexNow API</span>
+        </td>
+        <td>Structured schemas (<code>LocalBusiness</code>, <code>Service</code>, <code>FAQPage</code>) and instant search-crawler notification for Bing/Yandex.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 4. Key Platform Features -->
+  <h2>4. Core Platform Capabilities</h2>
+  <ul>
+    <li>
+      <strong>Real-Time Review System:</strong> Customers can submit ratings, feedback, and photos. Includes Firestore-backed thumbs-up/thumbs-down reactions with optimistic UI updates.
+    </li>
+    <li>
+      <strong>Custom Privacy-Focused Analytics:</strong> Built-in tracker (<code>src/lib/analytics.ts</code>) logging session durations, referral paths, page views, and button clicks without third-party tracking scripts.
+    </li>
+    <li>
+      <strong>Interactive Admin Control Room:</strong> Full administrative view at <code>/admin</code> showcasing daily visitor graphs, conversion counts, review moderation, photo uploads, and an IndexNow broadcast button.
+    </li>
+    <li>
+      <strong>Educational Wedding Guides:</strong> Curated editorial guides (such as the <em>Delhi Baraat Checklist</em>) addressing sound ordinance restrictions (10 PM rule), vehicle permissions, and timeline planning.
+    </li>
+    <li>
+      <strong>Responsive Multi-Channel Communication:</strong> Direct WhatsApp intent links (<code>wa.me</code>) pre-configured with wedding inquiry messages alongside direct phone dialers.
+    </li>
+  </ul>
+
+  <!-- 5. Codebase Structure -->
+  <h2>5. Project Directory Structure</h2>
+  <div class="code-tree">
+ShivBand/
+├── public/                 <span class="comment"># Static imagery, icons, Bing IndexNow auth keys</span>
+├── src/
+│   ├── app/                <span class="comment"># Next.js App Router (pages & serverless endpoints)</span>
+│   │   ├── admin/          <span class="comment"># Owner dashboard (analytics, reviews, photos)</span>
+│   │   ├── api/            <span class="comment"># API endpoints (notify, geo, admin/indexnow)</span>
+│   │   ├── guides/         <span class="comment"># Editorial guides for Delhi wedding planning</span>
+│   │   ├── reviews/        <span class="comment"># Real-time customer review board</span>
+│   │   ├── services/       <span class="comment"># Dynamic service routes (/services/[slug])</span>
+│   │   ├── layout.tsx      <span class="comment"># Root layout (Theme, AuthProvider, Navbar, Footer)</span>
+│   │   └── page.tsx        <span class="comment"># High-conversion homepage</span>
+│   ├── components/
+│   │   ├── site/           <span class="comment"># Modules (Hero, BookingForm, ReviewsList, Faq)</span>
+│   │   └── ui/             <span class="comment"># UI primitives (Button, Card, Dialog, Dropdown)</span>
+│   ├── context/            <span class="comment"># Global state (AuthContext, ThemeContext)</span>
+│   └── lib/
+│       ├── analytics.ts    <span class="comment"># Custom visitor logging and metrics engine</span>
+│       ├── firebase.ts     <span class="comment"># Firestore client bindings and review mutations</span>
+│       ├── schema.ts       <span class="comment"># Structured JSON-LD SEO schema generator</span>
+│       ├── services.ts     <span class="comment"># Master data source for all 9 wedding services</span>
+│       └── site.ts         <span class="comment"># Single source of truth for business NAP information</span>
+├── firestore.rules         <span class="comment"># Security access rules for Cloud Firestore</span>
+├── next.config.ts          <span class="comment"># Next.js compiler and remote image configuration</span>
+└── tailwind.config.ts      <span class="comment"># Design tokens, fonts, and wedding color scheme</span>
+  </div>
+
+  <div class="footer-note">
+    <span>Shiv Band &amp; Light House — Confidential &amp; Proprietary Documentation</span>
+    <span>Page 2 of 2</span>
+  </div>
+
+</body>
+</html>
