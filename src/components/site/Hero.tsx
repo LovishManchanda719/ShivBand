@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarCheck, ChevronDown, Phone } from "lucide-react";
+import { CalendarCheck, ChevronDown, Phone, Play } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { SITE, telLink } from "@/lib/site";
 import { SERVICES } from "@/lib/services";
@@ -57,7 +57,10 @@ export default function Hero() {
             <Link href="/contact#book" className="btn-ghost-light">
               <CalendarCheck className="h-4 w-4" strokeWidth={1.5} /> Check your date
             </Link>
-            <a href={telLink()} className="btn-light hidden sm:inline-flex">
+            <Link href="/gallery/videos" className="btn-light">
+              <Play className="h-4 w-4 fill-maroon text-maroon" strokeWidth={1.5} /> Watch Videos &amp; Photos
+            </Link>
+            <a href={telLink()} className="btn-ghost-light hidden lg:inline-flex">
               <Phone className="h-4 w-4" strokeWidth={1.5} /> {SITE.phones[0].display}
             </a>
           </div>
