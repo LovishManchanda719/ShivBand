@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shiv Band & Light House — Official Website Interactive Demo Video</title>
+  <style>
+    :root {
+      --bg-dark: #120207;
+      --card-bg: rgba(35, 3, 11, 0.92);
+      --gold: #d4af37;
+      --gold-light: #f7e6a7;
+      --cream: #fbf5e6;
+      --muted: #bda38b;
+      --border: rgba(212, 175, 55, 0.35);
+      --border-bright: #d4af37;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      background: radial-gradient(circle at 50% 20%, #2b040e 0%, #120207 70%, #080104 100%);
+      color: var(--cream);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .wrapper {
+      max-width: 1120px;
+      width: 100%;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .crown-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 34px;
+      font-family: "Georgia", serif;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .sub-head {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Video Player Container */
+    .player-container {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.15);
+      margin-bottom: 30px;
+    }
+    .video-frame-box {
+      width: 100%;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    video {
+      width: 100%;
+      max-height: 620px;
+      outline: none;
+      display: block;
+      border-radius: 12px;
+    }
+    .video-info-bar {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .video-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--gold-light);
+      font-family: "Georgia", serif;
+    }
+    .video-specs {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .specs-pill {
+      background: rgba(212, 175, 55, 0.15);
+      padding: 4px 10px;
+      border-radius: 6px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    /* Actions Bar */
+    .actions-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37, #9b750c);
+      color: #1a0208;
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #f7e6a7, #d4af37);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    }
+    .btn-invideo {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+    .btn-invideo:hover {
+      background: rgba(212, 175, 55, 0.2);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border);
+      color: var(--cream);
+    }
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    /* Chapter Timeline Scrubber */
+    .chapter-section {
+      margin-bottom: 35px;
+    }
+    .section-heading {
+      font-size: 20px;
+      font-family: "Georgia", serif;
+      color: var(--gold-light);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .chapter-card {
+      background: rgba(25, 4, 10, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .chapter-card:hover {
+      border-color: var(--gold);
+      background: rgba(45, 6, 18, 0.9);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+    .chapter-card.active {
+      border-color: var(--gold-light);
+      background: rgba(212, 175, 55, 0.15);
+    }
+    .chapter-timing {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chapter-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .chapter-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Feature Highlights Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 35px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .feature-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .feature-icon {
+      font-size: 20px;
+    }
+    .feature-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    .feature-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .feature-card li {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .feature-card li::before {
+      content: "✓";
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    /* Quick CTA Row */
+    .cta-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .cta-whatsapp {
+      background: #25d366;
+      color: #fff;
+    }
+    .cta-whatsapp:hover {
+      background: #1eb956;
+      transform: translateY(-2px);
+    }
+    .cta-call {
+      background: linear-gradient(135deg, #d4af37, #9b750c);
+      color: #1a0208;
+    }
+    .cta-call:hover {
+      background: linear-gradient(135deg, #f7e6a7, #d4af37);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <header>
+      <div class="crown-badge">Official Website Demo • Estd. 1996</div>
+      <h1>Shiv Band & Light House</h1>
+      <p class="sub-head">
+        A broadcast-quality 1080p walkthrough showcasing the modern Next.js 15 web platform, dynamic wedding services catalog, interactive package builder, real-time booking, and mobile-first experience.
+      </p>
+    </header>
+
+    <!-- Main Player -->
+    <div class="player-container">
+      <div class="video-frame-box">
+        <video id="demoVideo" controls preload="metadata" poster="/images/hero-wedding.jpg">
+          <source src="/videos/shiv-band-website-demo.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div class="video-info-bar">
+        <div>
+          <div class="video-title">Shiv Band Website Interactive Demo Tour (1080p Master)</div>
+          <div style="font-size: 13px; color: var(--muted); margin-top: 4px;">Ultra-clean centered screen walkthrough • Pure product demo (No side card, no music, no step pills)</div>
+        </div>
+        <div class="video-specs">
+          <span class="specs-pill">1920 &times; 1080 Full HD</span>
+          <span class="specs-pill">H.264 Progressive</span>
+          <span class="specs-pill">30 FPS</span>
+          <span class="specs-pill">Clean / No Music</span>
+          <span class="specs-pill">35.33s</span>
+        </div>
+      </div>
+
+      <div class="actions-bar">
+        <a class="btn btn-gold" href="/videos/shiv-band-website-demo.mp4" download="shiv-band-website-demo.mp4">
+          ⬇ Download Master MP4
+        </a>
+        <a class="btn btn-invideo" href="https://invideo.io/@lovish-384148/shiv-band-website-demo/tree/main/seq-1.1" target="_blank">
+          🎬 Open in Invideo Cloud Editor
+        </a>
+        <a class="btn btn-secondary" href="http://localhost:3000" target="_blank">
+          🌐 View Live Site
+        </a>
+        <a class="btn btn-secondary" href="/ad-preview.html">
+          👑 View Commercial Ads
+        </a>
+      </div>
+    </div>
+
+    <!-- Chapter Timeline -->
+    <div class="chapter-section">
+      <div class="section-heading">
+        <span>⏱ Interactive Chapters & Scene Breakdown</span>
+      </div>
+      <div class="chapter-grid">
+        <div class="chapter-card" onclick="seekVideo(0)">
+          <div class="chapter-timing">▶ 00:00 – 00:05.5</div>
+          <div class="chapter-title">1. Homepage & Architecture</div>
+          <div class="chapter-desc">Next.js 15 & React 19 foundation, 28+ years heritage trust badge, instant call/WhatsApp CTAs.</div>
+        </div>
+
+        <div class="chapter-card" onclick="seekVideo(5.5)">
+          <div class="chapter-timing">▶ 00:05.5 – 00:11.0</div>
+          <div class="chapter-title">2. Dynamic Service Catalog</div>
+          <div class="chapter-desc">8+ dedicated pages for Brass Band, Ghodi, Dhol & Baggi with real event photos and bilingual copy.</div>
+        </div>
+
+        <div class="chapter-card" onclick="seekVideo(11.0)">
+          <div class="chapter-timing">▶ 00:11.0 – 00:16.5</div>
+          <div class="chapter-title">3. Interactive Package Builder</div>
+          <div class="chapter-desc">Transparent Silver, Gold & Royal Shahi package tiers, itemized inclusions, and instant WhatsApp quote.</div>
+        </div>
+
+        <div class="chapter-card" onclick="seekVideo(16.5)">
+          <div class="chapter-timing">▶ 00:16.5 – 00:22.0</div>
+          <div class="chapter-title">4. Frictionless Booking Flow</div>
+          <div class="chapter-desc">Date picker, event venue selection, one-click WhatsApp chat, and automated Resend email alerts.</div>
+        </div>
+
+        <div class="chapter-card" onclick="seekVideo(22.0)">
+          <div class="chapter-timing">▶ 00:22.0 – 00:27.5</div>
+          <div class="chapter-title">5. Social Proof & Trust</div>
+          <div class="chapter-desc">100% verified 5-star customer reviews, Google Maps Krishna Nagar location, and Delhi wedding guides.</div>
+        </div>
+
+        <div class="chapter-card" onclick="seekVideo(27.5)">
+          <div class="chapter-timing">▶ 00:27.5 – 00:32.0</div>
+          <div class="chapter-title">6. Mobile-First Experience</div>
+          <div class="chapter-desc">Flawless iPhone touch navigation, sticky action bar, fast loading on 4G/5G mobile networks.</div>
+        </div>
+
+        <div class="chapter-card" onclick="seekVideo(32.0)">
+          <div class="chapter-timing">▶ 00:32.0 – 00:35.33</div>
+          <div class="chapter-title">7. Royal Outro & Contact</div>
+          <div class="chapter-desc">Official domain shivband.in, owner direct phones, Krishna Nagar address, and Delhi NCR coverage.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Pillars -->
+    <div class="section-heading">
+      <span>👑 Platform Engineering & Architecture Highlights</span>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-header">
+          <span class="feature-icon">⚡</span>
+          <span class="feature-title">Modern Next.js 15 & React 19</span>
+        </div>
+        <ul>
+          <li>Server-Side Rendering (SSR) for sub-second first contentful paint</li>
+          <li>Tailwind CSS wedding color palette (maroon, gold, cream)</li>
+          <li>Radix UI unstyled accessible modals and dropdown menus</li>
+          <li>Framer Motion micro-interactions and smooth page reveals</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-header">
+          <span class="feature-icon">🔍</span>
+          <span class="feature-title">Hyper-Local & Generative SEO</span>
+        </div>
+        <ul>
+          <li>Full Schema.org JSON-LD (LocalBusiness, Service, FAQ, Breadcrumbs)</li>
+          <li>Bing IndexNow instant indexing pipeline (/api/admin/indexnow)</li>
+          <li>Bilingual Hindi & English copy targeting high-intent Delhi queries</li>
+          <li>AI-agent discovery endpoints (llms.txt and llms-full.txt)</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-header">
+          <span class="feature-icon">💼</span>
+          <span class="feature-title">Business Automation & Leads</span>
+        </div>
+        <ul>
+          <li>One-tap WhatsApp click-to-chat with pre-filled event inquiry text</li>
+          <li>Resend API email notifications alert the owner immediately</li>
+          <li>Password-protected /admin dashboard for visitor analytics</li>
+          <li>Firebase Firestore real-time customer reviews & moderation</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Quick CTA Links -->
+    <div class="cta-row">
+      <a class="cta-btn cta-whatsapp" href="https://wa.me/919818626259?text=Hello%20Shiv%20Band%2C%20I%20saw%20your%20website%20demo%20video%20and%20would%20like%20to%20inquire%20for%20wedding%20dates." target="_blank">
+        💬 Chat on WhatsApp (+91 98186 26259)
+      </a>
+      <a class="cta-btn cta-call" href="tel:+919818626259">
+        📞 Call Now (+91 98186 26259)
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    const video = document.getElementById('demoVideo');
+    const cards = document.querySelectorAll('.chapter-card');
+
+    function seekVideo(seconds) {
+      if (!video) return;
+      video.currentTime = seconds;
+      video.play();
+    }
+
+    // Highlight current active chapter card as video plays
+    video.addEventListener('timeupdate', () => {
+      const cur = video.currentTime;
+      cards.forEach((c, idx) => {
+        let start = [0, 5.5, 11.0, 16.5, 22.0, 27.5, 32.0][idx];
+        let end = [5.5, 11.0, 16.5, 22.0, 27.5, 32.0, 35.35][idx];
+        if (cur >= start && cur < end) {
+          c.classList.add('active');
+        } else {
+          c.classList.remove('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -130,8 +130,15 @@ export const websiteSchema = () => ({
   "@type": "WebSite",
   "@id": `${SITE_URL}/#website`,
   url: `${SITE_URL}/`,
-  name: SITE.name,
-  alternateName: ["Shiv Band", "Shiv Band and Light House", "Shiv Band Delhi"],
+  name: SITE.shortName,
+  alternateName: [
+    "Shiv Band & Light House",
+    "Shiv Band and Light House",
+    "Shiv Band Delhi",
+    "Shiv Band Krishna Nagar",
+    "शिव बैंड",
+    "शिव बैंड एंड लाइट हाउस",
+  ],
   inLanguage: "en-IN",
   publisher: { "@id": BUSINESS_ID },
 });

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shiv Band & Light House — Official Video Advertisements</title>
+  <style>
+    :root {
+      --bg-dark: #120207;
+      --card-bg: rgba(35, 3, 11, 0.9);
+      --gold: #d4af37;
+      --gold-light: #f7e6a7;
+      --cream: #fbf5e6;
+      --muted: #bda38b;
+      --border: rgba(212, 175, 55, 0.35);
+      --border-bright: #d4af37;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      background: radial-gradient(circle at 50% 20%, #2b040e 0%, #120207 70%, #080104 100%);
+      color: var(--cream);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .wrapper {
+      max-width: 1100px;
+      width: 100%;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .crown-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 34px;
+      font-family: "Georgia", serif;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .sub-head {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Format Switcher Tabs */
+    .tabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 28px 0;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 10px 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+      transform: translateY(-1px);
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.1));
+      border-color: var(--border-bright);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+    }
+
+    /* Video Player Container */
+    .player-container {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.15);
+      margin-bottom: 35px;
+    }
+    .video-frame-box {
+      width: 100%;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    video {
+      width: 100%;
+      max-height: 600px;
+      outline: none;
+      display: block;
+      border-radius: 12px;
+    }
+    .video-info-bar {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .video-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold-light);
+      font-family: "Georgia", serif;
+    }
+    .video-specs {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .specs-pill {
+      background: rgba(212, 175, 55, 0.15);
+      padding: 3px 10px;
+      border-radius: 5px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #d4af37, #aa820a);
+      color: #1a0208;
+      padding: 8px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .download-btn:hover {
+      background: linear-gradient(135deg, #f7e6a7, #d4af37);
+      transform: translateY(-1px);
+    }
+
+    /* Grid of Features / Scenes */
+    .section-title {
+      font-size: 22px;
+      font-family: "Georgia", serif;
+      color: var(--gold-light);
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .scenes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 16px;
+      margin-bottom: 35px;
+    }
+    .scene-card {
+      background: rgba(35, 3, 11, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      position: relative;
+    }
+    .scene-timing {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(212, 175, 55, 0.2);
+      color: var(--gold-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .scene-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      font-family: "Georgia", serif;
+    }
+    .scene-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .scene-quote {
+      margin-top: 8px;
+      font-size: 12px;
+      font-style: italic;
+      color: #dfd0c5;
+      border-left: 2px solid var(--gold);
+      padding-left: 8px;
+    }
+
+    /* Social Ad Copy Box */
+    .copy-box {
+      background: rgba(18, 2, 7, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 35px;
+      position: relative;
+    }
+    .copy-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .copy-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    .btn-copy {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-copy:hover {
+      background: var(--gold);
+      color: #120207;
+    }
+    pre {
+      background: #000;
+      padding: 15px;
+      border-radius: 8px;
+      color: #eeddc8;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Quick Action Buttons */
+    .cta-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .cta-whatsapp {
+      background: #25d366;
+      color: #fff;
+    }
+    .cta-whatsapp:hover {
+      background: #1eb956;
+      transform: translateY(-2px);
+    }
+    .cta-call {
+      background: linear-gradient(135deg, #d4af37, #9b750c);
+      color: #1a0208;
+    }
+    .cta-call:hover {
+      background: linear-gradient(135deg, #f7e6a7, #d4af37);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <header>
+      <div class="crown-badge">★ Shiv Band & Light House • Estd. 1996 ★</div>
+      <h1>Official Wedding Ad Videos</h1>
+      <p class="sub-head">
+        Professional high-resolution commercial cuts crafted for Delhi NCR wedding couples. Featuring authentic baraat brass music, royal entries, and high-energy celebrations.
+      </p>
+      <div style="margin-top: 14px;">
+        <a href="/demo-video.html" style="display: inline-flex; align-items: center; gap: 8px; color: var(--gold-light); font-size: 14px; text-decoration: none; font-weight: 600; background: rgba(212,175,55,0.15); border: 1px solid var(--gold); padding: 8px 18px; border-radius: 20px; transition: all 0.2s;">
+          ✨ Open Dedicated Website Interactive Demo Player &amp; Chapter Tour &rarr;
+        </a>
+      </div>
+    </header>
+
+    <!-- Format Tabs -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchVideo('heritage')">
+        🎬 1080p Royal Heritage Commercial (38s)
+      </button>
+      <button class="tab-btn" onclick="switchVideo('webdemo')">
+        🌐 Website Interactive Demo (1080p • 35s)
+      </button>
+      <button class="tab-btn" onclick="switchVideo('reel')">
+        📱 Instagram Reel / Short (9:16 Vertical • 24s)
+      </button>
+      <button class="tab-btn" onclick="switchVideo('promo')">
+        💻 Website Showcase Promo (16:9 • 28s)
+      </button>
+    </div>
+
+    <!-- Video Player Frame -->
+    <div class="player-container">
+      <div class="video-frame-box" id="frameBox">
+        <video id="mainPlayer" controls autoplay muted playsinline poster="/images/hero-wedding.jpg">
+          <source id="videoSource" src="/videos/shiv-band-royal-heritage-ad.mp4" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+      </div>
+
+      <div class="video-info-bar">
+        <div>
+          <div class="video-title" id="videoTitle">Master 1080p Royal Heritage Wedding Commercial</div>
+          <div class="video-specs" id="videoSpecs">
+            <span class="specs-pill">1920 &times; 1080</span>
+            <span class="specs-pill">H.264 / AAC</span>
+            <span class="specs-pill">30 FPS</span>
+            <span class="specs-pill">38.0s</span>
+          </div>
+        </div>
+        <div>
+          <a id="downloadLink" class="download-btn" href="/videos/shiv-band-royal-heritage-ad.mp4" download="shiv-band-royal-heritage-ad.mp4">
+            ⬇️ Download Master Video
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commercial Storyboard -->
+    <h2 class="section-title">Storyline & Sequence Highlights</h2>
+    <div class="scenes-grid">
+      <div class="scene-card">
+        <span class="scene-timing">00:00 – 00:05.5</span>
+        <div class="scene-title">Auspicious Beginnings</div>
+        <div class="scene-desc">Melodious Shehnai players for Milni & Pheras + Scottish-style Royal Bagpiper Troupe in ceremonial red safas.</div>
+        <div class="scene-quote">"Ek shaadi mein sabse yaadgaar pal hota hai baraat ka..."</div>
+      </div>
+
+      <div class="scene-card">
+        <span class="scene-timing">00:05.5 – 00:11.5</span>
+        <div class="scene-title">The Royal Brass Band</div>
+        <div class="scene-desc">21 to 51-piece master brass band in red & gold uniforms playing Bollywood classics and Punjabi anthems.</div>
+        <div class="scene-quote">"...aur baraat ki shaan hota hai ek shaahi band!"</div>
+      </div>
+
+      <div class="scene-card">
+        <span class="scene-timing">00:11.5 – 00:17.5</span>
+        <div class="scene-title">Regal Groom Entrance</div>
+        <div class="scene-desc">Decorated white mare (Ghodi) with traditional shringar and royal floral chariot/baggi entries.</div>
+        <div class="scene-quote">"Dulhe ki shaandar sawaari — decorated ghodi aur royal rath."</div>
+      </div>
+
+      <div class="scene-card">
+        <span class="scene-timing">00:17.5 – 00:23.5</span>
+        <div class="scene-title">Punjabi Dhol Beats</div>
+        <div class="scene-desc">Thunderous live acoustic Punjabi dhol beats that ignite the baraatis and make both families dance.</div>
+        <div class="scene-quote">"Bhangra ki jhankaar aur thumping dhol beats ka jaadoo!"</div>
+      </div>
+
+      <div class="scene-card">
+        <span class="scene-timing">00:23.5 – 00:29.0</span>
+        <div class="scene-title">Crystal Chhatri Lighting</div>
+        <div class="scene-desc">Handheld crystal umbrella chandeliers and mobile procession lights with silent generator backup.</div>
+        <div class="scene-quote">"Crystal chhatri lights aur mobile generator backup ka bharosa."</div>
+      </div>
+
+      <div class="scene-card">
+        <span class="scene-timing">00:29.0 – 00:34.0</span>
+        <div class="scene-title">Convertible Vintage Car</div>
+        <div class="scene-desc">Classic open-top vintage car for luxury groom entry and cinematic wedding photography.</div>
+        <div class="scene-quote">"Delhi NCR ki sabse vishwasniya wedding brass band service."</div>
+      </div>
+    </div>
+
+    <!-- Social Media Ad Copy -->
+    <div class="copy-box">
+      <div class="copy-header">
+        <span class="copy-title">📢 Ready-to-Post Ad Caption (Instagram / Facebook / YouTube Ads)</span>
+        <button class="btn-copy" onclick="copyCaption()">Copy Caption</button>
+      </div>
+      <pre id="captionText">🎺 Delhi NCR ki har Grand Baraat ki Pehli Pasand — Shiv Band & Light House! 👑✨
+
+Ek shaadi mein sabse yaadgaar pal hota hai baraat ka... aur baraat ki shaan hota hai ek shaahi band! 
+
+Celebrating 28+ years of trust and 10,000+ weddings across Delhi NCR:
+✅ 21 to 51-Piece Master Brass Band (Uniformed Musicians & Safa)
+✅ Decorated White Ghodi & Floral Royal Chariot / Baggi
+✅ High-Energy Live Punjabi & Nasik Dhol Beats
+✅ Crystal Chhatri & Procession Trolley Lights (with Silent Generator)
+✅ Chauffeur-Driven Classic Open-Top Vintage Car
+✅ Shehnai & Scottish Bagpiper Troupe for Grand Welcome
+
+📍 Location: D-96, Parwana Road, Krishna Nagar, East Delhi 110051
+🚗 Serving: Delhi, Noida, Greater Noida, Ghaziabad, Gurugram & Faridabad
+
+📅 Advance Bookings Open for 2026–2027 Wedding Season!
+📞 Direct Call / WhatsApp: +91 98186 26259 / +91 98186 22259
+🌐 Website: https://shivband.in
+
+#ShivBand #WeddingBandDelhi #BaraatBand #DelhiWedding #KrishnaNagar #WeddingBaggi #VintageCarEntry #BandBajaBaraat</pre>
+    </div>
+
+    <!-- Quick CTA Links -->
+    <div class="cta-row">
+      <a class="cta-btn cta-whatsapp" href="https://wa.me/919818626259?text=Hello%20Shiv%20Band%2C%20I%20saw%20your%20commercial%20ad%20and%20would%20like%20to%20inquire%20for%20wedding%20dates." target="_blank">
+        💬 Chat on WhatsApp (+91 98186 26259)
+      </a>
+      <a class="cta-btn cta-call" href="tel:+919818626259">
+        📞 Call Now (+91 98186 26259)
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    const videos = {
+      heritage: {
+        src: '/videos/shiv-band-royal-heritage-ad.mp4',
+        type: 'video/mp4',
+        title: 'Master 1080p Royal Heritage Wedding Commercial',
+        specs: '<span class="specs-pill">1920 &times; 1080</span><span class="specs-pill">H.264 / AAC</span><span class="specs-pill">30 FPS</span><span class="specs-pill">38.0s</span>',
+        download: 'shiv-band-royal-heritage-ad.mp4',
+        vertical: false
+      },
+      webdemo: {
+        src: '/videos/shiv-band-website-demo.mp4',
+        type: 'video/mp4',
+        title: 'Master 1080p Website Interactive Demo Tour (Clean / No Music)',
+        specs: '<span class="specs-pill">1920 &times; 1080 Full HD</span><span class="specs-pill">H.264</span><span class="specs-pill">30 FPS</span><span class="specs-pill">Clean / No Music</span><span class="specs-pill">35.33s</span>',
+        download: 'shiv-band-website-demo.mp4',
+        vertical: false
+      },
+      reel: {
+        src: '/videos/shiv-band-services-reel.webm',
+        type: 'video/webm',
+        title: 'Instagram Reels & Stories Vertical Ad (9:16)',
+        specs: '<span class="specs-pill">720 &times; 1280 (9:16)</span><span class="specs-pill">VP9 / Opus</span><span class="specs-pill">Mobile-Ready</span><span class="specs-pill">24.0s</span>',
+        download: 'shiv-band-services-reel.webm',
+        vertical: true
+      },
+      promo: {
+        src: '/videos/shiv-band-services-promo.webm',
+        type: 'video/webm',
+        title: 'Website Showcase Promo Cut (16:9)',
+        specs: '<span class="specs-pill">1280 &times; 720 (16:9)</span><span class="specs-pill">VP9 / Opus</span><span class="specs-pill">Web Showcase</span><span class="specs-pill">27.8s</span>',
+        download: 'shiv-band-services-promo.webm',
+        vertical: false
+      }
+    };
+
+    function switchVideo(key) {
+      const v = videos[key];
+      const player = document.getElementById('mainPlayer');
+      const source = document.getElementById('videoSource');
+      const title = document.getElementById('videoTitle');
+      const specs = document.getElementById('videoSpecs');
+      const dl = document.getElementById('downloadLink');
+      const btns = document.querySelectorAll('.tab-btn');
+
+      btns.forEach((b, i) => {
+        b.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      source.src = v.src;
+      source.type = v.type;
+      player.load();
+      player.play().catch(() => {});
+
+      title.innerText = v.title;
+      specs.innerHTML = v.specs;
+      dl.href = v.src;
+      dl.download = v.download;
+
+      if (v.vertical) {
+        player.style.maxHeight = '650px';
+        player.style.width = 'auto';
+      } else {
+        player.style.maxHeight = '600px';
+        player.style.width = '100%';
+      }
+    }
+
+    function copyCaption() {
+      const text = document.getElementById('captionText').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.btn-copy');
+        btn.innerText = 'Copied!';
+        setTimeout(() => { btn.innerText = 'Copy Caption'; }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>

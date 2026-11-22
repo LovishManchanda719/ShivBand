@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Shiv Band & Light House",
+    name: "Shiv Band",
     short_name: "Shiv Band",
     description:
       "Shiv Band & Light House, Krishna Nagar, Delhi — wedding band, baraat band, ghodi, flower baggi, dhol wale and chhatri lights since 1996.",
