@@ -9,7 +9,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  `connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.google-analytics.com https://www.googletagmanager.com https://firebase.googleapis.com https://firebaseinstallations.googleapis.com${isDev ? ' ws: http://localhost:*' : ''}`,
+  `connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.google-analytics.com https://*.analytics.google.com https://stats.g.doubleclick.net https://www.googletagmanager.com https://firebase.googleapis.com https://firebaseinstallations.googleapis.com${isDev ? ' ws: http://localhost:*' : ''}`,
   'frame-src https://*.firebaseapp.com https://accounts.google.com https://www.youtube-nocookie.com https://www.youtube.com https://maps.google.com https://www.google.com',
   "object-src 'none'",
   "base-uri 'self'",
@@ -65,12 +65,21 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 86400,
+    minimumCacheTTL: 31536000,
   },
 
-  // Security: Comprehensive HTTP Security Headers
+  // Security & Performance: Comprehensive HTTP Security & Caching Headers
   async headers() {
     return [
+      {
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
       { source: '/:path*', headers: [{ key: 'Content-Security-Policy', value: csp }] },
       {
         source: '/:path*',

@@ -16,16 +16,9 @@ export default function Hero() {
           alt="Shiv Band & Light House brass band leading a night baraat in Delhi"
           fill
           priority
-          sizes="100vw"
-          className="photo-grade -z-20 hidden scale-[1.02] object-cover md:block"
-        />
-        <Image
-          src={SITE.heroImage.mobile}
-          alt="Shiv Band musicians walking with crystal chhatri lights in a Delhi baraat"
-          fill
-          priority
-          sizes="100vw"
-          className="photo-grade -z-20 object-cover md:hidden"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1920px"
+          quality={80}
+          className="photo-grade -z-20 scale-[1.02] object-cover"
         />
         {/* Readability + warm tone */}
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/30 to-black/75" aria-hidden="true" />

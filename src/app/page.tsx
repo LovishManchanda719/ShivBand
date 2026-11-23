@@ -241,10 +241,10 @@ export default async function HomePage() {
           <div className="rounded-3xl border border-gold/40 bg-sand/30 p-8 sm:p-12 shadow-sm">
             <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-8">
-                <p className="eyebrow text-gold mb-2 flex items-center gap-2">
+                <p className="eyebrow text-maroon mb-2 flex items-center gap-2">
                   <span>Official Brand Verification</span>
                   <span>·</span>
-                  <span className="font-hindi text-maroon font-semibold">असली शिव बैंड पहचान</span>
+                  <span className="font-hindi font-semibold">असली शिव बैंड पहचान</span>
                 </p>
                 <h2 className="font-display text-[26px] leading-tight text-ink sm:text-[32px]">
                   Shiv Band &amp; Light House — Delhi NCR Heritage Since 1996

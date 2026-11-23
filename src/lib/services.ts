@@ -14,6 +14,7 @@ export interface ServiceVideo {
   title: string;
   youtubeId?: string;
   description?: string;
+  uploadDate?: string;
 }
 
 export interface Service {
@@ -95,18 +96,21 @@ export const SERVICES: Service[] = [
         poster: "https://i.ytimg.com/vi/BmgF2MWPkDw/hqdefault.jpg",
         title: "Live Brass Band Performance at Baraat",
         description: "Shiv Band performing live Bollywood and traditional baraati tunes on trumpets, clarinets, and side drums in red ceremonial uniform.",
+        uploadDate: "2024-10-15T10:00:00+05:30",
       },
       {
         youtubeId: "tWBjD2F0jsY",
         poster: "https://i.ytimg.com/vi/tWBjD2F0jsY/hqdefault.jpg",
         title: "Uniformed Brass Band Artists in Ceremonial Dress",
         description: "Watch our synchronized brass band musicians playing energetic wedding tunes in matching traditional uniforms and ceremonial safa.",
+        uploadDate: "2024-10-15T11:00:00+05:30",
       },
       {
         youtubeId: "0uyTTUHOa-8",
         poster: "https://i.ytimg.com/vi/0uyTTUHOa-8/hqdefault.jpg",
         title: "Classic Ceremonial Uniform & Procession",
         description: "Shiv Band musicians leading a joyful evening wedding baraat with festive fanfare across Delhi NCR.",
+        uploadDate: "2024-10-15T12:00:00+05:30",
       },
     ],
     faqs: [
@@ -317,18 +321,21 @@ export const SERVICES: Service[] = [
         poster: "https://i.ytimg.com/vi/33dtcWrf_WM/hqdefault.jpg",
         title: "Thunderous Punjabi Dhol Beats at Baraat",
         description: "High-energy Punjabi dhol players lifting the celebration with non-stop bhangra beats alongside baggi and lights.",
+        uploadDate: "2024-10-15T13:00:00+05:30",
       },
       {
         youtubeId: "JaMaJ02Icdg",
         poster: "https://i.ytimg.com/vi/JaMaJ02Icdg/hqdefault.jpg",
         title: "Live Dhol & Procession Performance in East Delhi",
         description: "Traditional dhol players in ceremonial Punjabi attire performing live in a vibrant celebration procession.",
+        uploadDate: "2024-10-15T14:00:00+05:30",
       },
       {
         youtubeId: "BmgF2MWPkDw",
         poster: "https://i.ytimg.com/vi/BmgF2MWPkDw/hqdefault.jpg",
         title: "Baraat Music & Dhol Beats Celebration",
         description: "Energetic wedding rhythm and brass fanfare keeping guests dancing throughout the baraat procession.",
+        uploadDate: "2024-10-15T15:00:00+05:30",
       },
     ],
     faqs: [
@@ -545,8 +552,20 @@ export const SERVICES: Service[] = [
       { src: "/images/vintage-car/white-vintage-car-baraat.jpg", alt: "Family dancing on a white vintage car during a Delhi baraat with chhatri lights" },
     ],
     videos: [
-      { src: "/images/vintage-car/vintage-car-baraat.mp4", poster: "/images/vintage-car/red-vintage-car-groom.jpg", title: "Red vintage car leading the baraat" },
-      { src: "/images/vintage-car/vintage-car-bride.mp4", poster: "/images/vintage-car/white-vintage-car-baraat.jpg", title: "White vintage car with the family" },
+      {
+        src: "/images/vintage-car/vintage-car-baraat.mp4",
+        poster: "/images/vintage-car/red-vintage-car-groom.jpg",
+        title: "Red vintage car leading the baraat",
+        description: "Decorated vintage wedding car leading a baraat procession with chhatri lights in Delhi.",
+        uploadDate: "2024-10-15T16:00:00+05:30",
+      },
+      {
+        src: "/images/vintage-car/vintage-car-bride.mp4",
+        poster: "/images/vintage-car/white-vintage-car-baraat.jpg",
+        title: "White vintage car with the family",
+        description: "Royal white vintage car celebration with family during a wedding procession in Delhi NCR.",
+        uploadDate: "2024-10-15T17:00:00+05:30",
+      },
     ],
     faqs: [
       {

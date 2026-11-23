@@ -160,7 +160,7 @@ export default function FeedbackPage() {
                 </div>
                 <div>
                   <label htmlFor="fb-loc" className="field-label">
-                    Area <span className="normal-case tracking-normal text-stone-light">(optional)</span>
+                    Area <span className="normal-case tracking-normal text-stone">(optional)</span>
                   </label>
                   <input id="fb-loc" className="field" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Preet Vihar" />
                 </div>

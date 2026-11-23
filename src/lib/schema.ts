@@ -1,5 +1,5 @@
 import { SITE, SITE_URL, AREAS_SERVED } from "./site";
-import { SERVICES, type Service, type ServiceFaq } from "./services";
+import { SERVICES, type Service, type ServiceFaq, type ServiceVideo } from "./services";
 
 export const BUSINESS_ID = `${SITE_URL}/#business`;
 
@@ -244,6 +244,17 @@ export const breadcrumbSchema = (items: { name: string; path: string }[]) => ({
     name: it.name,
     item: `${SITE_URL}${it.path}`,
   })),
+});
+
+export const videoObjectSchema = (v: ServiceVideo) => ({
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: `${v.title} — ${SITE.name}`,
+  description: v.description || `${v.title} at a baraat in Delhi by ${SITE.name}.`,
+  thumbnailUrl: v.poster.startsWith("http") ? v.poster : `${SITE_URL}${v.poster}`,
+  ...(v.src ? { contentUrl: v.src.startsWith("http") ? v.src : `${SITE_URL}${v.src}` } : {}),
+  ...(v.youtubeId ? { embedUrl: `https://www.youtube-nocookie.com/embed/${v.youtubeId}` } : {}),
+  uploadDate: v.uploadDate || "2024-10-15T00:00:00+05:30",
 });
 
 export const locationBusinessSchema = (loc: {

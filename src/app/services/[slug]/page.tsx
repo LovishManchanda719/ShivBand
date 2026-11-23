@@ -14,8 +14,8 @@ import Faq from "@/components/site/Faq";
 import JsonLd from "@/components/site/JsonLd";
 import { SERVICES, getService } from "@/lib/services";
 import { GUIDES } from "@/lib/guides";
-import { breadcrumbSchema, faqSchema, serviceSchema } from "@/lib/schema";
-import { SITE, SITE_URL, telLink, whatsappLink } from "@/lib/site";
+import { breadcrumbSchema, faqSchema, serviceSchema, videoObjectSchema } from "@/lib/schema";
+import { SITE, telLink, whatsappLink } from "@/lib/site";
 
 type Params = { slug: string };
 
@@ -65,16 +65,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           serviceSchema(s),
           breadcrumbSchema(crumbs),
           faqSchema([...s.faqs, ...(s.hindiFaqs || [])]),
-          ...(s.videos || []).map((v) => ({
-            "@context": "https://schema.org",
-            "@type": "VideoObject",
-            name: `${v.title} — ${SITE.name}`,
-            description: v.description || `${v.title} at a baraat in Delhi by ${SITE.name}.`,
-            thumbnailUrl: v.poster.startsWith("http") ? v.poster : `${SITE_URL}${v.poster}`,
-            contentUrl: v.youtubeId ? `https://www.youtube.com/watch?v=${v.youtubeId}` : `${SITE_URL}${v.src}`,
-            embedUrl: v.youtubeId ? `https://www.youtube-nocookie.com/embed/${v.youtubeId}` : undefined,
-            uploadDate: "2024-10-15",
-          })),
+          ...(s.videos || []).map(videoObjectSchema),
         ]}
       />
 
@@ -114,7 +105,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
               )}
             </div>
             {s.illustrativeImages && lead && (
-              <p className="mt-3 text-center text-[12px] text-stone-light">Illustrative image</p>
+              <p className="mt-3 text-center text-[12px] text-stone">Illustrative image</p>
             )}
           </div>
         </div>
@@ -176,7 +167,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             ))}
           </div>
           {s.illustrativeImages && (
-            <p className="mt-4 text-[12px] text-stone-light">Illustrative images. Ask us for photos and videos from recent events.</p>
+            <p className="mt-4 text-[12px] text-stone">Illustrative images. Ask us for photos and videos from recent events.</p>
           )}
           <div className="mt-8 flex flex-wrap items-center gap-5">
             <Link href="/gallery/photos" className="link-underline">

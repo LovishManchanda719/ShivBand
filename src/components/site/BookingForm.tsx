@@ -251,7 +251,7 @@ export default function BookingForm({ defaultService, compact = false }: Props) 
                 key={s}
                 onClick={() => toggle(s)}
                 aria-pressed={on}
-                className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-[13px] transition-colors ${
+                className={`inline-flex min-h-[44px] items-center gap-1.5 rounded-full border px-4 py-2.5 text-[13px] transition-colors ${
                   on ? "border-maroon bg-maroon text-ivory" : "border-line bg-white text-ink hover:border-stone-light"
                 }`}
               >
@@ -266,7 +266,7 @@ export default function BookingForm({ defaultService, compact = false }: Props) 
       {!compact && (
         <div>
           <label htmlFor="bf-msg" className="field-label">
-            Anything else <span className="normal-case tracking-normal text-stone-light">(optional)</span>
+            Anything else <span className="normal-case tracking-normal text-stone">(optional)</span>
           </label>
           <textarea
             id="bf-msg"

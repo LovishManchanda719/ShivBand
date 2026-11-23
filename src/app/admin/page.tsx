@@ -263,6 +263,7 @@ export default function AdminDashboardPage() {
   const [autoRefresh, setAutoRefresh] = useState<boolean>(false);
   const [showDetailedDailyTable, setShowDetailedDailyTable] = useState<boolean>(false);
   const [dailyChartWindow, setDailyChartWindow] = useState<7 | 14 | 30>(14);
+  const [dailyChartMetric, setDailyChartMetric] = useState<"users" | "views">("users");
   const [tableGroupingMode, setTableGroupingMode] = useState<"session" | "raw">("session");
 
   // Photo Manager State
@@ -453,7 +454,8 @@ export default function AdminDashboardPage() {
       }
       const entry = dayMap[dStr];
       entry.totalEvents += 1;
-      if (l.visitorId) entry.uniqueVisitors.add(l.visitorId);
+      const vid = l.visitorId || (l.userId && l.userId !== "guest" ? l.userId : null) || l.sessionId || l.ip;
+      if (vid) entry.uniqueVisitors.add(vid);
 
       if (l.eventName === "page_view") {
         entry.pageViews += 1;
@@ -604,10 +606,12 @@ export default function AdminDashboardPage() {
     return result;
   }, [dailyStats, dailyChartWindow]);
 
-  const maxDailyViews = useMemo(() => {
-    const max = Math.max(...chartDays.map((d) => d.pageViews), 1);
-    return max;
-  }, [chartDays]);
+  const maxDailyMetric = useMemo(() => {
+    const vals = chartDays.map((d) =>
+      dailyChartMetric === "users" ? d.uniqueVisitors : d.pageViews
+    );
+    return Math.max(...vals, 1);
+  }, [chartDays, dailyChartMetric]);
 
   const dailySummary = useMemo(() => {
     const today = chartDays.find((d) => d.isToday);
@@ -616,27 +620,49 @@ export default function AdminDashboardPage() {
     const viewsToday = today?.pageViews || 0;
     const viewsYesterday = yesterday?.pageViews || 0;
     const uniqueToday = today?.uniqueVisitors || 0;
+    const uniqueYesterday = yesterday?.uniqueVisitors || 0;
     const inquiriesToday = today?.inquiries || 0;
 
-    const diff = viewsToday - viewsYesterday;
-    let diffLabel = "";
+    const viewsDiff = viewsToday - viewsYesterday;
+    let viewsDiffLabel = "";
     if (viewsYesterday === 0 && viewsToday > 0) {
-      diffLabel = `+${viewsToday} vs yesterday`;
+      viewsDiffLabel = `+${viewsToday} vs yesterday`;
     } else if (viewsYesterday > 0) {
-      const pct = Math.round((diff / viewsYesterday) * 100);
-      diffLabel = pct >= 0 ? `+${pct}% vs yesterday` : `${pct}% vs yesterday`;
+      const pct = Math.round((viewsDiff / viewsYesterday) * 100);
+      viewsDiffLabel = pct >= 0 ? `+${pct}% vs yesterday` : `${pct}% vs yesterday`;
     } else {
-      diffLabel = "0 vs yesterday";
+      viewsDiffLabel = "0 vs yesterday";
+    }
+
+    const usersDiff = uniqueToday - uniqueYesterday;
+    let usersDiffLabel = "";
+    if (uniqueYesterday === 0 && uniqueToday > 0) {
+      usersDiffLabel = `+${uniqueToday} vs yesterday`;
+    } else if (uniqueYesterday > 0) {
+      const pct = Math.round((usersDiff / uniqueYesterday) * 100);
+      usersDiffLabel = pct >= 0 ? `+${pct}% vs yesterday` : `${pct}% vs yesterday`;
+    } else {
+      usersDiffLabel = "0 vs yesterday";
     }
 
     const last7 = chartDays.slice(-7);
     const totalViewsLast7 = last7.reduce((acc, d) => acc + d.pageViews, 0);
     const avgDailyViews = (totalViewsLast7 / Math.max(1, last7.length)).toFixed(1);
 
-    const peakDay =
+    const totalUsersLast7 = last7.reduce((acc, d) => acc + d.uniqueVisitors, 0);
+    const avgDailyUsers = (totalUsersLast7 / Math.max(1, last7.length)).toFixed(1);
+
+    const peakViewsDay =
       dailyStats.length > 0
         ? [...dailyStats].sort((a, b) => b.pageViews - a.pageViews)[0]
         : null;
+
+    const peakUsersDay =
+      dailyStats.length > 0
+        ? [...dailyStats].sort((a, b) => b.uniqueVisitors - a.uniqueVisitors)[0]
+        : null;
+
+    const peakDay = dailyChartMetric === "users" ? peakUsersDay : peakViewsDay;
 
     const totalUniqueAll = new Set(effectiveBaseLogs.map((l) => l.visitorId).filter(Boolean)).size;
     const totalInquiriesAll = effectiveBaseLogs.filter(
@@ -652,16 +678,24 @@ export default function AdminDashboardPage() {
     return {
       viewsToday,
       viewsYesterday,
-      diff,
-      diffLabel,
+      viewsDiff,
+      viewsDiffLabel,
       uniqueToday,
+      uniqueYesterday,
+      usersDiff,
+      usersDiffLabel,
+      diff: dailyChartMetric === "users" ? usersDiff : viewsDiff,
+      diffLabel: dailyChartMetric === "users" ? usersDiffLabel : viewsDiffLabel,
       inquiriesToday,
       avgDailyViews,
+      avgDailyUsers,
       peakDay,
+      peakViewsDay,
+      peakUsersDay,
       convRate,
       totalInquiriesAll,
     };
-  }, [chartDays, dailyStats, effectiveBaseLogs]);
+  }, [chartDays, dailyStats, effectiveBaseLogs, dailyChartMetric]);
 
   // Date range filtering
   const dateFilteredLogs = useMemo(() => {
@@ -1681,33 +1715,69 @@ export default function AdminDashboardPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-black flex items-center gap-2">
-                      <TrendingUp className="w-5 h-5 text-gold" />
-                      <span>Website Traffic &amp; Daily Views Trend</span>
+                      {dailyChartMetric === "users" ? (
+                        <Users className="w-5 h-5 text-gold" />
+                      ) : (
+                        <TrendingUp className="w-5 h-5 text-gold" />
+                      )}
+                      <span>
+                        Website Traffic &amp; Daily {dailyChartMetric === "users" ? "Users" : "Views"} Trend
+                      </span>
                     </h3>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-maroon/15 text-gold border border-maroon/30">
                       Per-Day Breakdown
                     </span>
                   </div>
                   <p className="text-xs text-gray-400 mt-1">
-                    Daily view breakdown with unique visitor counts and direct leads. Click any day column to filter the table below.
+                    {dailyChartMetric === "users"
+                      ? "Daily unique visitor & user count breakdown with view counts and direct leads. Click any day column to filter the table below."
+                      : "Daily view breakdown with unique visitor counts and direct leads. Click any day column to filter the table below."}
                   </p>
                 </div>
 
-                {/* Window Selector (7, 14, 30 days) */}
-                <div className="flex items-center gap-1 p-1 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 self-start sm:self-auto">
-                  {([7, 14, 30] as const).map((days) => (
+                <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                  {/* Metric Switcher (Users vs Views - Default: Users) */}
+                  <div className="flex items-center gap-1 p-1 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
                     <button
-                      key={days}
-                      onClick={() => setDailyChartWindow(days)}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                        dailyChartWindow === days
+                      onClick={() => setDailyChartMetric("users")}
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                        dailyChartMetric === "users"
                           ? "bg-maroon text-white shadow-sm"
-                          : "text-gray-400 hover:text-white"
+                          : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                       }`}
                     >
-                      {days} Days
+                      <Users className="w-3.5 h-3.5" />
+                      <span>Daily Users</span>
                     </button>
-                  ))}
+                    <button
+                      onClick={() => setDailyChartMetric("views")}
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                        dailyChartMetric === "views"
+                          ? "bg-maroon text-white shadow-sm"
+                          : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                      }`}
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>Page Views</span>
+                    </button>
+                  </div>
+
+                  {/* Window Selector (7, 14, 30 days) */}
+                  <div className="flex items-center gap-1 p-1 rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                    {([7, 14, 30] as const).map((days) => (
+                      <button
+                        key={days}
+                        onClick={() => setDailyChartWindow(days)}
+                        className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                          dailyChartWindow === days
+                            ? "bg-maroon text-white shadow-sm"
+                            : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                        }`}
+                      >
+                        {days} Days
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -1722,9 +1792,10 @@ export default function AdminDashboardPage() {
                     <div className="flex items-stretch gap-1.5 sm:gap-2.5 min-w-[550px] pt-4">
                     {chartDays.map((d) => {
                       const isSelected = selectedSpecificDate === d.date;
-                      const hasViews = d.pageViews > 0;
-                      const heightPx = hasViews
-                        ? Math.max(12, Math.round((d.pageViews / maxDailyViews) * 155))
+                      const metricValue = dailyChartMetric === "users" ? d.uniqueVisitors : d.pageViews;
+                      const hasMetric = metricValue > 0;
+                      const heightPx = hasMetric
+                        ? Math.max(12, Math.round((metricValue / maxDailyMetric) * 155))
                         : 4;
 
                       return (
@@ -1734,14 +1805,14 @@ export default function AdminDashboardPage() {
                             setSelectedSpecificDate(isSelected ? null : d.date)
                           }
                           className="flex-1 min-w-[38px] max-w-[62px] flex flex-col items-center group cursor-pointer select-none"
-                          title={`${d.fullDisplayDate}: ${d.pageViews} views, ${d.uniqueVisitors} visitors, ${d.inquiries} inquiries`}
+                          title={`${d.fullDisplayDate}: ${d.uniqueVisitors} unique users, ${d.pageViews} views, ${d.inquiries} inquiries`}
                         >
                           {/* 1. Bar Plotting Area (Fixed 176px h-44, bottom-aligned baseline) */}
                           <div className="w-full h-44 flex flex-col items-center justify-end relative pb-0 border-b-2 border-gray-200 dark:border-gray-800">
-                            {/* Views badge above bar */}
+                            {/* Metric badge above bar */}
                             <div
                               className={`text-[11px] font-black mb-1.5 transition-colors ${
-                                hasViews
+                                hasMetric
                                   ? isDarkMode
                                     ? "text-gray-100 group-hover:text-gold"
                                     : "text-gray-900 group-hover:text-maroon font-black"
@@ -1750,11 +1821,11 @@ export default function AdminDashboardPage() {
                                   : "text-gray-400"
                               }`}
                             >
-                              {hasViews ? d.pageViews : 0}
+                              {hasMetric ? metricValue : 0}
                             </div>
 
                             {/* Bar - strictly flush on the bottom baseline */}
-                            {hasViews ? (
+                            {hasMetric ? (
                               <div
                                 style={{ height: `${heightPx}px` }}
                                 className={`w-full rounded-t-xl transition-all duration-300 relative ${
@@ -1824,10 +1895,14 @@ export default function AdminDashboardPage() {
                       }`}
                     >
                       <div className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                        Today&apos;s Views
+                        {dailyChartMetric === "users" ? "Today's Users" : "Today's Views"}
                       </div>
                       <div className="text-2xl font-black mt-1 flex items-baseline gap-2">
-                        <span>{dailySummary.viewsToday}</span>
+                        <span>
+                          {dailyChartMetric === "users"
+                            ? dailySummary.uniqueToday
+                            : dailySummary.viewsToday}
+                        </span>
                         <span
                           className={`text-xs font-bold flex items-center ${
                             dailySummary.diff >= 0
@@ -1844,7 +1919,9 @@ export default function AdminDashboardPage() {
                         </span>
                       </div>
                       <div className="text-[11px] text-gray-400 mt-0.5">
-                        {dailySummary.uniqueToday} unique visitors today
+                        {dailyChartMetric === "users"
+                          ? `${dailySummary.viewsToday} page views today`
+                          : `${dailySummary.uniqueToday} unique visitors today`}
                       </div>
                     </div>
 
@@ -1856,13 +1933,17 @@ export default function AdminDashboardPage() {
                       }`}
                     >
                       <div className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                        Yesterday&apos;s Views
+                        {dailyChartMetric === "users" ? "Yesterday's Users" : "Yesterday's Views"}
                       </div>
                       <div className="text-2xl font-black mt-1">
-                        {dailySummary.viewsYesterday}
+                        {dailyChartMetric === "users"
+                          ? dailySummary.uniqueYesterday
+                          : dailySummary.viewsYesterday}
                       </div>
                       <div className="text-[11px] text-gray-400 mt-0.5">
-                        Previous day&apos;s traffic benchmark
+                        {dailyChartMetric === "users"
+                          ? `Benchmark (${dailySummary.viewsYesterday} views)`
+                          : "Previous day's traffic benchmark"}
                       </div>
                     </div>
 
@@ -1877,10 +1958,14 @@ export default function AdminDashboardPage() {
                         7-Day Average
                       </div>
                       <div className="text-2xl font-black mt-1 text-gold">
-                        {dailySummary.avgDailyViews}
+                        {dailyChartMetric === "users"
+                          ? dailySummary.avgDailyUsers
+                          : dailySummary.avgDailyViews}
                       </div>
                       <div className="text-[11px] text-gray-400 mt-0.5">
-                        Average page views per day
+                        {dailyChartMetric === "users"
+                          ? "Average unique users per day"
+                          : "Average page views per day"}
                       </div>
                     </div>
 
@@ -1892,10 +1977,14 @@ export default function AdminDashboardPage() {
                       }`}
                     >
                       <div className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                        Peak Traffic Record
+                        {dailyChartMetric === "users" ? "Peak Users Record" : "Peak Traffic Record"}
                       </div>
                       <div className="text-2xl font-black mt-1 text-emerald-400">
-                        {dailySummary.peakDay ? dailySummary.peakDay.pageViews : 0}
+                        {dailySummary.peakDay
+                          ? dailyChartMetric === "users"
+                            ? dailySummary.peakDay.uniqueVisitors
+                            : dailySummary.peakDay.pageViews
+                          : 0}
                       </div>
                       <div className="text-[11px] text-gray-400 mt-0.5 truncate">
                         {dailySummary.peakDay
@@ -1937,8 +2026,8 @@ export default function AdminDashboardPage() {
                           >
                             <tr>
                               <th className="py-2.5 px-3">Date</th>
+                              <th className="py-2.5 px-3">Unique Users</th>
                               <th className="py-2.5 px-3">Page Views</th>
-                              <th className="py-2.5 px-3">Unique Visitors</th>
                               <th className="py-2.5 px-3">Direct Inquiries</th>
                               <th className="py-2.5 px-3">Top Page</th>
                               <th className="py-2.5 px-3 text-right">Action</th>
@@ -1968,17 +2057,16 @@ export default function AdminDashboardPage() {
                                 </td>
                                 <td className="py-2.5 px-3">
                                   <div className="flex items-center gap-2">
-                                    <span className="font-bold">{d.pageViews}</span>
+                                    <span className="font-bold">{d.uniqueVisitors} {d.uniqueVisitors === 1 ? "user" : "users"}</span>
                                     <div className="w-16 h-1.5 bg-gray-700/30 rounded-full overflow-hidden">
                                       <div
-                                        className="h-full bg-maroon rounded-full"
+                                        className="h-full bg-emerald-500 rounded-full"
                                         style={{
                                           width: `${Math.min(
                                             100,
                                             Math.round(
-                                              (d.pageViews /
-                                                (dailySummary.peakDay?.pageViews ||
-                                                  1)) *
+                                              (d.uniqueVisitors /
+                                                (dailySummary.peakUsersDay?.uniqueVisitors || 1)) *
                                                 100
                                             )
                                           )}%`,
@@ -1988,7 +2076,24 @@ export default function AdminDashboardPage() {
                                   </div>
                                 </td>
                                 <td className="py-2.5 px-3">
-                                  {d.uniqueVisitors} visitors
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-bold">{d.pageViews}</span>
+                                    <div className="w-12 h-1.5 bg-gray-700/30 rounded-full overflow-hidden">
+                                      <div
+                                        className="h-full bg-maroon rounded-full"
+                                        style={{
+                                          width: `${Math.min(
+                                            100,
+                                            Math.round(
+                                              (d.pageViews /
+                                                (dailySummary.peakViewsDay?.pageViews || 1)) *
+                                                100
+                                            )
+                                          )}%`,
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
                                 </td>
                                 <td className="py-2.5 px-3">
                                   {d.inquiries > 0 ? (
