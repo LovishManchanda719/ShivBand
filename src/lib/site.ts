@@ -47,10 +47,10 @@ export const SITE = {
     facebook: "https://www.facebook.com/shivband.lighthouse",
     youtube: "https://www.youtube.com/@manishmanchanda4089/videos",
   },
-  // High-definition luxury royal brass band ensemble photograph
+  // Luxury website hero background image (shown on the website hero)
   heroImage: {
-    desktop: "/images/shiv-band-luxury-royal-brass-band.jpg",
-    mobile: "/images/shiv-band-luxury-royal-brass-band.jpg",
+    desktop: "/images/hero-wedding.jpg",
+    mobile: "/images/hero-wedding.jpg",
   },
 } as const;
 

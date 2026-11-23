@@ -72,6 +72,19 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: '/images/hero-wedding.jpg',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, nosnippet',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
         source: '/images/:path*',
         headers: [
           {

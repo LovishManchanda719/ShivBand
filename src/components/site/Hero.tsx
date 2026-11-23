@@ -9,15 +9,17 @@ import { SERVICES } from "@/lib/services";
 export default function Hero() {
   const quick = SERVICES.slice(0, 5);
   return (
-    <section className="p-2 sm:p-3 lg:p-4">
+    <section className="p-2 sm:p-3 lg:p-4" data-nosnippet="true">
       <div className="relative isolate flex h-[calc(100svh-1rem)] min-h-[600px] max-h-[960px] flex-col overflow-hidden rounded-[22px] bg-ink ring-1 ring-gold/60 sm:h-[calc(100svh-1.5rem)] sm:rounded-frame lg:h-[calc(100svh-2rem)]">
         <Image
           src={SITE.heroImage.desktop}
-          alt="Shiv Band & Light House luxury royal wedding brass band ensemble performing at grand palace baraat in Delhi NCR"
+          alt=""
+          role="presentation"
+          aria-hidden="true"
           fill
           priority
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1920px"
-          quality={90}
+          quality={80}
           className="photo-grade -z-20 scale-[1.02] object-cover"
         />
         {/* Readability + warm tone */}
