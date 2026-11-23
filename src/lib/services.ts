@@ -85,10 +85,10 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Baraat procession", "Groom entry", "Jaimala", "Engagement and roka", "Religious processions"],
     images: [
+      { src: "/images/shiv-band-luxury-royal-brass-band.jpg", alt: "Shiv Band luxury royal brass band ensemble in ceremonial red and gold uniform" },
       { src: "/images/shiv-band-brass-band-procession.jpg", alt: "Shiv Band brass band playing in a night baraat procession in Delhi" },
-      { src: "/images/3.jpg", alt: "Shiv Band trumpet player in red ceremonial uniform" },
+      { src: "/images/shiv-band-ceremonial-trumpet-player.jpg", alt: "Shiv Band trumpet player in red ceremonial uniform" },
       { src: "/images/brass-band-chhatri-lights.jpg", alt: "Wedding band musicians walking with chhatri lights at night" },
-      { src: "/images/108.jpg", alt: "Shiv Band wedding band uniforms displayed at the Krishna Nagar shop" },
     ],
     videos: [
       {
@@ -192,7 +192,7 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Groom's ghudchadi", "Baraat procession", "Sehrabandi", "Pre-wedding photo shoots"],
     images: [
-      { src: "/images/2.jpg", alt: "Decorated white wedding ghodi with traditional shringar by Shiv Band" },
+      { src: "/images/royal-wedding-ghodi-shringar.jpg", alt: "Decorated white wedding ghodi with royal peacock shringar by Shiv Band" },
       { src: "/images/groom-ghodi-chhatri-lights.jpg", alt: "Groom riding a decorated ghodi under chhatri lights in a Delhi baraat" },
     ],
     faqs: [
@@ -259,7 +259,7 @@ export const SERVICES: Service[] = [
       "Works for groom's baraat, bride's entry or vidaai",
     ],
     occasions: ["Groom's baraat", "Bride's entry", "Vidaai", "Religious processions and jhankis"],
-    images: [{ src: "/images/1.jpg", alt: "Flower-decorated wedding baggi by Shiv Band & Light House, Delhi" }],
+    images: [{ src: "/images/royal-flower-baggi-chariot.jpg", alt: "Royal flower-decorated wedding baggi chariot by Shiv Band & Light House, Delhi" }],
     faqs: [
       {
         q: "What is the difference between a baggi and a rath?",

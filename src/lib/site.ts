@@ -47,8 +47,11 @@ export const SITE = {
     facebook: "https://www.facebook.com/shivband.lighthouse",
     youtube: "https://www.youtube.com/@manishmanchanda4089/videos",
   },
-  // Swap these two files for higher-resolution shots when available.
-  heroImage: { desktop: "/images/hero-wedding.jpg", mobile: "/images/hero-wedding.jpg" },
+  // High-definition luxury royal brass band ensemble photograph
+  heroImage: {
+    desktop: "/images/shiv-band-luxury-royal-brass-band.jpg",
+    mobile: "/images/shiv-band-luxury-royal-brass-band.jpg",
+  },
 } as const;
 
 export const yearsServing = () => new Date().getFullYear() - SITE.foundingYear;

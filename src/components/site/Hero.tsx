@@ -13,11 +13,11 @@ export default function Hero() {
       <div className="relative isolate flex h-[calc(100svh-1rem)] min-h-[600px] max-h-[960px] flex-col overflow-hidden rounded-[22px] bg-ink ring-1 ring-gold/60 sm:h-[calc(100svh-1.5rem)] sm:rounded-frame lg:h-[calc(100svh-2rem)]">
         <Image
           src={SITE.heroImage.desktop}
-          alt="Shiv Band & Light House brass band leading a night baraat in Delhi"
+          alt="Shiv Band & Light House luxury royal wedding brass band ensemble performing at grand palace baraat in Delhi NCR"
           fill
           priority
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1920px"
-          quality={80}
+          quality={90}
           className="photo-grade -z-20 scale-[1.02] object-cover"
         />
         {/* Readability + warm tone */}

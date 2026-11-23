@@ -24,12 +24,12 @@ const STEPS = [
 
 // Shown at their natural shape (no cropping). Width/height are the real file sizes.
 const GALLERY = [
-  { src: "/images/groom-ghodi-chhatri-lights.jpg", w: 1254, h: 1254, alt: "Groom on a decorated ghodi with chhatri lights in a Delhi baraat" },
-  { src: "/images/brass-band-chhatri-lights.jpg", w: 941, h: 1672, alt: "Shiv Band brass band player with chhatri lights at a night baraat" },
-  { src: "/images/shiv-band-brass-band-procession.jpg", w: 1672, h: 941, alt: "Shiv Band brass band procession with SHIV BAND drum signs" },
-  { src: "/images/vintage-car/red-vintage-car-groom.jpg", w: 1086, h: 1448, alt: "Groom in a decorated red vintage car during a Delhi baraat" },
-  { src: "/images/dhol-wale-baraat.jpg", w: 941, h: 1671, alt: "Dhol players before a night baraat" },
-  { src: "/images/2.jpg", w: 736, h: 981, alt: "Decorated white wedding ghodi by Shiv Band" },
+  { src: "/images/vintage-car/red-vintage-car-groom.jpg", w: 1200, h: 896, alt: "Groom celebrating in a luxury red vintage car with celebratory fireworks at a Delhi baraat" },
+  { src: "/images/royal-wedding-ghodi-shringar.jpg", w: 896, h: 1200, alt: "Shiv Band decorated white royal wedding ghodi in peacock gold shringar at palace archway" },
+  { src: "/images/shehnai/shehnai-band-baraat.jpg", w: 1536, h: 1024, alt: "Shiv Band royal shehnai players in red and gold embroidered sherwanis with ceremonial safas" },
+  { src: "/images/royal-flower-baggi-chariot.jpg", w: 896, h: 1200, alt: "Royal flower-decorated wedding baggi chariot by Shiv Band at illuminated palace" },
+  { src: "/images/groom-ghodi-chhatri-lights.jpg", w: 1254, h: 1254, alt: "Groom on a decorated ghodi with illuminated crystal chhatri lanterns in a Delhi baraat" },
+  { src: "/images/shiv-band-ceremonial-trumpet-player.jpg", w: 768, h: 1376, alt: "Shiv Band trumpet musician in royal red ceremonial uniform at wedding palace" },
 ];
 
 // Three highlighted services on the home page; the rest are listed as links.
