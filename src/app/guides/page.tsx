@@ -56,7 +56,7 @@ export default async function GuidesPage() {
           {GUIDES.map((g) => (
             <Link key={g.slug} href={`/guides/${g.slug}`} className="group block">
               <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-sand">
-                <Image src={g.image.src} alt={g.image.alt} fill sizes="(min-width: 768px) 45vw, 90vw" className="photo-grade object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                <Image src={g.image.src} alt={g.image.alt} fill sizes="(min-width: 768px) 45vw, 90vw" className="photo-grade object-cover object-[50%_25%] transition-transform duration-700 group-hover:scale-[1.03]" />
               </div>
               <p className="eyebrow mt-5">{g.readMinutes} min read</p>
               <h2 className="mt-2 flex items-start gap-2 font-display text-2xl leading-snug text-ink">

@@ -54,6 +54,7 @@ import {
   ChevronUp,
   Activity,
   CalendarDays,
+  ExternalLink,
 } from "lucide-react";
 
 interface AnalyticsRecord {
@@ -244,6 +245,36 @@ const formatDateToIST = (date: Date): string => {
     return date.toISOString().split("T")[0];
   }
 };
+
+const GoogleSearchConsoleIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+    <path
+      fill="#4285F4"
+      d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"
+    />
+    <path
+      fill="#34A853"
+      d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"
+    />
+    <path
+      fill="#FBBC05"
+      d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"
+    />
+    <path
+      fill="#EA4335"
+      d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
+    />
+  </svg>
+);
+
+const BingWebmasterIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+    <path fill="#F25022" d="M1 1h10v10H1z" />
+    <path fill="#00A4EF" d="M1 13h10v10H1z" />
+    <path fill="#7FBA00" d="M13 1h10v10H13z" />
+    <path fill="#FFB900" d="M13 13h10v10H13z" />
+  </svg>
+);
 
 export default function AdminDashboardPage() {
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -1417,7 +1448,41 @@ export default function AdminDashboardPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+          <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
+            {/* Google Search Console Redirect */}
+            <a
+              href="https://search.google.com/search-console"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open Google Search Console Dashboard"
+              className={`inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-bold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98] ${
+                isDarkMode
+                  ? "bg-gray-900 border-gray-700 text-gray-200 hover:bg-gray-800 hover:text-white hover:border-gray-600"
+                  : "bg-white border-gray-300 text-gray-800 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-400"
+              }`}
+            >
+              <GoogleSearchConsoleIcon className="w-4 h-4 flex-shrink-0" />
+              <span>Google Search Console</span>
+              <ExternalLink className="w-3.5 h-3.5 opacity-60 ml-0.5" />
+            </a>
+
+            {/* Bing Webmaster Dashboard Console Redirect */}
+            <a
+              href="https://www.bing.com/webmasters"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open Bing Webmaster Dashboard Console"
+              className={`inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl border text-xs sm:text-sm font-bold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98] ${
+                isDarkMode
+                  ? "bg-gray-900 border-gray-700 text-gray-200 hover:bg-gray-800 hover:text-white hover:border-gray-600"
+                  : "bg-white border-gray-300 text-gray-800 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-400"
+              }`}
+            >
+              <BingWebmasterIcon className="w-4 h-4 flex-shrink-0" />
+              <span>Bing Webmaster</span>
+              <ExternalLink className="w-3.5 h-3.5 opacity-60 ml-0.5" />
+            </a>
+
             <NotifyBingButton />
             <button
               onClick={handleManualRefresh}
@@ -1584,6 +1649,139 @@ export default function AdminDashboardPage() {
                     <option value={500}>500 events</option>
                     <option value={1000}>1000 events</option>
                   </select>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Webmaster Consoles & Search Engine Portals */}
+            <div
+              className={`p-5 rounded-2xl border ${
+                isDarkMode
+                  ? "bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 border-gray-800"
+                  : "bg-gradient-to-br from-amber-50/60 via-white to-sky-50/60 border-gray-200"
+              } shadow-sm`}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-gray-200/80 dark:border-gray-800">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-2 rounded-xl bg-gold/15 text-gold border border-gold/30">
+                    <Globe className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h2 className="text-sm sm:text-base font-black flex items-center gap-2">
+                      <span>Search Engine &amp; Webmaster Dashboards</span>
+                      <span className="px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                        Live Portals
+                      </span>
+                    </h2>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Direct access to official search console dashboards for monitoring crawling, indexing, keywords, and search traffic for <strong className="text-gold">shivband.in</strong>.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-xs">
+                  <a
+                    href="/sitemap.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold hover:border-gold/50 transition-colors text-gray-600 dark:text-gray-300"
+                    title="View XML Sitemap"
+                  >
+                    <span>Sitemap XML</span>
+                    <ExternalLink className="w-3 h-3 opacity-60" />
+                  </a>
+                  <a
+                    href="/robots.txt"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold hover:border-gold/50 transition-colors text-gray-600 dark:text-gray-300"
+                    title="View robots.txt"
+                  >
+                    <span>Robots.txt</span>
+                    <ExternalLink className="w-3 h-3 opacity-60" />
+                  </a>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Google Search Console Card */}
+                <div
+                  className={`p-4 rounded-xl border flex flex-col justify-between transition-all hover:border-blue-500/40 ${
+                    isDarkMode ? "bg-gray-800/60 border-gray-700/80" : "bg-white border-gray-200"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                        <GoogleSearchConsoleIcon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-black text-sm text-gray-900 dark:text-white flex items-center gap-1.5">
+                          Google Search Console
+                        </h4>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          Organic Google queries, impressions, CTR, core web vitals &amp; sitemap indexing.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-gray-100 dark:border-gray-700/60 flex flex-wrap items-center justify-between gap-2 mt-auto">
+                    <span className="text-[11px] text-gray-500 dark:text-gray-400 font-mono">
+                      Property: <strong className="text-blue-500 dark:text-blue-400">shivband.in</strong>
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href="https://search.google.com/search-console"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+                      >
+                        <span>Open Search Console</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bing Webmaster Tools Card */}
+                <div
+                  className={`p-4 rounded-xl border flex flex-col justify-between transition-all hover:border-emerald-500/40 ${
+                    isDarkMode ? "bg-gray-800/60 border-gray-700/80" : "bg-white border-gray-200"
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                        <BingWebmasterIcon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-black text-sm text-gray-900 dark:text-white flex items-center gap-1.5">
+                          Bing Webmaster Dashboard
+                        </h4>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          Bing search performance, keyword research, crawl status &amp; IndexNow instant submission.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-gray-100 dark:border-gray-700/60 flex flex-wrap items-center justify-between gap-2 mt-auto">
+                    <span className="text-[11px] text-gray-500 dark:text-gray-400 font-mono">
+                      Engine: <strong className="text-emerald-500 dark:text-emerald-400">Bing &amp; Yahoo</strong>
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href="https://www.bing.com/webmasters"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+                      >
+                        <span>Open Bing Dashboard</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

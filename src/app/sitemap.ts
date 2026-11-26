@@ -2,10 +2,42 @@ import type { MetadataRoute } from "next";
 import { SERVICES } from "@/lib/services";
 import { GUIDES } from "@/lib/guides";
 import { LOCATIONS } from "@/lib/locations";
-import { SITE_URL } from "@/lib/site";
+import { LOCAL_PHOTOS } from "@/lib/photos";
+import { SITE, SITE_URL } from "@/lib/site";
 
 // Stable release date for static pages prevents false lastmod shifts on every crawler request
-const STATIC_LASTMOD = new Date("2026-10-15T00:00:00.000Z");
+const STATIC_LASTMOD = new Date("2026-11-26T00:00:00.000Z");
+
+const HOME_IMAGES = [
+  `${SITE_URL}/images/vintage-car/red-vintage-car-groom.jpg`,
+  `${SITE_URL}/images/shiv-band-luxury-royal-brass-band.jpg`,
+  `${SITE_URL}/images/royal-wedding-ghodi-shringar.jpg`,
+  `${SITE_URL}/images/royal-flower-baggi-chariot.jpg`,
+  `${SITE_URL}/images/shehnai/shehnai-band-baraat.jpg`,
+  `${SITE_URL}/images/groom-ghodi-chhatri-lights.jpg`,
+  `${SITE_URL}/images/shiv-band-ceremonial-trumpet-player.jpg`,
+];
+
+const GALLERY_VIDEOS = [
+  {
+    title: "Shiv Band & Light House — Royal Heritage Baraat Film",
+    thumbnail_loc: `${SITE_URL}/images/shiv-band-luxury-royal-brass-band.jpg`,
+    description: "Official Shiv Band & Light House wedding brass band, ghodi, flower baggi, Punjabi dhol and chhatri lights showcase in Delhi NCR.",
+    content_loc: `${SITE_URL}/videos/shiv-band-royal-heritage-ad.mp4`,
+  },
+  {
+    title: "Shiv Band Wedding Baraat Services Reel",
+    thumbnail_loc: `${SITE_URL}/images/shiv-band-brass-band-procession.jpg`,
+    description: "Live Delhi baraat procession with uniformed brass band, dhol wale and crystal chhatri lights by Shiv Band.",
+    content_loc: `${SITE_URL}/videos/shiv-band-services-reel.webm`,
+  },
+  {
+    title: "Shiv Band Services Promo",
+    thumbnail_loc: `${SITE_URL}/images/royal-flower-baggi-chariot.jpg`,
+    description: "Wedding band, decorated white ghodi, flower baggi rath and vintage car services across Delhi NCR.",
+    content_loc: `${SITE_URL}/videos/shiv-band-services-promo.webm`,
+  },
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const page = (
@@ -21,11 +53,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
   });
 
   return [
-    page("/", 1, "weekly"),
+    {
+      ...page("/", 1, "weekly"),
+      images: HOME_IMAGES,
+    },
     page("/services", 0.9),
     ...SERVICES.map((s) => ({
       ...page(`/services/${s.slug}`, 0.9),
       images: s.images.map((i) => `${SITE_URL}${i.src}`),
+      ...(s.videos?.length
+        ? {
+            videos: s.videos.map((v) => ({
+              title: `${v.title} — ${SITE.name}`,
+              thumbnail_loc: v.poster.startsWith("http") ? v.poster : `${SITE_URL}${v.poster}`,
+              description: v.description || `${v.title} by ${SITE.name} in Delhi NCR.`,
+              ...(v.src ? { content_loc: v.src.startsWith("http") ? v.src : `${SITE_URL}${v.src}` } : {}),
+              ...(v.youtubeId ? { player_loc: `https://www.youtube-nocookie.com/embed/${v.youtubeId}` } : {}),
+            })),
+          }
+        : {}),
     })),
     page("/packages", 0.95, "weekly"),
     page("/locations", 0.9, "weekly"),
@@ -33,8 +79,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page("/contact", 0.9),
     page("/guides", 0.7),
     ...GUIDES.map((g) => page(`/guides/${g.slug}`, 0.7, "monthly", new Date(g.updated))),
-    page("/gallery/photos", 0.8, "weekly"),
-    page("/gallery/videos", 0.7, "weekly"),
+    {
+      ...page("/gallery/photos", 0.8, "weekly"),
+      images: LOCAL_PHOTOS.map((p) => `${SITE_URL}${p.url}`),
+    },
+    {
+      ...page("/gallery/videos", 0.7, "weekly"),
+      videos: GALLERY_VIDEOS,
+    },
     page("/reviews", 0.7, "weekly"),
     page("/feedback", 0.4),
     page("/privacy", 0.2, "yearly"),

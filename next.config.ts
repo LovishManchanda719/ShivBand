@@ -45,6 +45,26 @@ const nextConfig: NextConfig = {
         destination: '/#about',
         permanent: true,
       },
+      {
+        source: '/admin/google-search-console',
+        destination: 'https://search.google.com/search-console',
+        permanent: false,
+      },
+      {
+        source: '/admin/gsc',
+        destination: 'https://search.google.com/search-console',
+        permanent: false,
+      },
+      {
+        source: '/admin/bing-webmaster',
+        destination: 'https://www.bing.com/webmasters',
+        permanent: false,
+      },
+      {
+        source: '/admin/bing-console',
+        destination: 'https://www.bing.com/webmasters',
+        permanent: false,
+      },
     ];
   },
 

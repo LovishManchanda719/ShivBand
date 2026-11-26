@@ -21,7 +21,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "East Delhi (HQ)",
     h1: "Wedding Band, Ghodi & Dhol in Krishna Nagar, Delhi",
     hindi: "कृष्णा नगर में शादी का बैंड, घोड़ी और ढोल वाले",
-    metaTitle: "Wedding Band in Krishna Nagar, East Delhi | Ghodi & Dhol | Shiv Band",
+    metaTitle: "Wedding Band in Krishna Nagar, East Delhi | Ghodi & Dhol",
     metaDescription:
       "Shiv Band & Light House: Krishna Nagar's trusted wedding brass band since 1996. Groom ghodi, flower baggi, Punjabi dhol & chhatri lights on Parwana Road. Call 98186 26259.",
     tagline:
@@ -72,7 +72,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "East Delhi",
     h1: "Wedding Band, Ghodi & Dhol in Preet Vihar, Delhi",
     hindi: "प्रीत विहार में शादी का बैंड, घोड़ी और ढोल वाले",
-    metaTitle: "Wedding Band in Preet Vihar, Delhi | Dhol, Ghodi & Baggi | Shiv Band",
+    metaTitle: "Wedding Band in Preet Vihar, Delhi | Dhol, Ghodi & Baggi",
     metaDescription:
       "Premium wedding brass band in Preet Vihar & Nirman Vihar. Uniformed musicians, royal white ghodi, flower baggi rath & crystal lights. Direct booking from Shiv Band since 1996.",
     tagline:
@@ -116,7 +116,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "East Delhi",
     h1: "Wedding Band, Ghodi & Dhol Players in Laxmi Nagar, Delhi",
     hindi: "लक्ष्मी नगर में शादी का बैंड, घोड़ी और ढोल वाले",
-    metaTitle: "Wedding Band in Laxmi Nagar, Delhi | Dhol Wale & Ghodi | Shiv Band",
+    metaTitle: "Wedding Band in Laxmi Nagar, Delhi | Dhol Wale & Ghodi",
     metaDescription:
       "Book the best wedding band in Laxmi Nagar & Shakarpur. Energetic Bollywood & Punjabi brass band, groom ghodi, flower rath & chhatri lights. Call 98186 26259.",
     tagline:
@@ -154,7 +154,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "East Delhi",
     h1: "Wedding Band & Dhol Services in Shahdara & Vivek Vihar",
     hindi: "शाहदरा और विवेक विहार में शादी का बैंड और घोड़ी",
-    metaTitle: "Wedding Band in Shahdara & Vivek Vihar, Delhi | Shiv Band",
+    metaTitle: "Wedding Band in Shahdara & Vivek Vihar, Delhi",
     metaDescription:
       "Top-rated wedding brass band in Shahdara, Vivek Vihar & Dilshad Garden. Complete baraat packages: uniformed band, trained white ghodi, flower baggi & dhol.",
     tagline:
@@ -192,7 +192,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "East Delhi",
     h1: "Wedding Band & Baraat Packages in Mayur Vihar & Patparganj",
     hindi: "मयूर विहार और पटपड़गंज में शादी का बैंड और ढोल",
-    metaTitle: "Wedding Band in Mayur Vihar & Patparganj, Delhi | Shiv Band",
+    metaTitle: "Wedding Band in Mayur Vihar & Patparganj, Delhi",
     metaDescription:
       "Uniformed brass band, groom ghodi, flower baggi & Punjabi dhol in Mayur Vihar Phase 1, 2, 3 & Patparganj. Trusted wedding band since 1996.",
     tagline:
@@ -231,7 +231,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "Delhi NCR",
     h1: "Wedding Band, Ghodi & Dhol Wale in Noida & Greater Noida",
     hindi: "नोएडा में शादी का बैंड, घोड़ी, बग्गी और ढोल वाले",
-    metaTitle: "Wedding Band in Noida & Greater Noida | Dhol, Ghodi, Baggi | Shiv Band",
+    metaTitle: "Wedding Band in Noida & Greater Noida | Dhol, Ghodi, Baggi",
     metaDescription:
       "Premier wedding brass band in Noida Sectors 18, 50, 62, 76, 137 & Greater Noida. Trained white ghodi, royal flower baggi, Punjabi dhol & chhatri lights.",
     tagline:
@@ -276,7 +276,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "Delhi NCR",
     h1: "Wedding Band, Royal Baggi & Dhol in Gurugram (Gurgaon)",
     hindi: "गुरुग्राम (गुड़गांव) में शादी का बैंड, बग्गी और ढोल वाले",
-    metaTitle: "Wedding Band in Gurugram (Gurgaon) | Royal Baggi & Dhol | Shiv Band",
+    metaTitle: "Wedding Band in Gurugram (Gurgaon) | Royal Baggi & Dhol",
     metaDescription:
       "Luxury wedding brass band in Gurugram. Royal flower rath, vintage car, white ghodi & high-energy Punjabi dhol for Golf Course Rd, Sohna Rd & Delhi-NCR farmhouses.",
     tagline:
@@ -315,20 +315,20 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "Delhi NCR",
     h1: "Wedding Band & Royal Baraat Services in South Delhi",
     hindi: "साउथ दिल्ली में शादी का बैंड, शाही बग्गी और ढोल",
-    metaTitle: "Wedding Band in South Delhi | Chattarpur & GK | Shiv Band",
+    metaTitle: "Wedding Band in South Delhi | Chhatarpur (Chattarpur) & GK",
     metaDescription:
-      "Elite brass band for South Delhi weddings: Chattarpur farmhouses, Sainik Farm, GK & Vasant Kunj. Decorated ghodi, crystal lights & Punjabi dhol since 1996.",
+      "Elite brass band for South Delhi weddings: Chhatarpur (Chattarpur) farmhouses, Sainik Farm, GK & Vasant Kunj. Decorated ghodi, crystal lights & Punjabi dhol since 1996.",
     tagline:
       "Setting the rhythm for high-profile weddings and farmhouse celebrations across South Delhi's celebrated wedding avenues.",
     travelTimeFromHQ: "30–45 mins from Krishna Nagar",
     popularVenues: [
-      "Chattarpur Farmhouse Strip",
+      "Chhatarpur (Chattarpur) Farmhouse Strip",
       "Sainik Farm Wedding Lawns",
       "Greater Kailash & Panchsheel Clubs",
       "Vasant Kunj Grand Hotels",
     ],
     coverageAreas: [
-      "Chattarpur",
+      "Chhatarpur / Chattarpur",
       "Sainik Farm",
       "Greater Kailash (GK 1 & 2)",
       "South Extension & Defence Colony",
@@ -337,8 +337,10 @@ export const LOCATIONS: LocationInfo[] = [
     ],
     keywords: [
       "wedding band South Delhi",
+      "wedding band Chhatarpur farmhouses",
       "wedding band Chattarpur farmhouses",
       "dhol wale South Delhi",
+      "ghodi baggi Chhatarpur",
       "ghodi baggi Chattarpur",
       "wedding band Sainik Farm",
     ],
@@ -355,7 +357,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "North-West Delhi",
     h1: "Wedding Band, Ghodi & Dhol in Rohini & Pitampura, Delhi",
     hindi: "रोहिणी और पीतमपुरा में शादी का बैंड, घोड़ी और ढोल वाले",
-    metaTitle: "Wedding Band in Rohini & Pitampura, Delhi | Shiv Band",
+    metaTitle: "Wedding Band in Rohini & Pitampura, Delhi",
     metaDescription:
       "Book top wedding band in Rohini Sectors 3-24 & Pitampura. Uniformed brass musicians, calm white ghodi, flower baggi rath & dhol wale. Call 98186 26259.",
     tagline:
@@ -395,7 +397,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "Delhi NCR",
     h1: "Wedding Band, Ghodi & Dhol in Ghaziabad & Indirapuram",
     hindi: "गाजियाबाद और इंदिरापुरम में शादी का बैंड, घोड़ी और ढोल",
-    metaTitle: "Wedding Band in Ghaziabad & Indirapuram | Shiv Band",
+    metaTitle: "Wedding Band in Ghaziabad & Indirapuram",
     metaDescription:
       "Best wedding brass band in Ghaziabad, Indirapuram, Vaishali & Vasundhara. Royal flower baggi, white ghodi, Punjabi dhol & crystal lights. Call 98186 26259.",
     tagline:
@@ -435,7 +437,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "Delhi NCR",
     h1: "Wedding Band & Baraat Services in Faridabad",
     hindi: "फरीदाबाद में शादी का बैंड, घोड़ी और ढोल वाले",
-    metaTitle: "Wedding Band in Faridabad | Surajkund & Mathura Rd | Shiv Band",
+    metaTitle: "Wedding Band in Faridabad | Surajkund & Mathura Rd",
     metaDescription:
       "Reliable wedding band in Faridabad. Serving Surajkund resorts, Mathura Road banquets & Greenfield with brass band, flower baggi, ghodi & dhol. Since 1996.",
     tagline:
@@ -473,7 +475,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "East Delhi (Banquet Corridor)",
     h1: "Wedding Band, Ghodi & Dhol in Karkardooma, Delhi",
     hindi: "कड़कड़डूमा में शादी का बैंड, घोड़ी और ढोल वाले",
-    metaTitle: "Wedding Band in Karkardooma, East Delhi | Ghodi, Baggi & Dhol | Shiv Band",
+    metaTitle: "Wedding Band in Karkardooma, East Delhi | Ghodi, Baggi & Dhol",
     metaDescription:
       "Book the best wedding brass band in Karkardooma & CBD Ground banquet belt. Uniformed musicians, groom ghodi, royal baggi & chhatri lights. Call 98186 26259.",
     tagline:
@@ -524,7 +526,7 @@ export const LOCATIONS: LocationInfo[] = [
     shortRegion: "East Delhi",
     h1: "Wedding Band, Ghodi & Dhol in Vivek Vihar & Surajmal Vihar, Delhi",
     hindi: "विवेक विहार और सूरजमल विहार में शादी का बैंड और ढोल वाले",
-    metaTitle: "Wedding Band in Vivek Vihar & Surajmal Vihar, Delhi | Shiv Band",
+    metaTitle: "Wedding Band in Vivek Vihar & Surajmal Vihar, Delhi",
     metaDescription:
       "Trusted wedding brass band in Vivek Vihar, Surajmal Vihar & Jhilmil Colony. Groom white ghodi, flower baggi, dhol vadak & crystal lights. Call 98186 26259.",
     tagline:

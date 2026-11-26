@@ -9,7 +9,7 @@ import { SERVICES } from "@/lib/services";
 export default function Hero() {
   const quick = SERVICES.slice(0, 5);
   return (
-    <section className="p-2 sm:p-3 lg:p-4" data-nosnippet="true">
+    <section className="p-2 sm:p-3 lg:p-4">
       <div className="relative isolate flex h-[calc(100svh-1rem)] min-h-[600px] max-h-[960px] flex-col overflow-hidden rounded-[22px] bg-ink ring-1 ring-gold/60 sm:h-[calc(100svh-1.5rem)] sm:rounded-frame lg:h-[calc(100svh-2rem)]">
         <Image
           src={SITE.heroImage.desktop}

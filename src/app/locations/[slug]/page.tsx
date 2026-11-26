@@ -10,6 +10,7 @@ import ServiceCard from "@/components/site/ServiceCard";
 import Faq from "@/components/site/Faq";
 import JsonLd from "@/components/site/JsonLd";
 import { LOCATIONS, getLocation } from "@/lib/locations";
+import { GUIDES } from "@/lib/guides";
 import { SERVICES } from "@/lib/services";
 import { breadcrumbSchema, faqSchema, locationBusinessSchema } from "@/lib/schema";
 import { SITE, SITE_URL, telLink, whatsappLink } from "@/lib/site";
@@ -203,6 +204,22 @@ export default async function LocationPage({ params }: { params: Promise<Params>
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-12 rounded-2xl border border-sand-dark bg-white p-6 sm:p-8">
+          <h3 className="font-display text-xl text-ink">Helpful Wedding Band &amp; Baraat Guides</h3>
+          <div className="mt-4 flex flex-wrap gap-3">
+            {GUIDES.map((g) => (
+              <Link
+                key={g.slug}
+                href={`/guides/${g.slug}`}
+                className="inline-flex items-center gap-1.5 rounded-full border border-sand-dark px-4 py-2 text-xs font-medium text-ink transition-colors hover:border-gold hover:text-maroon"
+              >
+                <span>{g.title.split(":")[0]}</span>
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </PageShell>

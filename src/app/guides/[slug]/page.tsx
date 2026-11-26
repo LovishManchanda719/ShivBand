@@ -9,6 +9,7 @@ import Breadcrumbs from "@/components/site/Breadcrumbs";
 import ServiceCard from "@/components/site/ServiceCard";
 import JsonLd from "@/components/site/JsonLd";
 import { GUIDES, getGuide } from "@/lib/guides";
+import { LOCATIONS } from "@/lib/locations";
 import { SERVICES } from "@/lib/services";
 import { BUSINESS_ID, breadcrumbSchema } from "@/lib/schema";
 import { SITE, SITE_URL, telLink, whatsappLink } from "@/lib/site";
@@ -110,7 +111,7 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
 
         <div className="container max-w-4xl">
           <div className="relative aspect-[16/9] overflow-hidden rounded-3xl bg-sand">
-            <Image src={heroSrc} alt={g.image.alt} fill priority sizes="(min-width: 1024px) 900px, 95vw" className="photo-grade object-cover" />
+            <Image src={heroSrc} alt={g.image.alt} fill priority sizes="(min-width: 1024px) 900px, 95vw" className="photo-grade object-cover object-[50%_25%]" />
           </div>
         </div>
 
@@ -175,9 +176,32 @@ export default async function GuidePage({ params }: { params: Promise<Params> })
             <ServiceCard key={s.slug} service={s} index={SERVICES.indexOf(s)} />
           ))}
         </div>
-        <p className="mt-14">
+        <div className="mt-14 border-t border-line pt-10">
+          <h3 className="font-display text-2xl text-ink">Delhi NCR areas we serve</h3>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {LOCATIONS.slice(0, 8).map((loc) => (
+              <Link
+                key={loc.slug}
+                href={`/locations/${loc.slug}`}
+                className="rounded-full border border-line bg-white px-4 py-2 text-[13px] text-ink transition-colors hover:border-gold"
+              >
+                {loc.name}
+              </Link>
+            ))}
+            <Link
+              href="/locations"
+              className="rounded-full border border-maroon/30 bg-maroon/5 px-4 py-2 text-[13px] font-medium text-maroon transition-colors hover:bg-maroon/10"
+            >
+              All Delhi NCR areas →
+            </Link>
+          </div>
+        </div>
+        <p className="mt-10 flex flex-wrap gap-6">
           <Link href="/guides" className="link-underline">
             All guides
+          </Link>
+          <Link href="/packages" className="link-underline">
+            Compare baraat packages
           </Link>
         </p>
       </section>

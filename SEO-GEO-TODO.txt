@@ -1,0 +1,102 @@
+SHIV BAND & LIGHT HOUSE — SEO & GEO ACTION LIST
+==================================================
+Goal: Rank #1 organically for "shiv band", show "Shiv Band" as the Google Site Name + favicon, and dominate Google Images & AI Search (GEO).
+
+--------------------------------------------------
+1. CODEBASE FIXES (Next.js / Schema / Metadata)
+--------------------------------------------------
+[x] Fix duplicate "| Shiv Band" in page <title>
+    - Done: Removed "| Shiv Band" suffix in src/app/packages/page.tsx.
+
+[x] Clean up sameAs in localBusinessSchema
+    - Done: Removed generic Wikipedia/Wikidata topic URLs from sameAs in src/lib/schema.ts.
+
+[x] Review data-nosnippet="true" on Homepage Hero
+    - Done: Removed data-nosnippet="true" from the Hero <section> in src/components/site/Hero.tsx.
+
+[x] Refine locationBusinessSchema for service-area pages
+    - Done: Converted locationBusinessSchema in src/lib/schema.ts to Service + areaServed referencing provider @id.
+
+[x] Add server-rendered review/testimonial content on /reviews
+    - Done: Added SSR heritage & Zero-Surge summary block with internal links in src/components/Reviews.tsx.
+
+--------------------------------------------------
+2. IMAGE SEO (Dominate Google Images for "shiv band")
+--------------------------------------------------
+[x] Add homepage & gallery images to sitemap.ts
+    - Done: Added HOME_IMAGES and LOCAL_PHOTOS to src/app/sitemap.ts.
+
+[x] Rename numbered image files to descriptive SEO filenames
+    - Done: Renamed 102/106/108/110.jpg to descriptive shiv-band-* filenames and updated src/lib/photos.ts titles.
+
+[x] Add ImageObject JSON-LD / rich captions on /gallery/photos
+    - Done: Updated all LOCAL_PHOTOS titles/alts in src/lib/photos.ts with "Shiv Band" and Delhi wedding context.
+
+[x] Add video entries to sitemap.ts (GSC currently shows "0 Discovered videos")
+    - Done: Added service videos and GALLERY_VIDEOS to src/app/sitemap.ts.
+
+--------------------------------------------------
+3. CONTENT, INTERNAL LINKING & MOBILE SPEED
+--------------------------------------------------
+[x] Add 1 new high-intent Delhi NCR guide
+    - Done: Added shubh-vivah-wedding-dates-delhi-2026-2027 in src/lib/guides.ts and public/llms.txt.
+
+[x] Strengthen internal cross-linking across Guides, Services & Locations
+    - Done: Added Delhi NCR location links to src/app/guides/[slug]/page.tsx and guide links to src/app/locations/[slug]/page.tsx.
+
+[x] Audit mobile speed & video lazy-loading (80% of traffic is Mobile)
+    - Done: Verified VideoGallery.tsx uses lazy thumbnails + click-to-load iframe, and services/[slug] uses preload="none".
+
+--------------------------------------------------
+3. GOOGLE SEARCH CONSOLE, SITE NAME & FAVICON
+--------------------------------------------------
+[ ] Wait 1-4 weeks for Site Name ("shivband.in" -> "Shiv Band") & Favicon refresh
+    - Note: Domain is ~5 days old. WebSite schema (src/lib/schema.ts), og:site_name (src/app/layout.tsx), and favicons (/icon.svg, /favicon.ico, /icon) are already configured.
+
+[x] Consolidate legacy Vercel domain (https://shiv-band.vercel.app/)
+    - Done: 301 redirect from shiv-band.vercel.app -> https://shivband.in is already configured in Vercel.
+
+[ ] Improve CTR & Rankings for High-Intent Queries (currently Avg Pos 7.5, CTR 3.3%)
+    - Observed GSC queries getting impressions with 0 clicks: "wedding bands near me", "shiv band faridabad", "band booking for marriage price", "flower baggi", "phool wali baggi", "white ghodi for wedding", "shadi band price".
+    - Action: Sharpen titles/meta descriptions with Delhi NCR + transparent Zero-Surge pricing hooks to lift CTR and move from pos ~7.5 into Top 3.
+
+[ ] Request Indexing in Google Search Console
+    - Inspect https://shivband.in/ and key pages (/services/*, /packages, /gallery/photos, /contact) in GSC after deploying fixes and click "Request Indexing".
+    - Recheck Indexing -> Pages once GSC finishes "Processing data" (~1-2 days).
+
+[ ] Trigger IndexNow after deploys (Bing & AI Search)
+    - Use the Notify Bing / IndexNow button in /admin (src/app/api/admin/indexnow/route.ts) after content or SEO updates.
+
+--------------------------------------------------
+4. CONVERSION & MOBILE UX (Observed from /admin)
+--------------------------------------------------
+[ ] Prioritize one-tap Call & WhatsApp CTAs on Mobile (80% of traffic is Mobile)
+    - Observation: 3 Phone Clicks + 1 WhatsApp Inquiry vs. 0 Saved Form Bookings.
+    - Action: Keep Call (+91 98186 26259) and WhatsApp CTAs prominent on top search landing pages (/, /packages, /services/*, /guides/wedding-band-cost-delhi, /contact).
+
+--------------------------------------------------
+5. OFF-PAGE & LOCAL SEO (Beat Ads, Justdial & Wristbands)
+--------------------------------------------------
+[x] Google Business Profile (Place ID: ChIJK8SuKqH8DDkRolBFpoSGbpY)
+    - Done: Website URL set to https://shivband.in, exact NAP matched, photos uploaded.
+
+[x] Wedding Directories & Social Profiles (Own Profiles)
+    - Done: Profiles (Instagram, Facebook, Justdial, WedMeGood, Sulekha, IndiaMART) linked to https://shivband.in.
+
+--------------------------------------------------
+6. MISSING KEYWORDS TO ADD (Confirmed Offered)
+--------------------------------------------------
+[x] High-Intent Pricing & Package Keywords (/packages, /guides/wedding-band-cost-delhi, service FAQs)
+    - Done: Added shadi band price, band booking for marriage price, baraat band rates, ghodi for wedding price, flower baggi price, vintage car for wedding price, 21 piece, 31 piece.
+
+[x] Hinglish & Local Slang (Service H2s, hindiFaqs, image alt text, llms-full.txt)
+    - Done: Added shadi band, phool wali baggi, phoolon wali baggi, safed ghodi, ghodiwala, chhatar light, ujala light, punjabi dhol toli, nashik dhol, shehnai vadak, pagdi wala, ghodi baggi near me.
+
+[x] Specialty Add-Ons & Location Variants
+    - Done: Added dj on wheels, cold pyro baraat entry, smoke gun groom entry, military band, and Chhatarpur spelling variant in src/lib/locations.ts & public/llms.txt.
+
+--------------------------------------------------
+BASELINE SNAPSHOT (26 Nov 2026)
+--------------------------------------------------
+- /admin: 33 views, 20 unique visitors (16 from Google Search, 16 Mobile), 16 engaged (30s+), 3 phone clicks, 1 WhatsApp inquiry, 0 saved bookings.
+- GSC (sc-domain:shivband.in, 20-24 Nov): 6 clicks, 180 impressions, 3.3% CTR, 7.5 avg position; 37 pages discovered in sitemap.xml (0 videos); 28 valid breadcrumbs, 8 valid videos.

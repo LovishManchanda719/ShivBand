@@ -17,13 +17,16 @@ import { breadcrumbSchema, faqSchema } from "@/lib/schema";
 import { SITE, SITE_URL, telLink, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Wedding Band Packages in Delhi | Baraat Budget & Custom Quote | Shiv Band",
+  title: "Wedding Band Packages in Delhi | Baraat Budget & Shadi Band Price",
   description:
-    "Explore Shiv Band's 2026 wedding band packages in Delhi NCR. Traditional Baraat, Grand Celebration & Royal Maharaja VIP tiers. Custom quotes based on your chosen services and venue.",
+    "Explore Shiv Band's 2026 wedding band packages in Delhi NCR. Traditional Baraat, Grand Celebration & Royal Maharaja VIP tiers. Transparent Zero-Surge shadi band price & custom quote.",
   alternates: { canonical: "/packages" },
   keywords: [
     "wedding band packages Delhi",
     "wedding band cost Delhi",
+    "shadi band price",
+    "band booking for marriage price",
+    "baraat band rates",
     "baraat band price list Delhi",
     "ghodi baggi package rates",
     "wedding brass band rates Delhi NCR",

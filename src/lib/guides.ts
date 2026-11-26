@@ -103,7 +103,7 @@ export const GUIDES: Guide[] = [
     published: "2026-10-11",
     updated: "2026-10-11",
     readMinutes: 5,
-    image: { src: "/images/3.jpg", alt: "Wedding band trumpet player in red ceremonial uniform" },
+    image: { src: "/images/shiv-band-luxury-royal-brass-band.jpg", alt: "Shiv Band royal brass band musicians in red and gold ceremonial uniforms in Delhi" },
     intro:
       "Every band says it is the best. These questions help you see the difference between a band that will make your baraat memorable and one that will leave you making phone calls on the wedding night.",
     keyTakeaways: [
@@ -208,6 +208,49 @@ export const GUIDES: Guide[] = [
       },
     ],
     related: ["wedding-band", "baraat-package", "dhol-wale", "ghodi-for-wedding", "flower-baggi-rath"],
+  },
+  {
+    slug: "shubh-vivah-wedding-dates-delhi-2026-2027",
+    title: "2026–2027 Shubh Vivah & Saya Wedding Dates in Delhi: Band Booking Guide",
+    description:
+      "Planning a wedding on peak 2026–2027 Shubh Vivah (Saya) dates in Delhi NCR? Learn when to lock your brass band, ghodi, phool wali baggi & dhol with Zero-Surge Pricing.",
+    published: "2026-11-26",
+    updated: "2026-11-26",
+    readMinutes: 5,
+    image: {
+      src: "/images/shehnai/shehnai-band-baraat.jpg",
+      alt: "Shiv Band royal shehnai and baraat ensemble for auspicious Saya wedding dates in Delhi NCR",
+    },
+    intro:
+      "In Delhi NCR, auspicious Shubh Vivah (Saya) dates in November, December, January, and February see hundreds of baraats on the same evening. Because Shiv Band & Light House caps nightly bookings to guarantee punctual arrival and in-house uniformed musicians, peak Saya slots fill weeks or months ahead — yet our rates never surge on high-demand dates.",
+    keyTakeaways: [
+      "Zero-Surge Saya Guarantee: Unlike brokers who hike shadi band price by 30–50% on peak muhurat dates, Shiv Band keeps fair, transparent family rates all year.",
+      "Book 6–10 weeks ahead for heavy Nov–Feb and April–May Saya nights to lock your preferred 21 piece or 31 piece brass band, safed ghodi, or flower baggi.",
+      "Plan your baraat start time around the Delhi 10:00 PM outdoor music rule so your procession reaches the banquet gate before cutoff.",
+    ],
+    sections: [
+      {
+        heading: "1. Why Saya (Shubh Muhurat) dates fill up fastest in Delhi NCR",
+        paragraphs: [
+          "During peak wedding months (late November through mid-December, and mid-January through early March), major banquet corridors in East Delhi, Noida, Indirapuram, Rohini, and Chhatarpur host multiple weddings simultaneously. In-house brass musicians, trained white ghodis, and 2-horse or 4-horse flower baggis are finite resources — we never outsource to third-party street crews just to take extra bookings.",
+        ],
+      },
+      {
+        heading: "2. Peak-date booking timeline: when to reserve each service",
+        list: [
+          "2–3 Months Before: Reserve Royal Maharaja VIP packages, 31 piece brass bands, 4-horse Bahubali raths, vintage wedding cars, and Chhatarpur/Gurugram farmhouse slots.",
+          "4–8 Weeks Before: Lock 21 piece brass bands, safed ghodi (ghodiwala), phool wali baggi, Punjabi dhol toli / Nashik dhol, and crystal chhatar light crews.",
+          "2–3 Weeks Before: Finalize your baraat song playlist, DJ on wheels trolley, cold pyro / smoke gun entry cues, and pagdi/safa count.",
+        ],
+      },
+      {
+        heading: "3. How to check availability without any surge markup",
+        paragraphs: [
+          "Call or WhatsApp owner Manish Kumar directly on 98186 26259 with your wedding date and venue area. We check exact troop availability for your evening and give you a transparent band booking for marriage price with zero middleman commission.",
+        ],
+      },
+    ],
+    related: ["baraat-package", "wedding-band", "ghodi-for-wedding", "flower-baggi-rath", "dhol-wale"],
   },
 ];
 
