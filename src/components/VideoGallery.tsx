@@ -5,19 +5,55 @@ import { Play, X, Youtube } from "lucide-react";
 import { getVideos, type Video } from "@/lib/firebase";
 import { trackEvent } from "@/lib/analytics";
 import { SITE } from "@/lib/site";
+import { SERVICES } from "@/lib/services";
 
 const ytId = (url: string) =>
   url?.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/)?.[1] || null;
 
-// Shows only videos added through the admin panel. No placeholder videos.
+interface GalleryVideoItem {
+  id: string;
+  title: string;
+  description?: string;
+  thumbnail: string;
+  youtubeId?: string;
+  src?: string;
+}
+
+const LOCAL_SERVICE_VIDEOS: GalleryVideoItem[] = SERVICES.flatMap((s) =>
+  (s.videos || [])
+    .filter((v) => v.src)
+    .map((v) => ({
+      id: `local-${s.slug}-${v.src}`,
+      title: v.title,
+      description: v.description,
+      thumbnail: v.poster,
+      src: v.src,
+    }))
+);
+
 export default function VideoGallery() {
-  const [videos, setVideos] = useState<Video[] | null>(null);
-  const [playing, setPlaying] = useState<Video | null>(null);
+  const [videos, setVideos] = useState<GalleryVideoItem[] | null>(null);
+  const [playing, setPlaying] = useState<GalleryVideoItem | null>(null);
 
   useEffect(() => {
     getVideos()
-      .then((v) => setVideos(v.filter((x) => ytId(x.youtubeLink))))
-      .catch(() => setVideos([]));
+      .then((v: Video[]) => {
+        const ytVideos: GalleryVideoItem[] = v.flatMap((x) => {
+          const id = ytId(x.youtubeLink);
+          if (!id) return [];
+          return [
+            {
+              id: x.id,
+              title: x.title,
+              description: x.description,
+              thumbnail: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+              youtubeId: id,
+            },
+          ];
+        });
+        setVideos([...LOCAL_SERVICE_VIDEOS, ...ytVideos]);
+      })
+      .catch(() => setVideos(LOCAL_SERVICE_VIDEOS));
   }, []);
 
   useEffect(() => {
@@ -53,37 +89,34 @@ export default function VideoGallery() {
   return (
     <>
       <ul className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-        {videos.map((v) => {
-          const id = ytId(v.youtubeLink)!;
-          return (
-            <li key={v.id}>
-              <button
-                onClick={() => {
-                  setPlaying(v);
-                  trackEvent("gallery_video_play", { video_id: v.id, title: v.title });
-                }}
-                className="group block w-full text-left"
-              >
-                <div className="relative aspect-video overflow-hidden rounded-2xl bg-ink">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
-                    alt={v.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.03]"
-                  />
-                  <span className="absolute inset-0 flex items-center justify-center">
-                    <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-ivory/95 text-maroon shadow-lg transition-transform group-hover:scale-105">
-                      <Play className="ml-0.5 h-5 w-5 fill-current" strokeWidth={1.5} />
-                    </span>
+        {videos.map((v) => (
+          <li key={v.id}>
+            <button
+              onClick={() => {
+                setPlaying(v);
+                trackEvent("gallery_video_play", { video_id: v.id, title: v.title });
+              }}
+              className="group block w-full text-left"
+            >
+              <div className="relative aspect-video overflow-hidden rounded-2xl bg-ink">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={v.thumbnail}
+                  alt={v.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-ivory/95 text-maroon shadow-lg transition-transform group-hover:scale-105">
+                    <Play className="ml-0.5 h-5 w-5 fill-current" strokeWidth={1.5} />
                   </span>
-                </div>
-                <h2 className="mt-4 font-display text-xl leading-snug text-ink">{v.title}</h2>
-                {v.description && <p className="mt-1 line-clamp-2 text-[14px] text-stone">{v.description}</p>}
-              </button>
-            </li>
-          );
-        })}
+                </span>
+              </div>
+              <h2 className="mt-4 font-display text-xl leading-snug text-ink">{v.title}</h2>
+              {v.description && <p className="mt-1 line-clamp-2 text-[14px] text-stone">{v.description}</p>}
+            </button>
+          </li>
+        ))}
       </ul>
 
       {playing && (
@@ -91,14 +124,25 @@ export default function VideoGallery() {
           <button onClick={() => setPlaying(null)} aria-label="Close video" className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full text-ivory hover:bg-white/10">
             <X className="h-5 w-5" strokeWidth={1.5} />
           </button>
-          <div className="aspect-video w-full max-w-5xl overflow-hidden rounded-2xl" onClick={(e) => e.stopPropagation()}>
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${ytId(playing.youtubeLink)}?autoplay=1&rel=0`}
-              title={playing.title}
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="h-full w-full"
-            />
+          <div className="aspect-video w-full max-w-5xl overflow-hidden rounded-2xl bg-black" onClick={(e) => e.stopPropagation()}>
+            {playing.src ? (
+              <video
+                src={playing.src}
+                poster={playing.thumbnail}
+                controls
+                autoPlay
+                playsInline
+                className="h-full w-full"
+              />
+            ) : (
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${playing.youtubeId}?autoplay=1&rel=0`}
+                title={playing.title}
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="h-full w-full"
+              />
+            )}
           </div>
         </div>
       )}

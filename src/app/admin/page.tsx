@@ -8,6 +8,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { db } from "@/lib/firebaseConfig";
 import { ADMIN_EMAIL, isExcludedVisitorId } from "@/lib/analytics";
+import { canonicalPhotoUrl } from "@/lib/photos";
+import { SERVICES } from "@/lib/services";
 import NotifyBingButton from "@/components/admin/NotifyBingButton";
 import { toast } from "@/components/ui/sonner";
 import {
@@ -3053,12 +3055,13 @@ export default function AdminDashboardPage() {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {photos.map((photo) => {
-                    const resolvedUrl =
+                    const rawResolvedUrl =
                       photo.url.startsWith("http") ||
                       photo.url.startsWith("data:image/") ||
                       photo.url.startsWith("/")
                         ? photo.url
                         : `/images/${photo.url}`;
+                    const resolvedUrl = canonicalPhotoUrl(rawResolvedUrl);
                     return (
                       <div
                         key={photo.id}
@@ -3243,6 +3246,74 @@ export default function AdminDashboardPage() {
                   ))}
                 </div>
               )}
+
+              {/* Built-in Service & Event Videos (from public/videos & services.ts) */}
+              {(() => {
+                const serviceVideos = SERVICES.flatMap((s) =>
+                  (s.videos || [])
+                    .filter((v) => v.src)
+                    .map((v) => ({
+                      ...v,
+                      serviceName: s.name,
+                      serviceSlug: s.slug,
+                    }))
+                );
+                return (
+                  <div className="mt-8">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-black">
+                        Service &amp; Event Videos ({serviceVideos.length})
+                      </h3>
+                      <Link
+                        href="/gallery/videos"
+                        className="text-xs font-bold text-maroon hover:underline"
+                      >
+                        View Public Video Gallery →
+                      </Link>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {serviceVideos.map((sv) => (
+                        <div
+                          key={sv.src}
+                          className={`p-4 rounded-2xl border flex items-start justify-between gap-3 ${
+                            isDarkMode
+                              ? "bg-gray-900 border-gray-800"
+                              : "bg-white border-gray-200"
+                          }`}
+                        >
+                          <div className="min-w-0">
+                            <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-gold mb-1">
+                              {sv.serviceName}
+                            </span>
+                            <h4 className="font-bold text-sm line-clamp-1">{sv.title}</h4>
+                            {sv.description && (
+                              <p className="text-xs text-gray-400 line-clamp-2 mt-0.5">
+                                {sv.description}
+                              </p>
+                            )}
+                            <div className="flex items-center gap-3 mt-2">
+                              <a
+                                href={sv.src}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-[11px] text-gold underline truncate"
+                              >
+                                {sv.src}
+                              </a>
+                              <Link
+                                href={`/services/${sv.serviceSlug}`}
+                                className="text-[11px] font-semibold text-maroon hover:underline shrink-0"
+                              >
+                                Service Page →
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         )}

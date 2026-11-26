@@ -39,6 +39,10 @@ export const DUPLICATE_ALIASES: Record<string, string> = {
   "/images/101.jpg": "/images/dhol-wale-baraat.jpg",
   "/images/103.jpg": "/images/brass-band-chhatri-lights.jpg",
   "/images/107.jpg": "/images/groom-ghodi-chhatri-lights.jpg",
+  "/images/102.jpg": "/images/shiv-band-gold-sherwani-uniform.jpg",
+  "/images/106.jpg": "/images/shiv-band-uniform-display-shop.jpg",
+  "/images/108.jpg": "/images/shiv-band-krishna-nagar-uniforms.jpg",
+  "/images/110.jpg": "/images/shiv-band-light-house-krishna-nagar-shop.jpg",
   "/images/vintage-car/red-vintage-car-baraat.jpg": "/images/vintage-car/red-vintage-car-groom.jpg",
 };
 
