@@ -640,7 +640,7 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Wedding baraat", "Groom grand entry", "Road processions", "Pre-wedding & Jago nights"],
     images: [
-      { src: "/images/brass-band-chhatri-lights.jpg", alt: "Shiv Band illuminated baraat procession with DJ on wheels and crystal chhatri lights in Delhi" },
+      { src: "/images/dj-on-wheels-baraat-speakers.jpg", alt: "Shiv Band floral-decorated DJ on Wheels mobile baraat speaker trolley with LED lights in Delhi NCR" },
     ],
     videos: [
       {
@@ -703,7 +703,7 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Groom baraat entry", "Bride entry", "Sangeet & cocktail welcome", "Festive & Ganpati processions"],
     images: [
-      { src: "/images/dhol-wale-baraat.jpg", alt: "Shiv Band Nashik dhol and Punjabi dhol players performing at a Delhi wedding baraat" },
+      { src: "/images/nashik-dhol-tasha-baraat.jpg", alt: "Shiv Band synchronized Nashik dhol and tasha troupe performing at a Delhi wedding baraat" },
     ],
     videos: [
       {
@@ -766,7 +766,7 @@ export const SERVICES: Service[] = [
     ],
     occasions: ["Groom baraat gate entry", "Bride entry", "Jaimala & varmala", "Vintage car / baggi arrival"],
     images: [
-      { src: "/images/vintage-car/red-vintage-car-luxury-fireworks.jpg", alt: "Shiv Band luxury groom entry with cold pyro spark fountains and fireworks in Delhi NCR" },
+      { src: "/images/cold-pyro-smoke-gun-baraat.jpg", alt: "Shiv Band luxury groom entry with cold pyro spark fountains and colour smoke guns in Delhi NCR" },
     ],
     videos: [
       {
