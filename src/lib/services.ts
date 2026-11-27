@@ -657,6 +657,41 @@ export const SERVICES: Service[] = [
         description: "High-energy wedding baraat procession with Shiv Band DJ on Wheels in Delhi NCR.",
         uploadDate: "2026-11-26T15:05:00+05:30",
       },
+      {
+        src: "/videos/shiv-band-dj-on-wheels-baraat-trolley-led-truss-delhi.mp4",
+        poster: "/images/shiv-band-dj-on-wheels-baraat-trolley-led-truss-delhi.jpg",
+        title: "Shiv Band DJ on Wheels Baraat Trolley with LED Truss in Delhi NCR",
+        description: "Illuminated Shiv Band & Light House DJ on Wheels baraat trolley in Delhi NCR featuring LED signage, golden lattice truss, high-bass speakers, and live DJ console.",
+        uploadDate: "2026-11-27T19:05:00+05:30",
+      },
+      {
+        src: "/videos/dj-on-wheels-night-lighting-speaker-rig-east-delhi.mp4",
+        poster: "/images/dj-on-wheels-night-lighting-speaker-rig-east-delhi.jpg",
+        title: "DJ on Wheels Mobile Baraat Speaker Rig & Stage Lighting in East Delhi",
+        description: "Close-up view of Shiv Band & Light House mobile DJ trolley with purple-blue LED stage lighting and line-array speakers for wedding baraats in East Delhi.",
+        uploadDate: "2026-11-27T19:05:00+05:30",
+      },
+      {
+        src: "/videos/shiv-band-ki-baraat-dj-trolley-walkthrough-delhi-ncr.mp4",
+        poster: "/images/shiv-band-ki-baraat-dj-trolley-walkthrough-delhi-ncr.jpg",
+        title: "Shiv Band Ki Baraat — Full DJ on Wheels Wedding Trolley Tour Delhi NCR",
+        description: "Full walkthrough of the Shiv Band & Light House DJ on Wheels baraat trolley featuring red-carpet deck, LED lighting, silent generator, and club-grade sound.",
+        uploadDate: "2026-11-27T19:05:00+05:30",
+      },
+      {
+        src: "/videos/barati-aa-gaye-oye-dj-on-wheels-krishna-nagar-delhi.mp4",
+        poster: "/images/barati-aa-gaye-oye-dj-on-wheels-krishna-nagar-delhi.jpg",
+        title: "Barati Aa Gaye Oye — DJ on Wheels Baraat Trolley Krishna Nagar Delhi",
+        description: "Shiv Band & Light House DJ on Wheels baraat trolley in Krishna Nagar, East Delhi with Barati Aa Gaye Oye LED display and live Bollywood & Punjabi DJ.",
+        uploadDate: "2026-11-27T19:05:00+05:30",
+      },
+      {
+        src: "/videos/mobile-dj-trolley-wedding-baraat-booking-delhi-ncr.mp4",
+        poster: "/images/mobile-dj-trolley-wedding-baraat-booking-delhi-ncr.jpg",
+        title: "Mobile DJ Trolley for Wedding Baraat Booking in Delhi NCR — Shiv Band",
+        description: "Book Shiv Band & Light House DJ on Wheels baraat trolley in Krishna Nagar, East Delhi & Delhi NCR. Call +91 98186 26259 for wedding baraat bookings.",
+        uploadDate: "2026-11-27T19:05:00+05:30",
+      },
     ],
     faqs: [
       {

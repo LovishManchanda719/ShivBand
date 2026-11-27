@@ -45,7 +45,7 @@ export const SITE = {
   social: {
     instagram: "https://www.instagram.com/shiv_band_and_light_house/",
     facebook: "https://www.facebook.com/shivband.lighthouse",
-    youtube: "https://www.youtube.com/@manishmanchanda4089/videos",
+    youtube: "https://www.youtube.com/@shivbanddelhi/videos",
   },
   // Luxury website hero background image (shown on the website hero)
   heroImage: {
