@@ -31,6 +31,8 @@
 - [Mayur Vihar & Patparganj](https://shivband.in/locations/mayur-vihar)
 - [South Delhi & Chattarpur](https://shivband.in/locations/south-delhi)
 - [Rohini & Pitampura](https://shivband.in/locations/rohini)
+- [North Delhi & GT Karnal Road](https://shivband.in/locations/north-delhi-gt-karnal-road)
+- [West Delhi (Rajouri Garden & Punjabi Bagh)](https://shivband.in/locations/west-delhi)
 - [Noida & Greater Noida](https://shivband.in/locations/noida)
 - [Gurugram (Gurgaon)](https://shivband.in/locations/gurugram)
 - [Ghaziabad & Indirapuram](https://shivband.in/locations/ghaziabad)
